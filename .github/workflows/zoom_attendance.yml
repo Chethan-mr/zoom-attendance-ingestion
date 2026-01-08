@@ -1,17 +1,16 @@
 name: Daily Zoom Attendance
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: "30 19 * * *"   # 01:00 AM IST
-  workflow_dispatch:
 
 jobs:
   run:
     runs-on: ubuntu-latest
-    environment: DB
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Python
