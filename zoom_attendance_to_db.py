@@ -33,11 +33,12 @@ ZOOM_ACCOUNT = {
 
 DB_CONFIG = {
     "host": os.environ["HOST"],
-    "port": int(os.environ.get("PORT", 5432)),
+    "port": int(os.environ.get("PORT") or 5432),
     "dbname": os.environ["DBNAME"],
     "user": os.environ["USER"],
     "password": os.environ["PASSWORD"]
 }
+
 
 FALLBACK_USER_ID = "ZOOM_EXTERNAL"
 
