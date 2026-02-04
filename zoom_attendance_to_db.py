@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 today = datetime.now(timezone.utc).date()
 yesterday = today - timedelta(days=1)
 
-FROM_DATE = datetime(2026, 2, 1).date().isoformat()
+FROM_DATE = datetime(2026, 1, 1).date().isoformat()
 TO_DATE = datetime(2026, 2, 4).date().isoformat()
 
 print(f"\n📅 Date range: {FROM_DATE} → {TO_DATE}")
