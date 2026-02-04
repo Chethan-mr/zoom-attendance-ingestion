@@ -14,7 +14,7 @@ yesterday = today - timedelta(days=1)
 FROM_DATE = yesterday.isoformat()
 TO_DATE = today.isoformat()
 
-print(f"\n📅 Date range: {FROM_DATE} → {TO_DATE}")
+print(f"\n📅 Date range: {"2026-02-1"} → {"2026-02-04"}")
 
 # =====================================================
 # CONFIGURATION (FROM GITHUB SECRETS)
