@@ -11,10 +11,10 @@ from datetime import datetime, timedelta, timezone
 today = datetime.now(timezone.utc).date()
 yesterday = today - timedelta(days=1)
 
-FROM_DATE = yesterday.isoformat()
-TO_DATE = today.isoformat()
+FROM_DATE = datetime(2026, 2, 1).date().isoformat()
+TO_DATE = datetime(2026, 2, 4).date().isoformat()
 
-print(f"\n📅 Date range: {"2026-02-1"} → {"2026-02-04"}")
+print(f"\n📅 Date range: {FROM_DATE} → {TO_DATE}")
 
 # =====================================================
 # CONFIGURATION (FROM GITHUB SECRETS)
