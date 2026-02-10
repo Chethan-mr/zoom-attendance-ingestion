@@ -5,12 +5,13 @@ import psycopg2
 import urllib.parse
 from datetime import datetime, timedelta, timezone
 
-# =====================================================
-# DATE RANGE (DAILY MODE)
-# =====================================================
+IST = timezone(timedelta(hours=5, minutes=30))
 
-TO_DATE = datetime.now(timezone.utc).date().isoformat()
-FROM_DATE = "2025-12-01"   # safe rolling backfill
+today_ist = datetime.now(IST).date()
+yesterday_ist = today_ist - timedelta(days=1)
+
+FROM_DATE = yesterday_ist.isoformat()
+TO_DATE = yesterday_ist.isoformat()
 
 print(f"\n📅 DAILY MODE: {FROM_DATE} → {TO_DATE}")
 
