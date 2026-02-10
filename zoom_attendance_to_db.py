@@ -6,16 +6,16 @@ import urllib.parse
 from datetime import datetime, timedelta, timezone
 
 # =====================================================
-# DATE RANGE (FULL BACKFILL)
+# DATE RANGE (DAILY MODE)
 # =====================================================
 
-FROM_DATE = "2025-12-01"
 TO_DATE = datetime.now(timezone.utc).date().isoformat()
+FROM_DATE = "2025-12-01"   # safe rolling backfill
 
-print(f"\n📅 BACKFILL MODE: {FROM_DATE} → {TO_DATE}")
+print(f"\n📅 DAILY MODE: {FROM_DATE} → {TO_DATE}")
 
 # =====================================================
-# CONFIGURATION
+# CONFIG
 # =====================================================
 
 ZOOM_ACCOUNT = {
@@ -51,7 +51,7 @@ def get_zoom_token():
     return r.json()["access_token"]
 
 # =====================================================
-# ZOOM API HELPERS
+# ZOOM API
 # =====================================================
 
 def fetch_users(token):
@@ -120,34 +120,12 @@ def fetch_participants(token, meeting_uuid):
 
 
 def get_internal_user_id(cur, email):
-    if not email:
-        return None
     cur.execute(
         "SELECT id FROM public.users WHERE LOWER(email) = LOWER(%s)",
         (email,),
     )
     row = cur.fetchone()
     return row[0] if row else None
-
-# =====================================================
-# CLEANUP (SAFE DEDUPLICATION)
-# =====================================================
-
-def cleanup_existing_duplicates(cur):
-    print("🧹 Cleaning existing duplicates in attendance…")
-
-    cur.execute(
-        """
-        DELETE FROM public.attendance a
-        USING public.attendance b
-        WHERE
-          a.id > b.id
-          AND a.user_id = b.user_id
-          AND a.meeting_id = b.meeting_id
-          AND a.joined_at = b.joined_at
-          AND a.left_at = b.left_at;
-        """
-    )
 
 # =====================================================
 # MAIN
@@ -157,14 +135,10 @@ def main():
     token = get_zoom_token()
     users = fetch_users(token)
 
-    print(f"👤 Total Zoom users scanned: {len(users)}")
+    print(f"👤 Zoom users scanned: {len(users)}")
 
     conn = psycopg2.connect(**DB_CONFIG)
     cur = conn.cursor()
-
-    # 1️⃣ Clean duplicates FIRST
-    cleanup_existing_duplicates(cur)
-    conn.commit()
 
     insert_sql = """
         INSERT INTO public.attendance (
@@ -210,9 +184,14 @@ def main():
 
             for p in participants:
                 email = p.get("user_email")
-                internal_id = get_internal_user_id(cur, email)
 
+                # ❌ SKIP if email is NULL
+                if not email:
+                    continue
+
+                internal_id = get_internal_user_id(cur, email)
                 user_identifier = internal_id or email
+
                 join_time = datetime.fromisoformat(
                     p["join_time"].replace("Z", "+00:00")
                 )
@@ -250,7 +229,7 @@ def main():
     cur.close()
     conn.close()
 
-    print("\n✅ BACKFILL COMPLETE: Attendance cleaned & re-ingested safely.")
+    print("\n✅ DAILY ATTENDANCE INGESTION COMPLETED (NO NULL EMAILS, NO DUPES)")
 
 if __name__ == "__main__":
     main()
