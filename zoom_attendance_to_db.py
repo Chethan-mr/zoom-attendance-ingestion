@@ -6,56 +6,60 @@ import urllib.parse
 from datetime import datetime, timedelta, timezone
 
 # =====================================================
-# DATE RANGE (HARDCODED FOR RECOVERY)
+# DATE RANGE (FULL BACKFILL)
 # =====================================================
-# Based on your image, we need to cover 2026-02-02.
-# We use a slightly wider range to account for UTC shifts.
-FROM_DATE = "2026-02-01"
-TO_DATE = "2026-02-09"
 
-print(f"\n📅 RECOVERY MODE: Fetching sessions from {FROM_DATE} to {TO_DATE}")
+FROM_DATE = "2025-12-01"
+TO_DATE = datetime.now(timezone.utc).date().isoformat()
+
+print(f"\n📅 BACKFILL MODE: {FROM_DATE} → {TO_DATE}")
 
 # =====================================================
 # CONFIGURATION
 # =====================================================
+
 ZOOM_ACCOUNT = {
-    "zoom_account_id": os.environ.get("ZOOM_ACCOUNT_ID"),
-    "account_id": os.environ.get("ACCOUNT_ID"),
-    "client_id": os.environ.get("CLIENT_ID"),
-    "client_secret": os.environ.get("CLIENT_SECRET")
+    "zoom_account_id": os.environ["ZOOM_ACCOUNT_ID"],
+    "account_id": os.environ["ACCOUNT_ID"],
+    "client_id": os.environ["CLIENT_ID"],
+    "client_secret": os.environ["CLIENT_SECRET"],
 }
 
 DB_CONFIG = {
-    "host": os.environ.get("HOST"),
+    "host": os.environ["HOST"],
     "port": int(os.environ.get("PORT") or 5432),
-    "dbname": os.environ.get("DBNAME"),
-    "user": os.environ.get("USER"),
-    "password": os.environ.get("PASSWORD")
+    "dbname": os.environ["DBNAME"],
+    "user": os.environ["USER"],
+    "password": os.environ["PASSWORD"],
 }
 
-FALLBACK_USER_ID = "ZOOM_EXTERNAL"
+# =====================================================
+# ZOOM AUTH
+# =====================================================
 
-# =====================================================
-# ZOOM AUTH & API
-# =====================================================
 def get_zoom_token():
     r = requests.post(
         "https://zoom.us/oauth/token",
         params={
             "grant_type": "account_credentials",
-            "account_id": ZOOM_ACCOUNT["account_id"]
+            "account_id": ZOOM_ACCOUNT["account_id"],
         },
         auth=(ZOOM_ACCOUNT["client_id"], ZOOM_ACCOUNT["client_secret"]),
-        timeout=20
+        timeout=20,
     )
     r.raise_for_status()
     return r.json()["access_token"]
+
+# =====================================================
+# ZOOM API HELPERS
+# =====================================================
 
 def fetch_users(token):
     headers = {"Authorization": f"Bearer {token}"}
     users = []
     url = "https://api.zoom.us/v2/users"
     params = {"page_size": 300}
+
     while True:
         r = requests.get(url, headers=headers, params=params, timeout=30)
         r.raise_for_status()
@@ -65,15 +69,20 @@ def fetch_users(token):
             params["next_page_token"] = data["next_page_token"]
         else:
             break
+
     return users
+
 
 def fetch_user_meetings(token, user_id):
     headers = {"Authorization": f"Bearer {token}"}
     meetings = []
     url = f"https://api.zoom.us/v2/report/users/{user_id}/meetings"
     params = {"from": FROM_DATE, "to": TO_DATE, "page_size": 300}
+
     while True:
         r = requests.get(url, headers=headers, params=params, timeout=30)
+        if r.status_code == 404:
+            return []
         r.raise_for_status()
         data = r.json()
         meetings.extend(data.get("meetings", []))
@@ -81,18 +90,24 @@ def fetch_user_meetings(token, user_id):
             params["next_page_token"] = data["next_page_token"]
         else:
             break
+
     return meetings
+
 
 def fetch_participants(token, meeting_uuid):
     headers = {"Authorization": f"Bearer {token}"}
     participants = []
-    # Double encoding is required for UUIDs that contain slashes or plus signs
-    encoded_uuid = urllib.parse.quote(urllib.parse.quote(meeting_uuid, safe=''), safe='')
+
+    encoded_uuid = urllib.parse.quote(
+        urllib.parse.quote(meeting_uuid, safe=""), safe=""
+    )
     url = f"https://api.zoom.us/v2/report/meetings/{encoded_uuid}/participants"
     params = {"page_size": 300}
+
     while True:
         r = requests.get(url, headers=headers, params=params, timeout=30)
-        if r.status_code == 404: return []
+        if r.status_code == 404:
+            return []
         r.raise_for_status()
         data = r.json()
         participants.extend(data.get("participants", []))
@@ -100,85 +115,142 @@ def fetch_participants(token, meeting_uuid):
             params["next_page_token"] = data["next_page_token"]
         else:
             break
+
     return participants
 
+
 def get_internal_user_id(cur, email):
-    if not email: return None
-    cur.execute("SELECT id FROM public.users WHERE LOWER(email) = LOWER(%s)", (email,))
+    if not email:
+        return None
+    cur.execute(
+        "SELECT id FROM public.users WHERE LOWER(email) = LOWER(%s)",
+        (email,),
+    )
     row = cur.fetchone()
     return row[0] if row else None
 
 # =====================================================
+# CLEANUP (SAFE DEDUPLICATION)
+# =====================================================
+
+def cleanup_existing_duplicates(cur):
+    print("🧹 Cleaning existing duplicates in attendance…")
+
+    cur.execute(
+        """
+        DELETE FROM public.attendance a
+        USING public.attendance b
+        WHERE
+          a.id > b.id
+          AND a.user_id = b.user_id
+          AND a.meeting_id = b.meeting_id
+          AND a.joined_at = b.joined_at
+          AND a.left_at = b.left_at;
+        """
+    )
+
+# =====================================================
 # MAIN
 # =====================================================
+
 def main():
     token = get_zoom_token()
-    all_users = fetch_users(token)
-    
-    # We remove the "Licensed only" filter to ensure we catch all hosts
-    print(f"👤 Total Zoom users found: {len(all_users)}")
+    users = fetch_users(token)
+
+    print(f"👤 Total Zoom users scanned: {len(users)}")
 
     conn = psycopg2.connect(**DB_CONFIG)
     cur = conn.cursor()
 
+    # 1️⃣ Clean duplicates FIRST
+    cleanup_existing_duplicates(cur)
+    conn.commit()
+
     insert_sql = """
         INSERT INTO public.attendance (
-            id, user_id, meeting_id, joined_at, left_at, 
-            meeting_topic, scheduled_from, scheduled_to, zoom_account_id
+            id,
+            user_id,
+            meeting_id,
+            joined_at,
+            left_at,
+            meeting_topic,
+            scheduled_from,
+            scheduled_to,
+            zoom_account_id
         )
         VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
-        ON CONFLICT DO NOTHING
+        ON CONFLICT DO NOTHING;
     """
 
-    processed_uuids = set()
+    processed_sessions = set()
+    seen_rows = set()
 
-    for user in all_users:
-        user_email = user.get('email')
+    for user in users:
         meetings = fetch_user_meetings(token, user["id"])
-        
         if not meetings:
             continue
 
-        print(f"📅 Checking Host: {user_email} ({len(meetings)} sessions found)")
+        print(f"📅 Host {user.get('email')} → {len(meetings)} meetings")
 
         for meeting in meetings:
             m_uuid = meeting["uuid"]
-            
-            # Using UUID prevents skipping the second session of the same Meeting ID
-            if m_uuid in processed_uuids:
-                continue
-            processed_uuids.add(m_uuid)
 
-            meeting_topic = meeting.get("topic")
-            start_time = datetime.fromisoformat(meeting["start_time"].replace("Z", "+00:00"))
-            end_time = start_time + timedelta(minutes=meeting.get("duration", 0))
+            if m_uuid in processed_sessions:
+                continue
+            processed_sessions.add(m_uuid)
+
+            topic = meeting.get("topic")
+            start = datetime.fromisoformat(
+                meeting["start_time"].replace("Z", "+00:00")
+            )
+            end = start + timedelta(minutes=meeting.get("duration", 0))
 
             participants = fetch_participants(token, m_uuid)
-            print(f"   → Session: {m_uuid} | Participants: {len(participants)}")
+            print(f"   → Session {m_uuid} | Participants: {len(participants)}")
 
             for p in participants:
-                p_email = p.get("user_email")
-                internal_id = get_internal_user_id(cur, p_email)
-                
+                email = p.get("user_email")
+                internal_id = get_internal_user_id(cur, email)
+
+                user_identifier = internal_id or email
+                join_time = datetime.fromisoformat(
+                    p["join_time"].replace("Z", "+00:00")
+                )
+                leave_time = datetime.fromisoformat(
+                    p["leave_time"].replace("Z", "+00:00")
+                )
+
+                dedupe_key = (
+                    user_identifier,
+                    m_uuid,
+                    join_time,
+                    leave_time,
+                )
+
+                if dedupe_key in seen_rows:
+                    continue
+                seen_rows.add(dedupe_key)
+
                 cur.execute(
                     insert_sql,
                     (
                         str(uuid.uuid4()),
-                        internal_id or FALLBACK_USER_ID,
-                        m_uuid,  # We store UUID as the meeting_id to keep sessions separate
-                        datetime.fromisoformat(p["join_time"].replace("Z", "+00:00")),
-                        datetime.fromisoformat(p["leave_time"].replace("Z", "+00:00")),
-                        meeting_topic,
-                        start_time,
-                        end_time,
-                        ZOOM_ACCOUNT["zoom_account_id"]
-                    )
+                        user_identifier,
+                        m_uuid,
+                        join_time,
+                        leave_time,
+                        topic,
+                        start,
+                        end,
+                        ZOOM_ACCOUNT["zoom_account_id"],
+                    ),
                 )
 
     conn.commit()
     cur.close()
     conn.close()
-    print("\n✅ PROCESS COMPLETED: All unique sessions ingested.")
+
+    print("\n✅ BACKFILL COMPLETE: Attendance cleaned & re-ingested safely.")
 
 if __name__ == "__main__":
     main()
