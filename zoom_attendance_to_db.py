@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, timezone
 # Based on your image, we need to cover 2026-02-02.
 # We use a slightly wider range to account for UTC shifts.
 FROM_DATE = "2026-02-01"
-TO_DATE = "2026-02-06"
+TO_DATE = "2026-02-09"
 
 print(f"\n📅 RECOVERY MODE: Fetching sessions from {FROM_DATE} to {TO_DATE}")
 
