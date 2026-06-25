@@ -203,7 +203,7 @@ DO NOTHING;
                     p["leave_time"].replace("Z", "+00:00")
                 )
 
-                dedupe_key = (
+                                dedupe_key = (
                     user_identifier,
                     m_uuid,
                     join_time,
