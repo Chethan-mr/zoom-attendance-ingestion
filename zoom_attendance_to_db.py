@@ -7,11 +7,12 @@ from datetime import datetime, timedelta, timezone
 
 IST = timezone(timedelta(hours=5, minutes=30))
 
-today_ist = datetime.now(IST).date()
-yesterday_ist = today_ist - timedelta(days=1)
+today = datetime.now(IST).date()
 
-FROM_DATE = yesterday_ist.isoformat()
-TO_DATE = yesterday_ist.isoformat()
+FROM_DATE = (today - timedelta(days=1)).isoformat()
+TO_DATE = today.isoformat()
+
+print(f"📅 Fetching meetings from {FROM_DATE} to {TO_DATE}")
 
 print(f"\n📅 DAILY MODE: {FROM_DATE} → {TO_DATE}")
 
@@ -142,23 +143,25 @@ def main():
     cur = conn.cursor()
 
     insert_sql = """
-        INSERT INTO public.attendance (
-            id,
-            user_id,
-            meeting_id,
-            joined_at,
-            left_at,
-            meeting_topic,
-            scheduled_from,
-            scheduled_to,
-            zoom_account_id
-        )
-        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
-        ON CONFLICT DO NOTHING;
-    """
+INSERT INTO public.attendance (
+    id,
+    user_id,
+    meeting_id,
+    joined_at,
+    left_at,
+    meeting_topic,
+    scheduled_from,
+    scheduled_to,
+    zoom_account_id
+)
+VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+ON CONFLICT (user_id, meeting_id, joined_at, left_at)
+DO NOTHING;
+"""
 
     processed_sessions = set()
     seen_rows = set()
+    inserted_rows = 0
 
     for user in users:
         meetings = fetch_user_meetings(token, user["id"])
@@ -207,11 +210,14 @@ def main():
                     leave_time,
                 )
 
-                if dedupe_key in seen_rows:
-                    continue
-                seen_rows.add(dedupe_key)
+               if dedupe_key in seen_rows:
+    continue
 
-                cur.execute(
+seen_rows.add(dedupe_key)
+
+cur.execute(
+
+                                cur.execute(
                     insert_sql,
                     (
                         str(uuid.uuid4()),
@@ -226,11 +232,17 @@ def main():
                     ),
                 )
 
+                if cur.rowcount > 0:
+                    inserted_rows += 1
+
     conn.commit()
     cur.close()
     conn.close()
 
-    print("\n✅ DAILY ATTENDANCE INGESTION COMPLETED (NO NULL EMAILS, NO DUPES)")
+    print("\n✅ Attendance ingestion completed.")
+    print(f"📥 New attendance rows inserted: {inserted_rows}")
+    print("♻️ Duplicate rows skipped automatically.")
+
 
 if __name__ == "__main__":
     main()
