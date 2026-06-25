@@ -186,49 +186,89 @@ DO NOTHING;
             participants = fetch_participants(token, m_uuid)
             print(f"   → Session {m_uuid} | Participants: {len(participants)}")
 
-            for p in participants:
-                email = p.get("user_email")
+           for p in participants:
+    email = p.get("user_email")
 
-                # ❌ SKIP if email is NULL
-                if not email:
-                    continue
+    if not email:
+        continue
 
-                internal_id = get_internal_user_id(cur, email)
-                user_identifier = internal_id or email
+    internal_id = get_internal_user_id(cur, email)
+    user_identifier = internal_id if internal_id else email
 
-                join_time = datetime.fromisoformat(
-                    p["join_time"].replace("Z", "+00:00")
-                )
-                leave_time = datetime.fromisoformat(
-                    p["leave_time"].replace("Z", "+00:00")
-                )
+    join_time = datetime.fromisoformat(
+        p["join_time"].replace("Z", "+00:00")
+    )
 
-                                dedupe_key = (
-                    user_identifier,
-                    m_uuid,
-                    join_time,
-                    leave_time,
-                )
+    leave_time = datetime.fromisoformat(
+        p["leave_time"].replace("Z", "+00:00")
+    )
 
-              for p in participants:
+dedupe_key = (
+    user_identifier,
+    m_uuid,
+    join_time,
+    leave_time,
+)
 
-                                cur.execute(
-                    insert_sql,
-                    (
-                        str(uuid.uuid4()),
-                        user_identifier,
-                        m_uuid,
-                        join_time,
-                        leave_time,
-                        topic,
-                        start,
-                        end,
-                        ZOOM_ACCOUNT["zoom_account_id"],
-                    ),
-                )
+if dedupe_key in seen_rows:
+    continue
 
-                if cur.rowcount > 0:
-                    inserted_rows += 1
+seen_rows.add(dedupe_key)
+
+check_sql = """
+SELECT 1
+FROM public.attendance
+WHERE user_id=%s
+  AND meeting_id=%s
+  AND joined_at=%s
+  AND left_at=%s
+LIMIT 1;
+"""
+
+cur.execute(
+    check_sql,
+    (
+        user_identifier,
+        m_uuid,
+        join_time,
+        leave_time,
+    ),
+)
+
+if cur.fetchone():
+    continue
+
+insert_sql = """
+INSERT INTO public.attendance (
+    id,
+    user_id,
+    meeting_id,
+    joined_at,
+    left_at,
+    meeting_topic,
+    scheduled_from,
+    scheduled_to,
+    zoom_account_id
+)
+VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);
+"""
+
+cur.execute(
+    insert_sql,
+    (
+        str(uuid.uuid4()),
+        user_identifier,
+        m_uuid,
+        join_time,
+        leave_time,
+        topic,
+        start,
+        end,
+        ZOOM_ACCOUNT["zoom_account_id"],
+    ),
+)
+
+inserted_rows += 1
 
     conn.commit()
     cur.close()
