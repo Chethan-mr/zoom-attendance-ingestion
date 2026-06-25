@@ -212,8 +212,6 @@ DO NOTHING;
 
               for p in participants:
 
-cur.execute(
-
                                 cur.execute(
                     insert_sql,
                     (
