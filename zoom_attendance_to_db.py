@@ -210,10 +210,7 @@ DO NOTHING;
                     leave_time,
                 )
 
-               if dedupe_key in seen_rows:
-    continue
-
-seen_rows.add(dedupe_key)
+              for p in participants:
 
 cur.execute(
 
