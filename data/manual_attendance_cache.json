@@ -1,5 +1,262 @@
 {
-  "updated_at": null,
-  "programs": [],
-  "learners_by_program": {}
+  "updated_at": "2026-08-07T12:05:32.991080+00:00",
+  "programs": [
+    {
+      "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
+      "text": "alchemy-advanced-dbx-chennai-2026"
+    },
+    {
+      "id": "25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9",
+      "text": "alchemy-advanced-gcp-pune-2026"
+    },
+    {
+      "id": "ed62ebfa-1bac-49be-b32f-48212c66188d",
+      "text": "alchemy-foundation-accelerated-ch-1-2026"
+    },
+    {
+      "id": "b02381a5-b3a8-4431-b067-0df944a2f10a",
+      "text": "alchemy-foundation-standard-ch-1-2026"
+    },
+    {
+      "id": "246cbb31-f7ee-479e-ab50-1eacaf86b23b",
+      "text": "aws-july-2026"
+    },
+    {
+      "id": "6075a4f2-f3ec-4410-92a8-782ba093d8aa",
+      "text": "client-demo"
+    },
+    {
+      "id": "18186e61-c441-4097-bc01-35ec161eeea5",
+      "text": "conotur-phase1-dac-25"
+    },
+    {
+      "id": "90ae1fc2-1cfd-47dd-b866-19d6206937bd",
+      "text": "contour-l1-tenured-cp-phase1-26"
+    },
+    {
+      "id": "26a93eca-dfda-45cf-8498-8492d5dda4f7",
+      "text": "contour-l1-tenured-cp-phase2-26"
+    },
+    {
+      "id": "48c87cf6-a355-477b-b68c-4dfe94969e56",
+      "text": "contour-l1-tenured-dac"
+    },
+    {
+      "id": "7cbfba33-67c8-4db2-9bc2-2768cbd1878f",
+      "text": "contour-l1-tenured-ess"
+    },
+    {
+      "id": "41625e0b-ff7a-4b8b-90ac-814a463fa599",
+      "text": "contour-phase1-cp-26"
+    },
+    {
+      "id": "37f396b4-0155-44b6-8ac1-48a2cb75f809",
+      "text": "contour-phase1-genai-26"
+    },
+    {
+      "id": "332e8c1c-fd58-4429-b4fe-d25c034fab3f",
+      "text": "contour-phase2-cp-26"
+    },
+    {
+      "id": "f3379b24-712d-417a-8df8-56994c6018d8",
+      "text": "contour-phase2-dac-25"
+    },
+    {
+      "id": "f09a2582-ad0b-42b8-8e5e-a9784c7ea57b",
+      "text": "contour-phase2-engg-25"
+    },
+    {
+      "id": "19402292-680b-4e9a-9ae0-dd188eb3d9e7",
+      "text": "contour-phase2-genai-26"
+    },
+    {
+      "id": "37c8ab14-54a1-4935-9940-89067af387ab",
+      "text": "cortex-code-july-2026"
+    },
+    {
+      "id": "2e85441c-0b46-40c9-a3e1-a8c738fe053d",
+      "text": "cortex-code-july-b2-2026"
+    },
+    {
+      "id": "a8b684dd-5f33-46e4-821c-6c2c9245982d",
+      "text": "databricks-de-assoc-july-2026"
+    },
+    {
+      "id": "f0bd6846-8cd2-414d-8f5f-ed1d66f803bb",
+      "text": "databricks-de-prof-july-2026"
+    },
+    {
+      "id": "06e4ada2-73ac-4dd7-b368-b5edbb24e7cb",
+      "text": " databricks-gen-ai-april-2026"
+    },
+    {
+      "id": "12581ec4-0122-47d6-bd7c-29481032a81d",
+      "text": "databricks-gen-ai-july-2026"
+    },
+    {
+      "id": "7aed2378-13cf-4648-9f80-0f3207cabcab",
+      "text": "dbx-prof-lab-testing"
+    },
+    {
+      "id": "d53e1286-bea9-4855-9fb3-5e106cdb4f10",
+      "text": "demo-for-hiring-assessments"
+    },
+    {
+      "id": "bbc29add-95e2-47a8-8db9-5ac1caf52c4d",
+      "text": "demo-test"
+    },
+    {
+      "id": "35df9f17-f3b5-4eaa-b165-6f7345e6c134",
+      "text": "Enqurious-Academy"
+    },
+    {
+      "id": "e343c540-eeca-4101-8c15-0961e690b640",
+      "text": "exl-pilot"
+    },
+    {
+      "id": "ada6e859-4ecc-49a7-a657-f6038d6a6f12",
+      "text": "github-copilot-june-B2-2026"
+    },
+    {
+      "id": "1c788edf-1914-4e7a-b79f-47960966de48",
+      "text": "github-copilot-may-2026"
+    },
+    {
+      "id": "33f3c774-bb8b-47ab-ba7e-8dc45c90fe9e",
+      "text": "iceberg-aws-june-2026"
+    },
+    {
+      "id": "ab7faa17-99fd-4a61-9fa2-caee4b8b321d",
+      "text": "intern-learning"
+    },
+    {
+      "id": "accc0d5f-b185-43a3-9f40-66be0b95218f",
+      "text": "microsoft-fabric-de-26"
+    },
+    {
+      "id": "f9457343-7f9a-44ba-8526-0d32507339fd",
+      "text": "mmx-assessment"
+    },
+    {
+      "id": "5a9d5edd-a0a6-4fe4-bbab-4c4f03559e53",
+      "text": "project-access-request"
+    },
+    {
+      "id": "8a9dc408-9ae8-419b-b8b5-eb076917c3b9",
+      "text": "project-contour-phase-1-engg-25"
+    },
+    {
+      "id": "38a3586b-f03b-461d-b908-dbf8f09669e2",
+      "text": "skill-path-access-request"
+    },
+    {
+      "id": "38c2320f-3e28-49f6-9ced-af7f17d501ad",
+      "text": "snowpro-advanced-data-scientist-april-2026"
+    },
+    {
+      "id": "b1b2d810-2384-4c8c-93b0-780d8a0a907e",
+      "text": "snowpro-advanced-de-july-2026"
+    },
+    {
+      "id": "2607ae40-cafa-4768-981e-00d535498927",
+      "text": "snowpro-core-aug-2026"
+    },
+    {
+      "id": "f1c90958-27bf-46cb-acc2-707d052759c8",
+      "text": "snowpro-core-july-2026"
+    },
+    {
+      "id": "3cb8ac1b-9092-4932-8a43-0afbef7a4774",
+      "text": "snowpro-gen-ai-july-2026"
+    },
+    {
+      "id": "17b73daf-5659-4db7-8a3a-7ce11f35a6d2",
+      "text": "test "
+    },
+    {
+      "id": "844b6ea4-999e-410f-b53c-e63503732709",
+      "text": "test-deployment-assessment"
+    },
+    {
+      "id": "cec8ffeb-daaf-49a3-ac94-b8e7240b16bb",
+      "text": "testing-content-review"
+    },
+    {
+      "id": "1aa04d86-6627-49fb-8263-1ab454f5c9ce",
+      "text": "testing-path"
+    },
+    {
+      "id": "e62fcc6d-e50a-4deb-900a-c250623c58e0",
+      "text": "Testing Proctoring"
+    },
+    {
+      "id": "acc4c0c6-e5c7-4c3d-81e4-d54b290dc4d6",
+      "text": "testing-project"
+    },
+    {
+      "id": "58bb7f2b-e905-46d9-b185-16a4d13cac78",
+      "text": "testing_ux"
+    },
+    {
+      "id": "4d586d72-6de5-4f97-b284-3ee1b4d5ac9a",
+      "text": "testing-vm-lab"
+    },
+    {
+      "id": "bf4e27fe-7a19-4b22-96f1-f4dda727ed60",
+      "text": "VAPT"
+    }
+  ],
+  "learners_by_program": {
+    "77419489-6bb1-40f6-9ba5-1105f673e116": [],
+    "25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9": [],
+    "ed62ebfa-1bac-49be-b32f-48212c66188d": [],
+    "b02381a5-b3a8-4431-b067-0df944a2f10a": [],
+    "246cbb31-f7ee-479e-ab50-1eacaf86b23b": [],
+    "6075a4f2-f3ec-4410-92a8-782ba093d8aa": [],
+    "18186e61-c441-4097-bc01-35ec161eeea5": [],
+    "90ae1fc2-1cfd-47dd-b866-19d6206937bd": [],
+    "26a93eca-dfda-45cf-8498-8492d5dda4f7": [],
+    "48c87cf6-a355-477b-b68c-4dfe94969e56": [],
+    "7cbfba33-67c8-4db2-9bc2-2768cbd1878f": [],
+    "41625e0b-ff7a-4b8b-90ac-814a463fa599": [],
+    "37f396b4-0155-44b6-8ac1-48a2cb75f809": [],
+    "332e8c1c-fd58-4429-b4fe-d25c034fab3f": [],
+    "f3379b24-712d-417a-8df8-56994c6018d8": [],
+    "f09a2582-ad0b-42b8-8e5e-a9784c7ea57b": [],
+    "19402292-680b-4e9a-9ae0-dd188eb3d9e7": [],
+    "37c8ab14-54a1-4935-9940-89067af387ab": [],
+    "2e85441c-0b46-40c9-a3e1-a8c738fe053d": [],
+    "a8b684dd-5f33-46e4-821c-6c2c9245982d": [],
+    "f0bd6846-8cd2-414d-8f5f-ed1d66f803bb": [],
+    "06e4ada2-73ac-4dd7-b368-b5edbb24e7cb": [],
+    "12581ec4-0122-47d6-bd7c-29481032a81d": [],
+    "7aed2378-13cf-4648-9f80-0f3207cabcab": [],
+    "d53e1286-bea9-4855-9fb3-5e106cdb4f10": [],
+    "bbc29add-95e2-47a8-8db9-5ac1caf52c4d": [],
+    "35df9f17-f3b5-4eaa-b165-6f7345e6c134": [],
+    "e343c540-eeca-4101-8c15-0961e690b640": [],
+    "ada6e859-4ecc-49a7-a657-f6038d6a6f12": [],
+    "1c788edf-1914-4e7a-b79f-47960966de48": [],
+    "33f3c774-bb8b-47ab-ba7e-8dc45c90fe9e": [],
+    "ab7faa17-99fd-4a61-9fa2-caee4b8b321d": [],
+    "accc0d5f-b185-43a3-9f40-66be0b95218f": [],
+    "f9457343-7f9a-44ba-8526-0d32507339fd": [],
+    "5a9d5edd-a0a6-4fe4-bbab-4c4f03559e53": [],
+    "8a9dc408-9ae8-419b-b8b5-eb076917c3b9": [],
+    "38a3586b-f03b-461d-b908-dbf8f09669e2": [],
+    "38c2320f-3e28-49f6-9ced-af7f17d501ad": [],
+    "b1b2d810-2384-4c8c-93b0-780d8a0a907e": [],
+    "2607ae40-cafa-4768-981e-00d535498927": [],
+    "f1c90958-27bf-46cb-acc2-707d052759c8": [],
+    "3cb8ac1b-9092-4932-8a43-0afbef7a4774": [],
+    "17b73daf-5659-4db7-8a3a-7ce11f35a6d2": [],
+    "844b6ea4-999e-410f-b53c-e63503732709": [],
+    "cec8ffeb-daaf-49a3-ac94-b8e7240b16bb": [],
+    "1aa04d86-6627-49fb-8263-1ab454f5c9ce": [],
+    "e62fcc6d-e50a-4deb-900a-c250623c58e0": [],
+    "acc4c0c6-e5c7-4c3d-81e4-d54b290dc4d6": [],
+    "58bb7f2b-e905-46d9-b185-16a4d13cac78": [],
+    "4d586d72-6de5-4f97-b284-3ee1b4d5ac9a": [],
+    "bf4e27fe-7a19-4b22-96f1-f4dda727ed60": []
+  }
 }
