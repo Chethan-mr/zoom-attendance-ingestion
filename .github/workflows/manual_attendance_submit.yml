@@ -1,0 +1,49 @@
+name: Manual Attendance Submit
+
+on:
+  repository_dispatch:
+    types: [manual_attendance_submit]
+  workflow_dispatch:
+    inputs:
+      payload_json:
+        description: "Manual attendance JSON payload"
+        required: true
+        type: string
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    environment: DB
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write dispatch payload
+        if: github.event_name == 'repository_dispatch'
+        env:
+          CLIENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
+        run: printenv CLIENT_PAYLOAD > /tmp/manual_attendance_payload.json
+
+      - name: Write manual payload
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          CLIENT_PAYLOAD: ${{ inputs.payload_json }}
+        run: printenv CLIENT_PAYLOAD > /tmp/manual_attendance_payload.json
+
+      - name: Insert present learners
+        env:
+          HOST: ${{ secrets.HOST }}
+          PORT: ${{ secrets.PORT }}
+          DBNAME: ${{ secrets.DBNAME }}
+          USER: ${{ secrets.USER }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: python -m manual_attendance.submit_from_dispatch /tmp/manual_attendance_payload.json

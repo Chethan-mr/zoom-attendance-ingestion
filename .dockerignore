@@ -1,0 +1,8 @@
+.git
+.github
+__pycache__
+*.pyc
+.venv
+venv
+.env
+zoom_attendance_to_db.py
