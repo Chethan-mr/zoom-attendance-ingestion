@@ -4,6 +4,14 @@ on:
   schedule:
     - cron: "0 * * * *"   # Every hour
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "Attendance mode (scheduled runs always use zoom)"
+        required: false
+        default: zoom
+        type: choice
+        options:
+          - zoom
 
 jobs:
   run:
@@ -23,6 +31,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run Zoom Attendance
+        if: ${{ github.event_name == 'schedule' || inputs.mode == 'zoom' || inputs.mode == '' }}
         env:
           HOST: ${{ secrets.HOST }}
           PORT: ${{ secrets.PORT }}
@@ -34,5 +43,7 @@ jobs:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           ZOOM_ACCOUNT_ID: ${{ secrets.ZOOM_ACCOUNT_ID }}
+
+          GOOGLE_WEBHOOKS: ${{ secrets.GOOGLE_WEBHOOKS }}
 
         run: python zoom_attendance_to_db.py

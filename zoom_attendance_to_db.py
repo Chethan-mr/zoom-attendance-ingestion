@@ -1,9 +1,11 @@
 import os
-import uuid
-import requests
-import psycopg2
 import urllib.parse
 from datetime import datetime, timedelta, timezone
+
+import psycopg2
+import requests
+
+from db import get_connection, get_internal_user_id, insert_attendance
 
 # =====================================================
 # DATE RANGE (Yesterday + Today)
@@ -30,14 +32,6 @@ ZOOM_ACCOUNT = {
     "account_id": os.environ["ACCOUNT_ID"],
     "client_id": os.environ["CLIENT_ID"],
     "client_secret": os.environ["CLIENT_SECRET"],
-}
-
-DB_CONFIG = {
-    "host": os.environ["HOST"],
-    "port": int(os.environ.get("PORT", 5432)),
-    "dbname": os.environ["DBNAME"],
-    "user": os.environ["USER"],
-    "password": os.environ["PASSWORD"],
 }
 
 # =====================================================
@@ -213,29 +207,6 @@ def fetch_participants(token, meeting_uuid):
     return participants
 
 # =====================================================
-# USER LOOKUP
-# =====================================================
-
-def get_internal_user_id(cur, email):
-
-    cur.execute(
-        """
-        SELECT id
-        FROM public.users
-        WHERE LOWER(email)=LOWER(%s)
-        LIMIT 1
-        """,
-        (email,),
-    )
-
-    row = cur.fetchone()
-
-    if row:
-        return row[0]
-
-    return None
-
-# =====================================================
 # MAIN
 # =====================================================
 
@@ -245,7 +216,7 @@ def main():
 
     users = fetch_users(token)
 
-    conn = psycopg2.connect(**DB_CONFIG)
+    conn = get_connection()
     cur = conn.cursor()
 
     processed_sessions = set()
@@ -253,35 +224,6 @@ def main():
 
     inserted_rows = 0
     skipped_rows = 0
-
-    check_sql = """
-    SELECT 1
-    FROM public.attendance
-    WHERE user_id=%s
-      AND meeting_id=%s
-      AND joined_at=%s
-      AND left_at=%s
-    LIMIT 1;
-    """
-
-    insert_sql = """
-    INSERT INTO public.attendance
-    (
-        id,
-        user_id,
-        meeting_id,
-        joined_at,
-        left_at,
-        meeting_topic,
-        scheduled_from,
-        scheduled_to,
-        zoom_account_id
-    )
-    VALUES
-    (
-        %s,%s,%s,%s,%s,%s,%s,%s,%s
-    );
-    """
 
     for user in users:
 
@@ -384,40 +326,23 @@ def main():
 
                 seen_rows.add(memory_key)
 
-                cur.execute(
-                    check_sql,
-                    (
-                        user_identifier,
-                        meeting_uuid,
-                        join_time,
-                        leave_time,
-                    ),
+                inserted = insert_attendance(
+                    cur,
+                    user_id=user_identifier,
+                    meeting_id=meeting_uuid,
+                    joined_at=join_time,
+                    left_at=leave_time,
+                    meeting_topic=topic,
+                    scheduled_from=start_time,
+                    scheduled_to=end_time,
+                    zoom_account_id=ZOOM_ACCOUNT["zoom_account_id"],
                 )
 
-                if cur.fetchone():
-
+                if inserted:
+                    inserted_rows += 1
+                else:
                     skipped_rows += 1
 
-                    continue
-
-                cur.execute(
-                    insert_sql,
-                    (
-                        str(uuid.uuid4()),
-                        user_identifier,
-                        meeting_uuid,
-                        join_time,
-                        leave_time,
-                        topic,
-                        start_time,
-                        end_time,
-                        ZOOM_ACCOUNT[
-                            "zoom_account_id"
-                        ],
-                    ),
-                )
-
-                inserted_rows += 1
     conn.commit()
 
     print("\n" + "=" * 70)
