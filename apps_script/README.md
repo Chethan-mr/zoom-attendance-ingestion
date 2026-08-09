@@ -2,7 +2,10 @@
 
 No Cloud Run / billing needed.
 
-Apps Script shows the Chat cards. GitHub Actions (already using your `DB` secrets) syncs programs/learners and inserts present attendance.
+**Important:** Do **not** use an Apps Script Web app URL as the Chat HTTP endpoint.  
+Chat cannot follow Apps Script redirects, so you get `not responding` even when the browser works.
+
+Use **Apps Script deployment ID** in Chat Configuration instead.
 
 ```text
 hi  →  Apps Script cards  →  GitHub Action inserts PRESENT rows
@@ -12,32 +15,21 @@ hi  →  Apps Script cards  →  GitHub Action inserts PRESENT rows
 
 ### 1. Sync the cache once
 
-In GitHub → Actions → **Sync Manual Attendance Cache** → Run workflow.
+GitHub → Actions → **Sync Manual Attendance Cache** → Run workflow.
 
-This fills `data/manual_attendance_cache.json`.
+### 2. GitHub token for Apps Script
 
-### 2. Create a GitHub token for Apps Script
+Classic PAT with `repo` + `workflow`.
 
-Create a fine-grained PAT (or classic `repo` + `workflow`) that can:
+### 3. Apps Script project
 
-- read repo contents
-- create `repository_dispatch` on this repo
-
-### 3. Create the Apps Script project
-
-1. Open [script.google.com](https://script.google.com) → New project
-2. Rename to **Manual Attendance**
-3. Create these files and paste contents from this folder:
-   - `Code.gs`
-   - `Cards.gs`
-   - `Config.gs`
-   - `Data.gs`
-4. Project Settings → check **Show "appsscript.json"**
-5. Replace `appsscript.json` with the file in this folder (`"chat": {}`)
+1. [script.google.com](https://script.google.com) → New project → name **Manual Attendance**
+2. Paste files: `Code.gs`, `Cards.gs`, `Config.gs`, `Data.gs`
+3. Project Settings → show `appsscript.json` → paste repo `appsscript.json`
+4. Project Settings → GCP project number: `192839681801` → Set project  
+   (OAuth consent screen must already be configured)
 
 ### 4. Script properties
-
-Project Settings → Script properties:
 
 | Property | Value |
 |---|---|
@@ -45,41 +37,36 @@ Project Settings → Script properties:
 | `GITHUB_TOKEN` | your PAT |
 | `GITHUB_REPO` | `Chethan-mr/zoom-attendance-ingestion` |
 
-If the repo is private, keep using the token (code already sends `Authorization`).
+### 5. Authorize UrlFetch once
 
-### 5. Deploy Apps Script (use Web app — more reliable)
+Run function `onMessage` once → Allow  
+(`script.external_request` only — do not add `chat.bot` to oauthScopes)
 
-1. Deploy → New deployment
-2. Type: **Web app**
-3. Execute as: **Me**
-4. Who has access: **Anyone**
-5. Deploy → **Authorize access**
-6. Copy the **Web app URL**  
-   (looks like `https://script.google.com/macros/s/XXXX/exec`)
+### 6. Deploy as Add-on
 
-### 6. Connect Google Chat
+1. Deploy → New deployment → Type: **Add-on**
+2. Deploy → copy **Deployment ID**
 
-1. Cloud Console project **Manual Attendance**
-2. Google Chat API → **Configuration**
+### 7. Google Chat API Configuration
+
+1. https://console.cloud.google.com/apis/api/chat.googleapis.com/hangouts-chat?project=manual-attendance-504811
+2. Configuration tab
 3. App name / avatar / description
 4. Interactive features: ON
-5. Functionality: receive 1:1 + join spaces
-6. Connection settings: **HTTP endpoint URL**
-7. Paste the **Web app URL**
-8. Authentication: optional / none for testing
-9. Save → App status **LIVE** → available to yourself / domain
+5. Receive 1:1 + join spaces: ON
+6. Connection / Triggers: **Apps Script** (NOT HTTP endpoint URL)
+7. Paste **Deployment ID**
+8. App status: **LIVE**
+9. Save
 
-### 7. Test
+### 8. Test
 
-1. In Google Chat, add the **Manual Attendance** app to your space  
-   (Apps → search app name — not the old space webhook)
-2. Send: `hi`
-3. Program → date → topic → times → mark absents → Submit
-4. Confirm in GitHub Actions → **Manual Attendance Submit**
+1. Add **Manual attendance** app to the space
+2. `@Manual attendance ping` → should reply online
+3. `@Manual attendance hi` → program card
 
-## Notes
+## If you still see "not responding"
 
-- Absents are never inserted
-- `zoom_account_id` is always `offline session`
-- Cache refreshes hourly; run **Sync Manual Attendance Cache** anytime for fresh learners
-- The old Flask/Cloud Run path is optional and not required for this flow
+1. Apps Script → **Executions** — any failed run? copy error
+2. Redeploy Add-on → **New version** → update Deployment ID in Chat config → Save
+3. Confirm Chat is **not** using `script.google.com/.../exec` as HTTP URL
