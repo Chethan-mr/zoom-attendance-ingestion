@@ -1,6 +1,6 @@
 /**
- * TEMPORARY: paste into Code.gs only to verify Chat replies.
- * Must use hostAppDataAction format for Workspace Add-ons Chat.
+ * QUICK TEST — paste ONLY this into Code.gs and clear Cards/Config/Data.
+ * Then redeploy Add-on and try: @Manual attendance ping
  */
 
 function onMessage(event) {
@@ -8,23 +8,13 @@ function onMessage(event) {
     hostAppDataAction: {
       chatDataAction: {
         createMessageAction: {
-          message: {
-            text: 'pong — Apps Script reached (Add-on format OK).'
-          }
+          message: { text: 'pong — Add-on reply format works.' }
         }
       }
     }
   };
 }
 
-function onAddToSpace() {
-  return onMessage();
-}
-
-function onAddedToSpace() {
-  return onMessage();
-}
-
-function onCardClick() {
-  return onMessage();
-}
+function onAddToSpace() { return onMessage(); }
+function onAddedToSpace() { return onMessage(); }
+function onCardClick() { return onMessage(); }
