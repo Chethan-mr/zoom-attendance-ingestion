@@ -20,21 +20,32 @@ function onRemoveFromSpace(event) {
 }
 
 function onMessage(event) {
-  var message = (event && event.message) || {};
-  var text = message.argumentText || message.text || '';
-  text = String(text).replace(/@\S+/g, '').trim().toLowerCase();
+  try {
+    var message = (event && event.message) || {};
+    var text = message.argumentText || message.text || '';
+    text = String(text).replace(/@\S+/g, '').trim().toLowerCase();
 
-  if (
-    text === 'hi' ||
-    text === '/attendance' ||
-    text === 'attendance' ||
-    text === 'manual attendance' ||
-    text.indexOf('/attendance') === 0
-  ) {
-    return startManualAttendance_();
+    if (text === 'ping' || text === 'test') {
+      return textMessage_('Manual Attendance is online.');
+    }
+
+    if (
+      text === 'hi' ||
+      text === '/attendance' ||
+      text === 'attendance' ||
+      text === 'manual attendance' ||
+      text.indexOf('/attendance') === 0
+    ) {
+      return startManualAttendance_();
+    }
+
+    return textMessage_('Send `hi` or `/attendance` to start Manual Attendance.');
+  } catch (err) {
+    console.error(err);
+    return textMessage_(
+      'Error: ' + String(err && err.message ? err.message : err)
+    );
   }
-
-  return textMessage_('Send `hi` or `/attendance` to start Manual Attendance.');
 }
 
 function onCardClick(event) {

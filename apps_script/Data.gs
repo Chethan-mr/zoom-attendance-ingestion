@@ -1,18 +1,40 @@
 function fetchAttendanceCache_() {
   var config = getConfig_();
-  var response = UrlFetchApp.fetch(config.cacheUrl, {
+
+  // Prefer GitHub Contents API (works for private repos with PAT)
+  var apiUrl =
+    'https://api.github.com/repos/' +
+    config.githubRepo +
+    '/contents/data/manual_attendance_cache.json?ref=main';
+
+  var response = UrlFetchApp.fetch(apiUrl, {
     method: 'get',
     muteHttpExceptions: true,
     headers: {
       Authorization: 'Bearer ' + config.githubToken,
       Accept: 'application/vnd.github.raw',
+      'X-GitHub-Api-Version': '2022-11-28',
       'User-Agent': 'manual-attendance-apps-script'
     }
   });
 
   var code = response.getResponseCode();
+
+  // Fallback to CACHE_URL (raw.githubusercontent.com or other)
   if (code < 200 || code >= 300) {
-    // Fallback: try public raw URL without auth headers
+    response = UrlFetchApp.fetch(config.cacheUrl, {
+      method: 'get',
+      muteHttpExceptions: true,
+      headers: {
+        Authorization: 'Bearer ' + config.githubToken,
+        Accept: 'application/vnd.github.raw',
+        'User-Agent': 'manual-attendance-apps-script'
+      }
+    });
+    code = response.getResponseCode();
+  }
+
+  if (code < 200 || code >= 300) {
     response = UrlFetchApp.fetch(config.cacheUrl, {
       method: 'get',
       muteHttpExceptions: true
