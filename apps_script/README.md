@@ -47,12 +47,15 @@ Project Settings → Script properties:
 
 If the repo is private, keep using the token (code already sends `Authorization`).
 
-### 5. Deploy Apps Script
+### 5. Deploy Apps Script (use Web app — more reliable)
 
 1. Deploy → New deployment
-2. Type: **Add-on**
-3. Description: Manual Attendance
-4. Deploy → copy the **Deployment ID**
+2. Type: **Web app**
+3. Execute as: **Me**
+4. Who has access: **Anyone**
+5. Deploy → **Authorize access**
+6. Copy the **Web app URL**  
+   (looks like `https://script.google.com/macros/s/XXXX/exec`)
 
 ### 6. Connect Google Chat
 
@@ -61,9 +64,10 @@ If the repo is private, keep using the token (code already sends `Authorization`
 3. App name / avatar / description
 4. Interactive features: ON
 5. Functionality: receive 1:1 + join spaces
-6. Connection settings: **Apps Script**
-7. Paste the **Deployment ID**
-8. Save → publish / make available to yourself / domain
+6. Connection settings: **HTTP endpoint URL**
+7. Paste the **Web app URL**
+8. Authentication: optional / none for testing
+9. Save → App status **LIVE** → available to yourself / domain
 
 ### 7. Test
 

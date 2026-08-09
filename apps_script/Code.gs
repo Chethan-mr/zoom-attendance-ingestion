@@ -1,22 +1,66 @@
 /**
  * Google Chat app entrypoints for Manual Attendance.
  *
- * Deploy:
- * 1. Create Apps Script project, paste these .gs files + appsscript.json chat config
- * 2. Set Script Properties (CACHE_URL, GITHUB_TOKEN, GITHUB_REPO)
- * 3. Deploy → New deployment → Type: Add-on → deploy
- * 4. Google Chat API Configuration → Connection: Apps Script → paste Deployment ID
- * 5. Add the Chat app to your space, send: hi
+ * Preferred connection (more reliable):
+ *   Deploy → Web app → Anyone
+ *   Chat API Configuration → HTTP endpoint URL → paste Web app URL
+ *
+ * Alternate connection:
+ *   Deploy → Add-on → paste Deployment ID under Apps Script
  */
 
+function textReply_(text) {
+  return { text: String(text) };
+}
+
 function onAddToSpace(event) {
-  return textMessage_(
-    'Manual Attendance ready. Send `hi` or `/attendance` to begin.'
-  );
+  return textReply_('Manual Attendance ready. Send `hi` or `/attendance` to begin.');
 }
 
 function onRemoveFromSpace(event) {
   console.log('Removed from space', event && event.space && event.space.name);
+}
+
+/**
+ * HTTP endpoint handler for Chat (Web app deployment).
+ */
+function doPost(e) {
+  try {
+    var event = JSON.parse(e.postData.contents);
+    var body = routeChatEvent_(event) || {};
+    return ContentService
+      .createTextOutput(JSON.stringify(body))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    console.error(err);
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        text: 'Error: ' + String(err && err.message ? err.message : err)
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet() {
+  return ContentService.createTextOutput('Manual Attendance Chat app is running.');
+}
+
+function routeChatEvent_(event) {
+  var type = event && event.type;
+  if (type === 'ADDED_TO_SPACE') {
+    return onAddToSpace(event);
+  }
+  if (type === 'MESSAGE') {
+    return onMessage(event);
+  }
+  if (type === 'CARD_CLICKED') {
+    return onCardClick(event);
+  }
+  if (type === 'REMOVED_FROM_SPACE') {
+    onRemoveFromSpace(event);
+    return {};
+  }
+  return {};
 }
 
 function onMessage(event) {
@@ -26,7 +70,7 @@ function onMessage(event) {
     text = String(text).replace(/@\S+/g, '').trim().toLowerCase();
 
     if (text === 'ping' || text === 'test') {
-      return textMessage_('Manual Attendance is online.');
+      return textReply_('Manual Attendance is online.');
     }
 
     if (
@@ -39,12 +83,10 @@ function onMessage(event) {
       return startManualAttendance_();
     }
 
-    return textMessage_('Send `hi` or `/attendance` to start Manual Attendance.');
+    return textReply_('Send `hi` or `/attendance` to start Manual Attendance.');
   } catch (err) {
     console.error(err);
-    return textMessage_(
-      'Error: ' + String(err && err.message ? err.message : err)
-    );
+    return textReply_('Error: ' + String(err && err.message ? err.message : err));
   }
 }
 
