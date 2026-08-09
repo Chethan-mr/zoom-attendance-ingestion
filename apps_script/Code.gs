@@ -1,76 +1,32 @@
 /**
- * Google Chat app entrypoints for Manual Attendance.
+ * Google Chat (Workspace Add-on) entrypoints for Manual Attendance.
  *
- * Preferred connection (more reliable):
- *   Deploy → Web app → Anyone
- *   Chat API Configuration → HTTP endpoint URL → paste Web app URL
- *
- * Alternate connection:
- *   Deploy → Add-on → paste Deployment ID under Apps Script
+ * Responses MUST use hostAppDataAction / createMessageAction.
+ * Plain { text: "..." } will show as "not responding" even when Executions = Completed.
  */
 
-function textReply_(text) {
-  return { text: String(text) };
+function onAddToSpace(event) {
+  return textMessage_('Manual Attendance ready. Send `hi` or `/attendance` to begin.');
 }
 
-function onAddToSpace(event) {
-  return textReply_('Manual Attendance ready. Send `hi` or `/attendance` to begin.');
+function onAddedToSpace(event) {
+  return onAddToSpace(event);
 }
 
 function onRemoveFromSpace(event) {
-  console.log('Removed from space', event && event.space && event.space.name);
+  console.log('Removed from space');
 }
 
-/**
- * HTTP endpoint handler for Chat (Web app deployment).
- */
-function doPost(e) {
-  try {
-    var event = JSON.parse(e.postData.contents);
-    var body = routeChatEvent_(event) || {};
-    return ContentService
-      .createTextOutput(JSON.stringify(body))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    console.error(err);
-    return ContentService
-      .createTextOutput(JSON.stringify({
-        text: 'Error: ' + String(err && err.message ? err.message : err)
-      }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-}
-
-function doGet() {
-  return ContentService.createTextOutput('Manual Attendance Chat app is running.');
-}
-
-function routeChatEvent_(event) {
-  var type = event && event.type;
-  if (type === 'ADDED_TO_SPACE') {
-    return onAddToSpace(event);
-  }
-  if (type === 'MESSAGE') {
-    return onMessage(event);
-  }
-  if (type === 'CARD_CLICKED') {
-    return onCardClick(event);
-  }
-  if (type === 'REMOVED_FROM_SPACE') {
-    onRemoveFromSpace(event);
-    return {};
-  }
-  return {};
+function onRemovedFromSpace(event) {
+  onRemoveFromSpace(event);
 }
 
 function onMessage(event) {
   try {
-    var message = (event && event.message) || {};
-    var text = message.argumentText || message.text || '';
-    text = String(text).replace(/@\S+/g, '').trim().toLowerCase();
+    var text = extractMessageText_(event);
 
     if (text === 'ping' || text === 'test') {
-      return textReply_('Manual Attendance is online.');
+      return textMessage_('Manual Attendance is online.');
     }
 
     if (
@@ -83,22 +39,15 @@ function onMessage(event) {
       return startManualAttendance_();
     }
 
-    return textReply_('Send `hi` or `/attendance` to start Manual Attendance.');
+    return textMessage_('Send `hi` or `/attendance` to start Manual Attendance.');
   } catch (err) {
     console.error(err);
-    return textReply_('Error: ' + String(err && err.message ? err.message : err));
+    return textMessage_('Error: ' + String(err && err.message ? err.message : err));
   }
 }
 
 function onCardClick(event) {
-  var functionName = '';
-  if (event && event.common && event.common.invokedFunction) {
-    functionName = event.common.invokedFunction;
-  } else if (event && event.action && event.action.actionMethodName) {
-    functionName = event.action.actionMethodName;
-  } else if (event && event.action && event.action.function) {
-    functionName = event.action.function;
-  }
+  var functionName = extractFunctionName_(event);
 
   try {
     if (functionName === 'select_program') {
@@ -110,10 +59,10 @@ function onCardClick(event) {
     if (functionName === 'submit_attendance') {
       return handleSubmitAttendance_(event);
     }
-    return errorCard_('Unknown action: ' + (functionName || '(none)'));
+    return errorCard_('Unknown action: ' + (functionName || '(none)'), true);
   } catch (err) {
     console.error(err);
-    return errorCard_(String(err && err.message ? err.message : err));
+    return errorCard_(String(err && err.message ? err.message : err), true);
   }
 }
 
@@ -137,10 +86,10 @@ function startManualAttendance_() {
 }
 
 function handleSelectProgram_(event) {
-  var formInputs = (event.common && event.common.formInputs) || {};
+  var formInputs = extractFormInputs_(event);
   var programId = formString_(formInputs, 'program_id');
   if (!programId) {
-    return errorCard_('Please select a program before continuing.');
+    return errorCard_('Please select a program before continuing.', true);
   }
 
   var cache = fetchAttendanceCache_();
@@ -151,31 +100,31 @@ function handleSelectProgram_(event) {
     }
   });
 
-  return sessionDetailsCard_(programId, programName);
+  return sessionDetailsCard_(programId, programName, true);
 }
 
 function handleLoadLearners_(event) {
-  var formInputs = (event.common && event.common.formInputs) || {};
+  var formInputs = extractFormInputs_(event);
   var params = actionParams_(event);
 
   var programId = params.program_id || formString_(formInputs, 'program_id');
   var programName = params.program_name || programId || 'Program';
   if (!programId) {
-    return errorCard_('Missing program. Restart with `hi`.');
+    return errorCard_('Missing program. Restart with `hi`.', true);
   }
 
   var sessionDay = formDate_(formInputs, 'session_date');
   if (!sessionDay) {
-    return errorCard_('Please select an attendance date.');
+    return errorCard_('Please select an attendance date.', true);
   }
 
   var startTime = formString_(formInputs, 'start_time');
   var endTime = formString_(formInputs, 'end_time');
   if (!startTime || !endTime) {
-    return errorCard_('Please select both start and end times.');
+    return errorCard_('Please select both start and end times.', true);
   }
   if (endTime <= startTime) {
-    return errorCard_('End time must be after start time.');
+    return errorCard_('End time must be after start time.', true);
   }
 
   var topic = (formString_(formInputs, 'meeting_topic') || '').trim();
@@ -187,7 +136,8 @@ function handleLoadLearners_(event) {
   if (!learners.length) {
     return errorCard_(
       'No learners found for <b>' + programName + '</b> in the cache. ' +
-      'Re-run "Sync Manual Attendance Cache".'
+      'Re-run "Sync Manual Attendance Cache".',
+      true
     );
   }
 
@@ -199,11 +149,11 @@ function handleLoadLearners_(event) {
     startTime: startTime,
     endTime: endTime,
     learners: learners
-  });
+  }, true);
 }
 
 function handleSubmitAttendance_(event) {
-  var formInputs = (event.common && event.common.formInputs) || {};
+  var formInputs = extractFormInputs_(event);
   var params = actionParams_(event);
 
   var programId = params.program_id;
@@ -215,7 +165,7 @@ function handleSubmitAttendance_(event) {
   var allIdsRaw = params.all_learner_ids || '';
 
   if (!programId || !sessionDate || !startTime || !endTime) {
-    return errorCard_('Missing session details. Restart with `hi`.');
+    return errorCard_('Missing session details. Restart with `hi`.', true);
   }
 
   var allLearnerIds = allIdsRaw.split(',').filter(function (x) { return !!x; });
@@ -245,31 +195,90 @@ function handleSubmitAttendance_(event) {
     endTime: endTime,
     presentCount: presentCount,
     absentCount: absentLearnerIds.length
-  });
+  }, true);
+}
+
+function extractMessageText_(event) {
+  var text = '';
+  if (event && event.chat && event.chat.messagePayload && event.chat.messagePayload.message) {
+    var msg = event.chat.messagePayload.message;
+    text = msg.argumentText || msg.text || '';
+  } else if (event && event.message) {
+    text = event.message.argumentText || event.message.text || '';
+  }
+  return String(text).replace(/@\S+/g, '').trim().toLowerCase();
+}
+
+function extractFormInputs_(event) {
+  if (event && event.commonEventObject && event.commonEventObject.formInputs) {
+    return event.commonEventObject.formInputs;
+  }
+  if (event && event.common && event.common.formInputs) {
+    return event.common.formInputs;
+  }
+  return {};
+}
+
+function extractFunctionName_(event) {
+  if (event && event.commonEventObject && event.commonEventObject.parameters) {
+    // some add-on payloads put function in common
+  }
+  if (event && event.common && event.common.invokedFunction) {
+    return String(event.common.invokedFunction);
+  }
+  if (event && event.action && event.action.actionMethodName) {
+    return String(event.action.actionMethodName);
+  }
+  if (event && event.action && event.action.function) {
+    return String(event.action.function);
+  }
+  if (event && event.commonEventObject && event.commonEventObject.invokedFunction) {
+    return String(event.commonEventObject.invokedFunction);
+  }
+  return '';
 }
 
 function formString_(formInputs, name) {
   var field = formInputs[name];
-  if (!field || !field.stringInputs || !field.stringInputs.value) {
+  if (!field) {
     return null;
   }
-  return String(field.stringInputs.value[0]);
+  // Add-on style: { stringInputs: { value: [...] } }
+  if (field.stringInputs && field.stringInputs.value && field.stringInputs.value.length) {
+    return String(field.stringInputs.value[0]);
+  }
+  // Sometimes nested differently
+  if (field[""] && field[""].stringInputs) {
+    var v = field[""].stringInputs.value;
+    return v && v.length ? String(v[0]) : null;
+  }
+  return null;
 }
 
 function formStrings_(formInputs, name) {
   var field = formInputs[name];
-  if (!field || !field.stringInputs || !field.stringInputs.value) {
+  if (!field) {
     return [];
   }
-  return field.stringInputs.value.map(function (v) { return String(v); });
+  if (field.stringInputs && field.stringInputs.value) {
+    return field.stringInputs.value.map(function (v) { return String(v); });
+  }
+  if (field[""] && field[""].stringInputs && field[""].stringInputs.value) {
+    return field[""].stringInputs.value.map(function (v) { return String(v); });
+  }
+  return [];
 }
 
 function formDate_(formInputs, name) {
   var field = formInputs[name];
-  if (!field || !field.dateInput || field.dateInput.msSinceEpoch == null) {
+  if (!field) {
     return null;
   }
-  var ms = Number(field.dateInput.msSinceEpoch);
+  var dateInput = field.dateInput || (field[""] && field[""].dateInput);
+  if (!dateInput || dateInput.msSinceEpoch == null) {
+    return null;
+  }
+  var ms = Number(dateInput.msSinceEpoch);
   var d = new Date(ms);
   var yyyy = d.getUTCFullYear();
   var mm = ('0' + (d.getUTCMonth() + 1)).slice(-2);
@@ -286,7 +295,17 @@ function actionParams_(event) {
   if (event.action && event.action.parameters) {
     lists.push(event.action.parameters);
   }
+  if (event.commonEventObject && event.commonEventObject.parameters) {
+    // object map form
+    var obj = event.commonEventObject.parameters;
+    Object.keys(obj).forEach(function (k) {
+      params[k] = String(obj[k]);
+    });
+  }
   lists.forEach(function (list) {
+    if (!list || !list.forEach) {
+      return;
+    }
     list.forEach(function (item) {
       if (item && item.key) {
         params[item.key] = String(item.value || '');

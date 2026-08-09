@@ -3,5 +3,18 @@
   "dependencies": {},
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/script.external_request"
+  ],
+  "addOns": {
+    "common": {
+      "name": "Manual Attendance",
+      "logoUrl": "https://fonts.gstatic.com/s/i/productlogos/chat_2020q4/v6/web-512dp/logo_chat_2020q4_color_2x_web_512dp.png",
+      "layoutProperties": {
+        "primaryColor": "#0B57D0"
+      }
+    },
+    "chat": {}
+  },
   "chat": {}
 }

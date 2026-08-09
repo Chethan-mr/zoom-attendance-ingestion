@@ -1,9 +1,39 @@
-function textMessage_(text) {
-  return { text: text };
+/**
+ * Workspace Add-ons Chat requires hostAppDataAction wrappers.
+ * Plain { text: "..." } completes the script but Chat shows "not responding".
+ */
+
+function chatCreate_(message) {
+  return {
+    hostAppDataAction: {
+      chatDataAction: {
+        createMessageAction: {
+          message: message
+        }
+      }
+    }
+  };
 }
 
-function errorCard_(message) {
+function chatUpdate_(message) {
   return {
+    hostAppDataAction: {
+      chatDataAction: {
+        updateMessageAction: {
+          message: message
+        }
+      }
+    }
+  };
+}
+
+function textMessage_(text, optUpdate) {
+  var message = { text: String(text) };
+  return optUpdate ? chatUpdate_(message) : chatCreate_(message);
+}
+
+function errorCard_(message, optUpdate) {
+  var payload = {
     cardsV2: [{
       cardId: 'manualAttendanceError',
       card: {
@@ -17,9 +47,10 @@ function errorCard_(message) {
       }
     }]
   };
+  return optUpdate ? chatUpdate_(payload) : chatCreate_(payload);
 }
 
-function programSelectionCard_(programs) {
+function programSelectionCard_(programs, optUpdate) {
   var items = programs.map(function (p, i) {
     return {
       text: p.text,
@@ -28,7 +59,7 @@ function programSelectionCard_(programs) {
     };
   });
 
-  return {
+  var payload = {
     cardsV2: [{
       cardId: 'manualAttendanceProgram',
       card: {
@@ -68,9 +99,10 @@ function programSelectionCard_(programs) {
       }
     }]
   };
+  return optUpdate ? chatUpdate_(payload) : chatCreate_(payload);
 }
 
-function sessionDetailsCard_(programId, programName) {
+function sessionDetailsCard_(programId, programName, optUpdate) {
   var slots = buildTimeSlots_();
   var startItems = slots.map(function (item) {
     return {
@@ -87,7 +119,7 @@ function sessionDetailsCard_(programId, programName) {
     };
   });
 
-  return {
+  var payload = {
     cardsV2: [{
       cardId: 'manualAttendanceSession',
       card: {
@@ -150,9 +182,10 @@ function sessionDetailsCard_(programId, programName) {
       }
     }]
   };
+  return optUpdate ? chatUpdate_(payload) : chatCreate_(payload);
 }
 
-function learnerChecklistCard_(opts) {
+function learnerChecklistCard_(opts, optUpdate) {
   var items = opts.learners.map(function (learner) {
     return {
       text: learner.display_name,
@@ -163,7 +196,7 @@ function learnerChecklistCard_(opts) {
 
   var allIds = opts.learners.map(function (l) { return l.id; }).join(',');
 
-  return {
+  var payload = {
     cardsV2: [{
       cardId: 'manualAttendanceLearners',
       card: {
@@ -218,10 +251,11 @@ function learnerChecklistCard_(opts) {
       }
     }]
   };
+  return optUpdate ? chatUpdate_(payload) : chatCreate_(payload);
 }
 
-function successCard_(summary) {
-  return {
+function successCard_(summary, optUpdate) {
+  var payload = {
     cardsV2: [{
       cardId: 'manualAttendanceSuccess',
       card: {
@@ -247,4 +281,5 @@ function successCard_(summary) {
       }
     }]
   };
+  return optUpdate ? chatUpdate_(payload) : chatCreate_(payload);
 }
