@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-10T04:57:41.145632+00:00",
+  "updated_at": "2026-08-10T06:44:55.714650+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -130,6 +130,10 @@
       "text": "intern-learning"
     },
     {
+      "id": "61012b53-4cc7-4fde-afa2-de2149c3c7a5",
+      "text": "masterclass-access-request"
+    },
+    {
       "id": "accc0d5f-b185-43a3-9f40-66be0b95218f",
       "text": "microsoft-fabric-de-26"
     },
@@ -239,6 +243,7 @@
     "1c788edf-1914-4e7a-b79f-47960966de48": [],
     "33f3c774-bb8b-47ab-ba7e-8dc45c90fe9e": [],
     "ab7faa17-99fd-4a61-9fa2-caee4b8b321d": [],
+    "61012b53-4cc7-4fde-afa2-de2149c3c7a5": [],
     "accc0d5f-b185-43a3-9f40-66be0b95218f": [],
     "f9457343-7f9a-44ba-8526-0d32507339fd": [],
     "5a9d5edd-a0a6-4fe4-bbab-4c4f03559e53": [],
