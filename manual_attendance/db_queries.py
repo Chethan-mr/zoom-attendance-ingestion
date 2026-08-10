@@ -25,17 +25,18 @@ PROGRAMS_SQL = """
     ORDER BY l.text
 """
 
+# No deployment_users table in this DB. Learners are inferred from progress rows.
 LEARNERS_SQL = """
     SELECT DISTINCT
         u.id,
         COALESCE(NULLIF(TRIM(u.name), ''), u.email, u.id) AS display_name
-    FROM deployments d
+    FROM progress p
+    JOIN deployments d
+        ON d.id = p.deployment_id
     JOIN deployment_labels dl
         ON dl.deployment_id = d.id
-    JOIN deployment_users du
-        ON du.deployment_id = d.id
     JOIN users u
-        ON u.id = du.user_id
+        ON u.id = p.user_id
     WHERE dl.label_id = %s
       AND d.start_timestamp >= CURRENT_DATE - INTERVAL '3 months'
     ORDER BY display_name
