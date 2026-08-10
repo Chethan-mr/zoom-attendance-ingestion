@@ -89,17 +89,51 @@ function onAddedToSpace() {
 function onRemoveFromSpace() {}
 function onRemovedFromSpace() {}
 
+/**
+ * Workspace Add-ons invoke the button's action.function NAME directly
+ * (e.g. select_program), not always onCardClick. Keep both.
+ */
 function onCardClick(event) {
-  // Workspace Add-ons do NOT populate invokedFunction; use action parameters.
+  return routeCardAction_(event);
+}
+
+function select_program(event) {
+  try {
+    return handleSelectProgram_(event);
+  } catch (err) {
+    console.error(err);
+    return replyError_(String(err && err.message ? err.message : err));
+  }
+}
+
+function load_learners(event) {
+  try {
+    return handleLoadLearners_(event);
+  } catch (err) {
+    console.error(err);
+    return replyError_(String(err && err.message ? err.message : err));
+  }
+}
+
+function submit_attendance(event) {
+  try {
+    return handleSubmitAttendance_(event);
+  } catch (err) {
+    console.error(err);
+    return replyError_(String(err && err.message ? err.message : err));
+  }
+}
+
+function routeCardAction_(event) {
   var fn = extractFunctionName_(event);
-  console.log('onCardClick fn=' + fn);
+  console.log('card action fn=' + fn);
   try {
     if (fn === 'select_program') return handleSelectProgram_(event);
     if (fn === 'load_learners') return handleLoadLearners_(event);
     if (fn === 'submit_attendance') return handleSubmitAttendance_(event);
-    // Prefer createMessageAction on errors (updateMessageAction often fails)
-    return replyError_('Unknown action: ' + (fn || '(none)') +
-      '. Re-send hi and try again.');
+    return replyError_(
+      'Unknown action: ' + (fn || '(none)') + '. Re-send hi and try again.'
+    );
   } catch (err) {
     console.error(err);
     return replyError_(String(err && err.message ? err.message : err));
