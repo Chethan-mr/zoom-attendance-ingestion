@@ -90,15 +90,19 @@ function onRemoveFromSpace() {}
 function onRemovedFromSpace() {}
 
 function onCardClick(event) {
+  // Workspace Add-ons do NOT populate invokedFunction; use action parameters.
   var fn = extractFunctionName_(event);
+  console.log('onCardClick fn=' + fn);
   try {
     if (fn === 'select_program') return handleSelectProgram_(event);
     if (fn === 'load_learners') return handleLoadLearners_(event);
     if (fn === 'submit_attendance') return handleSubmitAttendance_(event);
-    return replyError_('Unknown action: ' + (fn || '(none)'), true);
+    // Prefer createMessageAction on errors (updateMessageAction often fails)
+    return replyError_('Unknown action: ' + (fn || '(none)') +
+      '. Re-send hi and try again.');
   } catch (err) {
     console.error(err);
-    return replyError_(String(err && err.message ? err.message : err), true);
+    return replyError_(String(err && err.message ? err.message : err));
   }
 }
 
@@ -117,14 +121,17 @@ function startManualAttendance_() {
 function handleSelectProgram_(event) {
   var formInputs = extractFormInputs_(event);
   var programId = formString_(formInputs, 'program_id');
-  if (!programId) return replyError_('Please select a program.', true);
+  if (!programId) {
+    return replyError_('Please select a program (checkbox/dropdown), then Continue.');
+  }
 
   var cache = fetchAttendanceCache_();
   var programName = programId;
   cache.programs.forEach(function (p) {
     if (p.id === programId) programName = p.text;
   });
-  return sessionCard_(programId, programName, true);
+  // Use createMessageAction (not update) for reliability in Add-ons
+  return sessionCard_(programId, programName, false);
 }
 
 function handleLoadLearners_(event) {
@@ -132,15 +139,15 @@ function handleLoadLearners_(event) {
   var params = actionParams_(event);
   var programId = params.program_id || formString_(formInputs, 'program_id');
   var programName = params.program_name || programId || 'Program';
-  if (!programId) return replyError_('Missing program. Restart with hi.', true);
+  if (!programId) return replyError_('Missing program. Restart with hi.');
 
   var sessionDate = formDate_(formInputs, 'session_date');
-  if (!sessionDate) return replyError_('Please select an attendance date.', true);
+  if (!sessionDate) return replyError_('Please select an attendance date.');
 
   var startTime = formString_(formInputs, 'start_time');
   var endTime = formString_(formInputs, 'end_time');
-  if (!startTime || !endTime) return replyError_('Select start and end times.', true);
-  if (endTime <= startTime) return replyError_('End time must be after start time.', true);
+  if (!startTime || !endTime) return replyError_('Select start and end times.');
+  if (endTime <= startTime) return replyError_('End time must be after start time.');
 
   var topic = (formString_(formInputs, 'meeting_topic') || '').trim();
   var meetingTopic = topic || sessionDate;
@@ -148,7 +155,7 @@ function handleLoadLearners_(event) {
   var cache = fetchAttendanceCache_();
   var learners = cache.learners_by_program[programId] || [];
   if (!learners.length) {
-    return replyError_('No learners for ' + programName + '. Re-sync cache.', true);
+    return replyError_('No learners for ' + programName + '. Re-sync cache.');
   }
 
   return learnersCard_({
@@ -159,7 +166,7 @@ function handleLoadLearners_(event) {
     startTime: startTime,
     endTime: endTime,
     learners: learners
-  }, true);
+  }, false);
 }
 
 function handleSubmitAttendance_(event) {
@@ -175,7 +182,7 @@ function handleSubmitAttendance_(event) {
   var allIdsRaw = params.all_learner_ids || '';
 
   if (!programId || !sessionDate || !startTime || !endTime) {
-    return replyError_('Missing session details. Restart with hi.', true);
+    return replyError_('Missing session details. Restart with hi.');
   }
 
   var allLearnerIds = allIdsRaw.split(',').filter(function (x) { return !!x; });
@@ -216,7 +223,7 @@ function handleSubmitAttendance_(event) {
         }]
       }]
     }
-  }], true);
+  }], false);
 }
 
 // -------------------- Cards --------------------
@@ -236,7 +243,7 @@ function programCard_(programs, update) {
             selectionInput: {
               name: 'program_id',
               label: 'Program',
-              type: 'DROP_DOWN',
+              type: 'RADIO_BUTTON',
               items: items
             }
           },
@@ -244,7 +251,14 @@ function programCard_(programs, update) {
             buttonList: {
               buttons: [{
                 text: 'Continue',
-                onClick: { action: { function: 'select_program' } }
+                onClick: {
+                  action: {
+                    function: 'select_program',
+                    parameters: [
+                      { key: 'action', value: 'select_program' }
+                    ]
+                  }
+                }
               }]
             }
           }
@@ -309,6 +323,7 @@ function sessionCard_(programId, programName, update) {
                   action: {
                     function: 'load_learners',
                     parameters: [
+                      { key: 'action', value: 'load_learners' },
                       { key: 'program_id', value: programId },
                       { key: 'program_name', value: programName }
                     ]
@@ -361,6 +376,7 @@ function learnersCard_(opts, update) {
                   action: {
                     function: 'submit_attendance',
                     parameters: [
+                      { key: 'action', value: 'submit_attendance' },
                       { key: 'program_id', value: opts.programId },
                       { key: 'program_name', value: opts.programName },
                       { key: 'session_date', value: opts.sessionDate },
@@ -495,6 +511,13 @@ function extractFormInputs_(event) {
 }
 
 function extractFunctionName_(event) {
+  // Add-ons: invokedFunction is often empty — read parameters.action first
+  var params = actionParams_(event);
+  if (params.action) return String(params.action);
+
+  if (event && event.commonEventObject && event.commonEventObject.invokedFunction) {
+    return String(event.commonEventObject.invokedFunction);
+  }
   if (event && event.common && event.common.invokedFunction) {
     return String(event.common.invokedFunction);
   }
@@ -503,9 +526,6 @@ function extractFunctionName_(event) {
   }
   if (event && event.action && event.action.function) {
     return String(event.action.function);
-  }
-  if (event && event.commonEventObject && event.commonEventObject.invokedFunction) {
-    return String(event.commonEventObject.invokedFunction);
   }
   return '';
 }
@@ -548,18 +568,26 @@ function formDate_(formInputs, name) {
 
 function actionParams_(event) {
   var params = {};
-  var lists = [];
-  if (event.common && event.common.parameters) lists.push(event.common.parameters);
-  if (event.action && event.action.parameters) lists.push(event.action.parameters);
+
+  // Add-on style: commonEventObject.parameters is a string->string map
   if (event.commonEventObject && event.commonEventObject.parameters) {
     var obj = event.commonEventObject.parameters;
     Object.keys(obj).forEach(function (k) { params[k] = String(obj[k]); });
   }
+
+  // Classic style: arrays of {key,value}
+  var lists = [];
+  if (event.common && event.common.parameters) lists.push(event.common.parameters);
+  if (event.action && event.action.parameters) lists.push(event.action.parameters);
   lists.forEach(function (list) {
-    if (!list || !list.forEach) return;
-    list.forEach(function (item) {
-      if (item && item.key) params[item.key] = String(item.value || '');
-    });
+    if (!list) return;
+    if (list.forEach) {
+      list.forEach(function (item) {
+        if (item && item.key) params[item.key] = String(item.value || '');
+      });
+    } else if (typeof list === 'object') {
+      Object.keys(list).forEach(function (k) { params[k] = String(list[k]); });
+    }
   });
   return params;
 }
