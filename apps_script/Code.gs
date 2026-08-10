@@ -176,10 +176,10 @@ function handleLoadLearners_(event) {
   if (!programId) return replyError_('Missing program. Restart with hi.');
 
   var sessionDate = formDate_(formInputs, 'session_date') || todayIso_();
-  var startTime = formString_(formInputs, 'start_time');
-  var endTime = formString_(formInputs, 'end_time');
+  var startTime = normalizeTime_(formString_(formInputs, 'start_time') || '09:00');
+  var endTime = normalizeTime_(formString_(formInputs, 'end_time') || '11:00');
   if (!startTime || !endTime) {
-    return replyError_('Select start and end times (one each), then Load learners.');
+    return replyError_('Enter start and end times as HH:MM (example 09:00 and 11:00).');
   }
   if (endTime <= startTime) return replyError_('End time must be after start time.');
 
@@ -214,13 +214,18 @@ function handleSubmitAttendance_(event) {
   var startTime = params.start_time;
   var endTime = params.end_time;
   var allIdsRaw = params.all_learner_ids || '';
+  var forceAllPresent = params.force_all_present === 'true';
 
   if (!programId || !sessionDate || !startTime || !endTime) {
     return replyError_('Missing session details. Restart with hi.');
   }
 
   var allLearnerIds = allIdsRaw.split(',').filter(function (x) { return !!x; });
-  var absentLearnerIds = formStrings_(formInputs, 'absent_learners');
+  var allPresentChecked = formStrings_(formInputs, 'all_present').indexOf('ALL_PRESENT') !== -1;
+  var absentLearnerIds = [];
+  if (!forceAllPresent && !allPresentChecked) {
+    absentLearnerIds = formStrings_(formInputs, 'absent_learners');
+  }
   var presentCount = allLearnerIds.filter(function (id) {
     return absentLearnerIds.indexOf(id) === -1;
   }).length;
@@ -269,22 +274,26 @@ function programCard_(programs, update) {
   return replyCards_([{
     cardId: 'manualAttendanceProgram',
     card: {
-      header: { title: 'Manual Attendance', subtitle: 'Step 1 — Select program' },
+      header: { title: 'Manual Attendance', subtitle: 'Step 1 of 3 — Program' },
       sections: [{
         widgets: [
-          { textParagraph: { text: 'Select the program for this offline session.' } },
+          {
+            textParagraph: {
+              text: 'Choose the program for this offline session.'
+            }
+          },
           {
             selectionInput: {
               name: 'program_id',
               label: 'Program',
-              type: 'RADIO_BUTTON',
+              type: 'DROP_DOWN',
               items: items
             }
           },
           {
             buttonList: {
               buttons: [{
-                text: 'Continue',
+                text: 'Next',
                 onClick: {
                   action: {
                     function: 'select_program',
@@ -303,56 +312,50 @@ function programCard_(programs, update) {
 }
 
 function sessionCard_(programId, programName, update) {
-  var slots = buildTimeSlots_();
-  var startItems = slots.map(function (item) {
-    return { text: item.text, value: item.value, selected: item.value === '09:00' };
-  });
-  var endItems = slots.map(function (item) {
-    return { text: item.text, value: item.value, selected: item.value === '11:00' };
-  });
-
   return replyCards_([{
     cardId: 'manualAttendanceSession',
     card: {
-      header: { title: 'Manual Attendance', subtitle: 'Step 2 — Session details' },
+      header: { title: 'Manual Attendance', subtitle: 'Step 2 of 3 — Session' },
       sections: [{
         widgets: [
           { textParagraph: { text: '<b>Program:</b> ' + programName } },
           {
             dateTimePicker: {
               name: 'session_date',
-              label: 'Attendance date',
+              label: 'Date (optional — defaults to today)',
               type: 'DATE_ONLY'
             }
           },
           {
             textInput: {
               name: 'meeting_topic',
-              label: 'Meeting topic (optional)',
+              label: 'Topic (optional)',
               type: 'SINGLE_LINE',
-              hintText: 'Leave blank to use the date'
+              hintText: 'e.g. Day 3 offline workshop'
             }
           },
           {
-            selectionInput: {
+            textInput: {
               name: 'start_time',
               label: 'Start time',
-              type: 'RADIO_BUTTON',
-              items: startItems
+              type: 'SINGLE_LINE',
+              value: '09:00',
+              hintText: 'HH:MM  e.g. 09:00'
             }
           },
           {
-            selectionInput: {
+            textInput: {
               name: 'end_time',
               label: 'End time',
-              type: 'RADIO_BUTTON',
-              items: endItems
+              type: 'SINGLE_LINE',
+              value: '11:00',
+              hintText: 'HH:MM  e.g. 11:00'
             }
           },
           {
             buttonList: {
               buttons: [{
-                text: 'Load learners',
+                text: 'Next — load learners',
                 onClick: {
                   action: {
                     function: 'load_learners',
@@ -377,68 +380,118 @@ function learnersCard_(opts, update) {
     return { text: l.display_name, value: l.id, selected: false };
   });
   var allIds = opts.learners.map(function (l) { return l.id; }).join(',');
+  var submitParams = [
+    { key: 'action', value: 'submit_attendance' },
+    { key: 'program_id', value: opts.programId },
+    { key: 'program_name', value: opts.programName },
+    { key: 'session_date', value: opts.sessionDate },
+    { key: 'meeting_topic', value: opts.meetingTopic },
+    { key: 'start_time', value: opts.startTime },
+    { key: 'end_time', value: opts.endTime },
+    { key: 'all_learner_ids', value: allIds }
+  ];
 
   return replyCards_([{
     cardId: 'manualAttendanceLearners',
     card: {
-      header: { title: 'Manual Attendance', subtitle: 'Step 3 — Mark absents' },
-      sections: [{
-        widgets: [
-          {
-            textParagraph: {
-              text:
-                '<b>Program:</b> ' + opts.programName + '<br>' +
-                '<b>Date:</b> ' + opts.sessionDate + '<br>' +
-                '<b>Topic:</b> ' + opts.meetingTopic + '<br>' +
-                '<b>Time:</b> ' + opts.startTime + ' – ' + opts.endTime + '<br><br>' +
-                'Check learners who were <b>ABSENT</b>.'
-            }
-          },
-          {
-            selectionInput: {
-              name: 'absent_learners',
-              label: 'Absent learners',
-              type: 'CHECK_BOX',
-              items: items
-            }
-          },
-          {
-            buttonList: {
-              buttons: [{
-                text: 'Submit attendance',
-                onClick: {
-                  action: {
-                    function: 'submit_attendance',
-                    parameters: [
-                      { key: 'action', value: 'submit_attendance' },
-                      { key: 'program_id', value: opts.programId },
-                      { key: 'program_name', value: opts.programName },
-                      { key: 'session_date', value: opts.sessionDate },
-                      { key: 'meeting_topic', value: opts.meetingTopic },
-                      { key: 'start_time', value: opts.startTime },
-                      { key: 'end_time', value: opts.endTime },
-                      { key: 'all_learner_ids', value: allIds }
-                    ]
+      header: { title: 'Manual Attendance', subtitle: 'Step 3 of 3 — Attendance' },
+      sections: [
+        {
+          widgets: [
+            {
+              textParagraph: {
+                text:
+                  '<b>Program:</b> ' + opts.programName + '<br>' +
+                  '<b>Date:</b> ' + opts.sessionDate + '<br>' +
+                  '<b>Topic:</b> ' + opts.meetingTopic + '<br>' +
+                  '<b>Time:</b> ' + opts.startTime + ' – ' + opts.endTime + '<br>' +
+                  '<b>Learners:</b> ' + opts.learners.length
+              }
+            },
+            {
+              textParagraph: {
+                text:
+                  '<b>Quick option:</b> if nobody was absent, tap ' +
+                  '<b>All present — Submit</b>.<br>' +
+                  'Or uncheck All present, mark only absents, then Submit.'
+              }
+            },
+            {
+              selectionInput: {
+                name: 'all_present',
+                label: 'Everyone present?',
+                type: 'CHECK_BOX',
+                items: [{
+                  text: 'All present (no absentees)',
+                  value: 'ALL_PRESENT',
+                  selected: true
+                }]
+              }
+            },
+            {
+              buttonList: {
+                buttons: [{
+                  text: 'All present — Submit',
+                  onClick: {
+                    action: {
+                      function: 'submit_attendance',
+                      parameters: submitParams.concat([
+                        { key: 'force_all_present', value: 'true' }
+                      ])
+                    }
                   }
-                }
-              }]
+                }]
+              }
             }
-          }
-        ]
-      }]
+          ]
+        },
+        {
+          header: 'Or mark absents only',
+          widgets: [
+            {
+              textParagraph: {
+                text: 'Uncheck “All present” above, then check only absent learners.'
+              }
+            },
+            {
+              selectionInput: {
+                name: 'absent_learners',
+                label: 'Absent learners',
+                type: 'CHECK_BOX',
+                items: items
+              }
+            },
+            {
+              buttonList: {
+                buttons: [{
+                  text: 'Submit with absents',
+                  onClick: {
+                    action: {
+                      function: 'submit_attendance',
+                      parameters: submitParams.concat([
+                        { key: 'force_all_present', value: 'false' }
+                      ])
+                    }
+                  }
+                }]
+              }
+            }
+          ]
+        }
+      ]
     }
   }], update);
 }
 
-function buildTimeSlots_() {
-  var items = [];
-  for (var minutes = 6 * 60; minutes <= 22 * 60; minutes += 15) {
-    var hh = Math.floor(minutes / 60);
-    var mm = minutes % 60;
-    var value = (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
-    items.push({ text: value, value: value });
-  }
-  return items;
+function normalizeTime_(value) {
+  if (!value) return null;
+  var text = String(value).trim();
+  var match = text.match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return null;
+  var hh = Number(match[1]);
+  var mm = Number(match[2]);
+  if (hh < 0 || hh > 23 || mm < 0 || mm > 59) return null;
+  return (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
 }
 
 // -------------------- Config / GitHub --------------------
