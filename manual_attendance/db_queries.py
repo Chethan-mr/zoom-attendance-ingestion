@@ -22,23 +22,41 @@ PROGRAMS_SQL = """
     JOIN deployments d
         ON d.id = dl.deployment_id
     WHERE d.start_timestamp >= CURRENT_DATE - INTERVAL '3 months'
+      AND (d.intent IS NULL OR d.intent = 'Learning')
     ORDER BY l.text
 """
 
-# No deployment_users table in this DB. Learners are inferred from progress rows.
+# Enrollment path (from Metabase):
+# labels -> deployment_labels -> deployments -> progress -> users
 LEARNERS_SQL = """
     SELECT DISTINCT
         u.id,
-        COALESCE(NULLIF(TRIM(u.name), ''), u.email, u.id) AS display_name
-    FROM progress p
-    JOIN deployments d
-        ON d.id = p.deployment_id
+        COALESCE(
+            NULLIF(
+                TRIM(
+                    CONCAT(
+                        COALESCE(u.first_name, ''),
+                        ' ',
+                        COALESCE(u.last_name, '')
+                    )
+                ),
+                ''
+            ),
+            NULLIF(TRIM(u.email), ''),
+            u.id
+        ) AS display_name
+    FROM labels l
     JOIN deployment_labels dl
-        ON dl.deployment_id = d.id
+        ON dl.label_id = l.id
+    JOIN deployments d
+        ON d.id = dl.deployment_id
+    JOIN progress p
+        ON p.deployment_id = d.id
     JOIN users u
         ON u.id = p.user_id
-    WHERE dl.label_id = %s
+    WHERE l.id = %s
       AND d.start_timestamp >= CURRENT_DATE - INTERVAL '3 months'
+      AND (d.intent IS NULL OR d.intent = 'Learning')
     ORDER BY display_name
 """
 

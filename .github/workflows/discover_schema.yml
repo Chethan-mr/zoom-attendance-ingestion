@@ -20,4 +20,6 @@ jobs:
           DBNAME: ${{ secrets.DBNAME }}
           USER: ${{ secrets.USER }}
           PASSWORD: ${{ secrets.PASSWORD }}
-        run: python -m manual_attendance.discover_schema
+        run: |
+          python -m manual_attendance.discover_schema
+          python -m manual_attendance.probe_learners
