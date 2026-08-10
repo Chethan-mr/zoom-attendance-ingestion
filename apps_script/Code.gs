@@ -175,12 +175,12 @@ function handleLoadLearners_(event) {
   var programName = params.program_name || programId || 'Program';
   if (!programId) return replyError_('Missing program. Restart with hi.');
 
-  var sessionDate = formDate_(formInputs, 'session_date');
-  if (!sessionDate) return replyError_('Please select an attendance date.');
-
+  var sessionDate = formDate_(formInputs, 'session_date') || todayIso_();
   var startTime = formString_(formInputs, 'start_time');
   var endTime = formString_(formInputs, 'end_time');
-  if (!startTime || !endTime) return replyError_('Select start and end times.');
+  if (!startTime || !endTime) {
+    return replyError_('Select start and end times (one each), then Load learners.');
+  }
   if (endTime <= startTime) return replyError_('End time must be after start time.');
 
   var topic = (formString_(formInputs, 'meeting_topic') || '').trim();
@@ -337,7 +337,7 @@ function sessionCard_(programId, programName, update) {
             selectionInput: {
               name: 'start_time',
               label: 'Start time',
-              type: 'DROP_DOWN',
+              type: 'RADIO_BUTTON',
               items: startItems
             }
           },
@@ -345,7 +345,7 @@ function sessionCard_(programId, programName, update) {
             selectionInput: {
               name: 'end_time',
               label: 'End time',
-              type: 'DROP_DOWN',
+              type: 'RADIO_BUTTON',
               items: endItems
             }
           },
@@ -591,12 +591,28 @@ function formStrings_(formInputs, name) {
 function formDate_(formInputs, name) {
   var field = formInputs[name];
   if (!field) return null;
-  var dateInput = field.dateInput || (field[''] && field[''].dateInput);
+
+  var dateInput =
+    field.dateInput ||
+    field.dateTimeInput ||
+    (field[''] && field[''].dateInput) ||
+    (field[''] && field[''].dateTimeInput);
+
   if (!dateInput || dateInput.msSinceEpoch == null) return null;
+
   var d = new Date(Number(dateInput.msSinceEpoch));
-  var yyyy = d.getUTCFullYear();
-  var mm = ('0' + (d.getUTCMonth() + 1)).slice(-2);
-  var dd = ('0' + d.getUTCDate()).slice(-2);
+  // Use local calendar date components from the picker timezone when possible
+  var yyyy = d.getFullYear();
+  var mm = ('0' + (d.getMonth() + 1)).slice(-2);
+  var dd = ('0' + d.getDate()).slice(-2);
+  return yyyy + '-' + mm + '-' + dd;
+}
+
+function todayIso_() {
+  var d = new Date();
+  var yyyy = d.getFullYear();
+  var mm = ('0' + (d.getMonth() + 1)).slice(-2);
+  var dd = ('0' + d.getDate()).slice(-2);
   return yyyy + '-' + mm + '-' + dd;
 }
 
