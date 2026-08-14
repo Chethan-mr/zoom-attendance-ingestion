@@ -27,17 +27,51 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # printenv can write an empty file for large/special JSON; use Python instead.
       - name: Write dispatch payload
         if: github.event_name == 'repository_dispatch'
         env:
           CLIENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
-        run: printenv CLIENT_PAYLOAD > /tmp/manual_attendance_payload.json
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, sys
+          raw = os.environ.get("CLIENT_PAYLOAD", "")
+          print(f"CLIENT_PAYLOAD length={len(raw)}")
+          if not raw.strip():
+              print("ERROR: CLIENT_PAYLOAD is empty. repository_dispatch client_payload was missing.", file=sys.stderr)
+              sys.exit(1)
+          try:
+              data = json.loads(raw)
+          except json.JSONDecodeError as e:
+              print(f"ERROR: CLIENT_PAYLOAD is not valid JSON: {e}", file=sys.stderr)
+              print(raw[:500], file=sys.stderr)
+              sys.exit(1)
+          if not isinstance(data, dict) or not data:
+              print(f"ERROR: client_payload must be a non-empty object, got: {type(data).__name__}", file=sys.stderr)
+              sys.exit(1)
+          path = pathlib.Path("/tmp/manual_attendance_payload.json")
+          path.write_text(json.dumps(data), encoding="utf-8")
+          print("Wrote keys:", sorted(data.keys()))
+          PY
 
       - name: Write manual payload
         if: github.event_name == 'workflow_dispatch'
         env:
           CLIENT_PAYLOAD: ${{ inputs.payload_json }}
-        run: printenv CLIENT_PAYLOAD > /tmp/manual_attendance_payload.json
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, sys
+          raw = os.environ.get("CLIENT_PAYLOAD", "")
+          print(f"CLIENT_PAYLOAD length={len(raw)}")
+          if not raw.strip():
+              print("ERROR: payload_json input is empty.", file=sys.stderr)
+              sys.exit(1)
+          data = json.loads(raw)
+          pathlib.Path("/tmp/manual_attendance_payload.json").write_text(
+              json.dumps(data), encoding="utf-8"
+          )
+          print("Wrote keys:", sorted(data.keys()))
+          PY
 
       - name: Insert present learners
         env:

@@ -1,17 +1,28 @@
 /**
- * SINGLE-FILE Manual Attendance Chat app (Workspace Add-on format).
+ * Manual Attendance v2 — Google Chat app (Workspace Add-on format).
  *
- * IMPORTANT in Apps Script editor:
- * 1. Replace Code.gs with this entire file
- * 2. Open Cards.gs / Config.gs / Data.gs and delete ALL code
- *    (leave empty or delete the files) so old helpers cannot override this
- * 3. Keep appsscript.json from repo
- * 4. Deploy → Manage deployments → New version → Deploy
+ * SETUP (Manual Attendance v2 Apps Script project):
+ * 1. Paste this entire file into Code.gs (delete other .gs files or leave them empty)
+ * 2. Paste appsscript.json from this folder into Project Settings → appsscript.json
+ * 3. Script Properties: CACHE_URL, GITHUB_TOKEN, GITHUB_REPO
+ * 4. Project Settings → GCP project number for Chat app (same as Chat API project)
+ * 5. Deploy → New deployment (Add-on) or Manage deployments → New version
+ * 6. Chat API Configuration → Connection: Apps Script → paste Deployment ID → Save
+ *
+ * Features:
+ * - Program: single-select dropdown, nothing selected by default
+ * - Topic: ops types only the title; saved as {program}-ILT-{title}
+ * - Attendance: All present + absents in one section, one Submit button
+ * - Mutual exclusivity: All present clears absents; absents clears All present
  */
+
+var DEBUG_PING_ONLY = false;
+var USE_CLASSIC_REPLY = false;
 
 // -------------------- Add-on reply wrappers --------------------
 
 function addonCreate_(message) {
+  if (USE_CLASSIC_REPLY) return message;
   return {
     hostAppDataAction: {
       chatDataAction: {
@@ -22,6 +33,7 @@ function addonCreate_(message) {
 }
 
 function addonUpdate_(message) {
+  if (USE_CLASSIC_REPLY) return message;
   return {
     hostAppDataAction: {
       chatDataAction: {
@@ -37,7 +49,10 @@ function replyText_(text, update) {
 }
 
 function replyCards_(cardsV2, update) {
-  var msg = { cardsV2: cardsV2 };
+  var msg = {
+    text: 'Manual Attendance',
+    cardsV2: cardsV2
+  };
   return update ? addonUpdate_(msg) : addonCreate_(msg);
 }
 
@@ -54,19 +69,28 @@ function replyError_(text, update) {
 // -------------------- Chat triggers --------------------
 
 function onMessage(event) {
+  if (DEBUG_PING_ONLY) {
+    return replyText_('pong OK — set DEBUG_PING_ONLY=false and redeploy.');
+  }
+
   try {
     var text = extractMessageText_(event);
+    console.log('onMessage text=[' + text + ']');
 
-    if (text === 'ping' || text === 'test') {
+    if (text === 'ping' || text === 'test' || text.indexOf('ping') === 0) {
       return replyText_('Manual Attendance is online.');
     }
 
     if (
       text === 'hi' ||
+      text === 'hello' ||
+      text.indexOf('hi ') === 0 ||
+      text.indexOf('hello ') === 0 ||
       text === '/attendance' ||
       text === 'attendance' ||
       text === 'manual attendance' ||
-      text.indexOf('/attendance') === 0
+      text.indexOf('/attendance') === 0 ||
+      text.indexOf('attendance') !== -1
     ) {
       return startManualAttendance_();
     }
@@ -78,21 +102,26 @@ function onMessage(event) {
   }
 }
 
-function onAddToSpace() {
+function onAddToSpace(event) {
   return replyText_('Manual Attendance ready. Send `hi` or `/attendance` to begin.');
 }
 
-function onAddedToSpace() {
-  return onAddToSpace();
+function onAddedToSpace(event) {
+  return onAddToSpace(event);
 }
 
-function onRemoveFromSpace() {}
-function onRemovedFromSpace() {}
+function onRemoveFromSpace(event) {
+  return null;
+}
 
-/**
- * Workspace Add-ons invoke the button's action.function NAME directly
- * (e.g. select_program), not always onCardClick. Keep both.
- */
+function onRemovedFromSpace(event) {
+  return null;
+}
+
+function onAppCommand(event) {
+  return replyText_('Use hi or /attendance to start Manual Attendance.');
+}
+
 function onCardClick(event) {
   return routeCardAction_(event);
 }
@@ -124,6 +153,15 @@ function submit_attendance(event) {
   }
 }
 
+function toggle_attendance(event) {
+  try {
+    return handleToggleAttendance_(event);
+  } catch (err) {
+    console.error(err);
+    return replyError_(String(err && err.message ? err.message : err));
+  }
+}
+
 function routeCardAction_(event) {
   var fn = extractFunctionName_(event);
   console.log('card action fn=' + fn);
@@ -131,6 +169,7 @@ function routeCardAction_(event) {
     if (fn === 'select_program') return handleSelectProgram_(event);
     if (fn === 'load_learners') return handleLoadLearners_(event);
     if (fn === 'submit_attendance') return handleSubmitAttendance_(event);
+    if (fn === 'toggle_attendance') return handleToggleAttendance_(event);
     return replyError_(
       'Unknown action: ' + (fn || '(none)') + '. Re-send hi and try again.'
     );
@@ -155,8 +194,8 @@ function startManualAttendance_() {
 function handleSelectProgram_(event) {
   var formInputs = extractFormInputs_(event);
   var programId = formString_(formInputs, 'program_id');
-  if (!programId) {
-    return replyError_('Please select a program (checkbox/dropdown), then Continue.');
+  if (!programId || programId === '__NONE__') {
+    return replyError_('Please select one program, then tap Next.');
   }
 
   var cache = fetchAttendanceCache_();
@@ -164,7 +203,6 @@ function handleSelectProgram_(event) {
   cache.programs.forEach(function (p) {
     if (p.id === programId) programName = p.text;
   });
-  // Use createMessageAction (not update) for reliability in Add-ons
   return sessionCard_(programId, programName, false);
 }
 
@@ -183,8 +221,22 @@ function handleLoadLearners_(event) {
   }
   if (endTime <= startTime) return replyError_('End time must be after start time.');
 
-  var topic = (formString_(formInputs, 'meeting_topic') || '').trim();
-  var meetingTopic = topic || sessionDate;
+  var topicSuffix = (formString_(formInputs, 'topic_suffix') || '').trim();
+  if (!topicSuffix) {
+    return replyError_(
+      'Enter the topic name only (example: Understanding Window Functions in SQL). ' +
+      'It will be saved as ' + programName + '-ILT-[your topic].'
+    );
+  }
+
+  var prefix = programName + '-ILT-';
+  if (topicSuffix.indexOf(prefix) === 0) {
+    topicSuffix = topicSuffix.substring(prefix.length).trim();
+  }
+  if (!topicSuffix) {
+    return replyError_('Enter the topic name after ILT-.');
+  }
+  var meetingTopic = prefix + topicSuffix;
 
   var cache = fetchAttendanceCache_();
   var learners = cache.learners_by_program[programId] || [];
@@ -199,7 +251,9 @@ function handleLoadLearners_(event) {
     meetingTopic: meetingTopic,
     startTime: startTime,
     endTime: endTime,
-    learners: learners
+    learners: learners,
+    allPresentSelected: true,
+    absentIds: []
   }, false);
 }
 
@@ -214,7 +268,6 @@ function handleSubmitAttendance_(event) {
   var startTime = params.start_time;
   var endTime = params.end_time;
   var allIdsRaw = params.all_learner_ids || '';
-  var forceAllPresent = params.force_all_present === 'true';
 
   if (!programId || !sessionDate || !startTime || !endTime) {
     return replyError_('Missing session details. Restart with hi.');
@@ -222,10 +275,15 @@ function handleSubmitAttendance_(event) {
 
   var allLearnerIds = allIdsRaw.split(',').filter(function (x) { return !!x; });
   var allPresentChecked = formStrings_(formInputs, 'all_present').indexOf('ALL_PRESENT') !== -1;
-  var absentLearnerIds = [];
-  if (!forceAllPresent && !allPresentChecked) {
-    absentLearnerIds = formStrings_(formInputs, 'absent_learners');
+  var absentLearnerIds = formStrings_(formInputs, 'absent_learners');
+
+  // Mutual rule: absents win if any checked; else All present / neither → no absents
+  if (absentLearnerIds.length > 0) {
+    allPresentChecked = false;
+  } else {
+    absentLearnerIds = [];
   }
+
   var presentCount = allLearnerIds.filter(function (id) {
     return absentLearnerIds.indexOf(id) === -1;
   }).length;
@@ -265,12 +323,52 @@ function handleSubmitAttendance_(event) {
   }], false);
 }
 
+function handleToggleAttendance_(event) {
+  var formInputs = extractFormInputs_(event);
+  var params = actionParams_(event);
+  var programId = params.program_id;
+  if (!programId) return replyError_('Missing program. Restart with hi.', true);
+
+  var cache = fetchAttendanceCache_();
+  var learners = cache.learners_by_program[programId] || [];
+  if (!learners.length) {
+    return replyError_('No learners for this program. Re-sync cache.', true);
+  }
+
+  var allPresentChecked = formStrings_(formInputs, 'all_present').indexOf('ALL_PRESENT') !== -1;
+  var absentIds = formStrings_(formInputs, 'absent_learners');
+  var source = params.toggle_source || '';
+
+  if (source === 'all_present' && allPresentChecked) {
+    absentIds = [];
+  } else if (source === 'absent_learners' && absentIds.length > 0) {
+    allPresentChecked = false;
+  } else if (absentIds.length > 0) {
+    allPresentChecked = false;
+  }
+
+  return learnersCard_({
+    programId: programId,
+    programName: params.program_name || programId,
+    sessionDate: params.session_date,
+    meetingTopic: params.meeting_topic,
+    startTime: params.start_time,
+    endTime: params.end_time,
+    learners: learners,
+    allPresentSelected: allPresentChecked,
+    absentIds: absentIds
+  }, true);
+}
+
 // -------------------- Cards --------------------
 
 function programCard_(programs, update) {
-  var items = programs.map(function (p, i) {
-    return { text: p.text, value: p.id, selected: i === 0 };
-  });
+  // Compact single-select dropdown; no real program pre-selected
+  var items = [{ text: '— Select a program —', value: '__NONE__', selected: true }].concat(
+    programs.map(function (p) {
+      return { text: p.text, value: String(p.id), selected: false };
+    })
+  );
   return replyCards_([{
     cardId: 'manualAttendanceProgram',
     card: {
@@ -279,7 +377,7 @@ function programCard_(programs, update) {
         widgets: [
           {
             textParagraph: {
-              text: 'Choose the program for this offline session.'
+              text: 'Select <b>one</b> program from the dropdown, then tap Next.'
             }
           },
           {
@@ -312,6 +410,7 @@ function programCard_(programs, update) {
 }
 
 function sessionCard_(programId, programName, update) {
+  var topicPrefix = programName + '-ILT-';
   return replyCards_([{
     cardId: 'manualAttendanceSession',
     card: {
@@ -327,11 +426,18 @@ function sessionCard_(programId, programName, update) {
             }
           },
           {
+            textParagraph: {
+              text:
+                'Topic will be saved as:<br>' +
+                '<b>' + topicPrefix + '</b><i>[your topic]</i>'
+            }
+          },
+          {
             textInput: {
-              name: 'meeting_topic',
-              label: 'Topic (optional)',
+              name: 'topic_suffix',
+              label: 'Topic name (after ILT-)',
               type: 'SINGLE_LINE',
-              hintText: 'e.g. Day 3 offline workshop'
+              hintText: 'Understanding Window Functions in SQL'
             }
           },
           {
@@ -376,12 +482,19 @@ function sessionCard_(programId, programName, update) {
 }
 
 function learnersCard_(opts, update) {
+  var absentSet = {};
+  (opts.absentIds || []).forEach(function (id) { absentSet[id] = true; });
+  var allPresentSelected = opts.allPresentSelected !== false && !(opts.absentIds || []).length;
+
   var items = opts.learners.map(function (l) {
-    return { text: l.display_name, value: l.id, selected: false };
+    return {
+      text: l.display_name,
+      value: l.id,
+      selected: !!absentSet[l.id] && !allPresentSelected
+    };
   });
   var allIds = opts.learners.map(function (l) { return l.id; }).join(',');
-  var submitParams = [
-    { key: 'action', value: 'submit_attendance' },
+  var baseParams = [
     { key: 'program_id', value: opts.programId },
     { key: 'program_name', value: opts.programName },
     { key: 'session_date', value: opts.sessionDate },
@@ -390,95 +503,82 @@ function learnersCard_(opts, update) {
     { key: 'end_time', value: opts.endTime },
     { key: 'all_learner_ids', value: allIds }
   ];
+  var submitParams = [{ key: 'action', value: 'submit_attendance' }].concat(baseParams);
+  var toggleAllParams = [
+    { key: 'action', value: 'toggle_attendance' },
+    { key: 'toggle_source', value: 'all_present' }
+  ].concat(baseParams);
+  var toggleAbsentParams = [
+    { key: 'action', value: 'toggle_attendance' },
+    { key: 'toggle_source', value: 'absent_learners' }
+  ].concat(baseParams);
 
   return replyCards_([{
     cardId: 'manualAttendanceLearners',
     card: {
       header: { title: 'Manual Attendance', subtitle: 'Step 3 of 3 — Attendance' },
-      sections: [
-        {
-          widgets: [
-            {
-              textParagraph: {
-                text:
-                  '<b>Program:</b> ' + opts.programName + '<br>' +
-                  '<b>Date:</b> ' + opts.sessionDate + '<br>' +
-                  '<b>Topic:</b> ' + opts.meetingTopic + '<br>' +
-                  '<b>Time:</b> ' + opts.startTime + ' – ' + opts.endTime + '<br>' +
-                  '<b>Learners:</b> ' + opts.learners.length
-              }
-            },
-            {
-              textParagraph: {
-                text:
-                  '<b>Quick option:</b> if nobody was absent, tap ' +
-                  '<b>All present — Submit</b>.<br>' +
-                  'Or uncheck All present, mark only absents, then Submit.'
-              }
-            },
-            {
-              selectionInput: {
-                name: 'all_present',
-                label: 'Everyone present?',
-                type: 'CHECK_BOX',
-                items: [{
-                  text: 'All present (no absentees)',
-                  value: 'ALL_PRESENT',
-                  selected: true
-                }]
-              }
-            },
-            {
-              buttonList: {
-                buttons: [{
-                  text: 'All present — Submit',
-                  onClick: {
-                    action: {
-                      function: 'submit_attendance',
-                      parameters: submitParams.concat([
-                        { key: 'force_all_present', value: 'true' }
-                      ])
-                    }
-                  }
-                }]
+      sections: [{
+        widgets: [
+          {
+            textParagraph: {
+              text:
+                '<b>Program:</b> ' + opts.programName + '<br>' +
+                '<b>Date:</b> ' + opts.sessionDate + '<br>' +
+                '<b>Topic:</b> ' + opts.meetingTopic + '<br>' +
+                '<b>Time:</b> ' + opts.startTime + ' – ' + opts.endTime + '<br>' +
+                '<b>Learners:</b> ' + opts.learners.length
+            }
+          },
+          {
+            textParagraph: {
+              text:
+                'Check <b>All present</b> if nobody was absent, or check only the absent learners. ' +
+                'Selecting absents clears All present (and the reverse). Then tap Submit at the bottom.'
+            }
+          },
+          {
+            selectionInput: {
+              name: 'all_present',
+              label: 'Everyone present?',
+              type: 'CHECK_BOX',
+              items: [{
+                text: 'All present (no absentees)',
+                value: 'ALL_PRESENT',
+                selected: allPresentSelected
+              }],
+              onChangeAction: {
+                function: 'toggle_attendance',
+                parameters: toggleAllParams
               }
             }
-          ]
-        },
-        {
-          header: 'Or mark absents only',
-          widgets: [
-            {
-              textParagraph: {
-                text: 'Uncheck “All present” above, then check only absent learners.'
-              }
-            },
-            {
-              selectionInput: {
-                name: 'absent_learners',
-                label: 'Absent learners',
-                type: 'CHECK_BOX',
-                items: items
-              }
-            },
-            {
-              buttonList: {
-                buttons: [{
-                  text: 'Submit with absents',
-                  onClick: {
-                    action: {
-                      function: 'submit_attendance',
-                      parameters: submitParams.concat([
-                        { key: 'force_all_present', value: 'false' }
-                      ])
-                    }
-                  }
-                }]
+          },
+          {
+            selectionInput: {
+              name: 'absent_learners',
+              label: 'Absent learners (leave empty if all present)',
+              type: 'CHECK_BOX',
+              items: items,
+              onChangeAction: {
+                function: 'toggle_attendance',
+                parameters: toggleAbsentParams
               }
             }
-          ]
-        }
-      ]
+          },
+          {
+            buttonList: {
+              buttons: [{
+                text: 'Submit',
+                onClick: {
+                  action: {
+                    function: 'submit_attendance',
+                    parameters: submitParams
+                  }
+                }
+              }]
+            }
+          }
+        ]
+      }]
     }
   }], update);
 }
@@ -584,7 +684,16 @@ function extractMessageText_(event) {
   } else if (event && event.message) {
     text = event.message.argumentText || event.message.text || '';
   }
-  return String(text).replace(/@\S+/g, '').trim().toLowerCase();
+  text = String(text)
+    .replace(/@[^ \t\n]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+  text = text
+    .replace(/^manual attendance\s*/i, '')
+    .replace(/\s*manual attendance$/i, '')
+    .trim();
+  return text;
 }
 
 function extractFormInputs_(event) {
@@ -598,7 +707,6 @@ function extractFormInputs_(event) {
 }
 
 function extractFunctionName_(event) {
-  // Add-ons: invokedFunction is often empty — read parameters.action first
   var params = actionParams_(event);
   if (params.action) return String(params.action);
 
@@ -654,7 +762,6 @@ function formDate_(formInputs, name) {
   if (!dateInput || dateInput.msSinceEpoch == null) return null;
 
   var d = new Date(Number(dateInput.msSinceEpoch));
-  // Use local calendar date components from the picker timezone when possible
   var yyyy = d.getFullYear();
   var mm = ('0' + (d.getMonth() + 1)).slice(-2);
   var dd = ('0' + d.getDate()).slice(-2);
@@ -672,13 +779,11 @@ function todayIso_() {
 function actionParams_(event) {
   var params = {};
 
-  // Add-on style: commonEventObject.parameters is a string->string map
   if (event.commonEventObject && event.commonEventObject.parameters) {
     var obj = event.commonEventObject.parameters;
     Object.keys(obj).forEach(function (k) { params[k] = String(obj[k]); });
   }
 
-  // Classic style: arrays of {key,value}
   var lists = [];
   if (event.common && event.common.parameters) lists.push(event.common.parameters);
   if (event.action && event.action.parameters) lists.push(event.action.parameters);

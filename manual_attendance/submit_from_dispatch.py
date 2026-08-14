@@ -25,7 +25,14 @@ def _load_payload() -> dict:
         return json.loads(raw)
 
     if len(sys.argv) > 1:
-        return json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+        path = Path(sys.argv[1])
+        text = path.read_text(encoding="utf-8").strip()
+        if not text:
+            raise SystemExit(
+                f"Payload file is empty: {path}. "
+                "Check the workflow Write payload step / repository_dispatch client_payload."
+            )
+        return json.loads(text)
 
     raise SystemExit("CLIENT_PAYLOAD env var (or JSON file arg) is required")
 
