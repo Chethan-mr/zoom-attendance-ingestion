@@ -8,7 +8,11 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-from manual_attendance.db_queries import fetch_learners_for_program, fetch_programs
+from manual_attendance.db_queries import (
+    fetch_learners_for_program,
+    fetch_programs,
+    fetch_recent_manual_sessions,
+)
 
 logging.basicConfig(
     level=os.environ.get("LOG_LEVEL", "INFO"),
@@ -31,10 +35,17 @@ def build_cache() -> dict:
             logger.exception("Failed fetching learners for program_id=%s", program_id)
             learners_by_program[program_id] = []
 
+    recent_sessions: list[dict] = []
+    try:
+        recent_sessions = fetch_recent_manual_sessions(limit=40)
+    except Exception:
+        logger.exception("Failed fetching recent manual sessions")
+
     return {
         "updated_at": datetime.now(timezone.utc).isoformat(),
         "programs": programs,
         "learners_by_program": learners_by_program,
+        "recent_sessions": recent_sessions,
     }
 
 

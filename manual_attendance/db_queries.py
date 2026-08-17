@@ -98,6 +98,56 @@ def fetch_learners_for_program(program_id: str) -> list[dict[str, str]]:
         conn.close()
 
 
+RECENT_MANUAL_SESSIONS_SQL = """
+    SELECT
+        a.meeting_id,
+        COALESCE(a.meeting_topic, '') AS meeting_topic,
+        MIN(a.scheduled_from) AS session_start,
+        MAX(a.scheduled_to) AS session_end,
+        COUNT(*) AS present_count
+    FROM public.attendance a
+    WHERE a.zoom_account_id = %s
+       OR a.meeting_id LIKE 'MANUAL-%%'
+    GROUP BY a.meeting_id, a.meeting_topic
+    ORDER BY MIN(a.scheduled_from) DESC NULLS LAST
+    LIMIT %s
+"""
+
+
+def fetch_recent_manual_sessions(limit: int = 30) -> list[dict[str, Any]]:
+    """Return recent offline/manual attendance sessions for the web UI."""
+    limit = max(1, min(int(limit), 100))
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(RECENT_MANUAL_SESSIONS_SQL, (OFFLINE_ZOOM_ACCOUNT_ID, limit))
+            rows = cur.fetchall()
+            sessions: list[dict[str, Any]] = []
+            for row in rows:
+                meeting_id = str(row[0] or "")
+                topic = str(row[1] or "")
+                start = row[2]
+                end = row[3]
+                present_count = int(row[4] or 0)
+                program_name = ""
+                if "-ILT-" in topic:
+                    program_name = topic.split("-ILT-", 1)[0]
+                sessions.append(
+                    {
+                        "meeting_id": meeting_id,
+                        "meeting_topic": topic,
+                        "program_name": program_name,
+                        "session_start": start.isoformat() if start else None,
+                        "session_end": end.isoformat() if end else None,
+                        "present_count": present_count,
+                    }
+                )
+            logger.info("Fetched %d recent manual sessions", len(sessions))
+            return sessions
+    finally:
+        conn.close()
+
+
 def build_meeting_id(program_id: str, session_start: datetime) -> str:
     """Build a deterministic manual meeting id."""
     return (
