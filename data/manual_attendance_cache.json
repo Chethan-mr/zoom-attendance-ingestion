@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-17T10:49:56.601868+00:00",
+  "updated_at": "2026-08-17T10:56:11.484002+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -197,219 +197,9 @@
         "display_name": "Yogesh Patidar"
       }
     ],
-    "1d489083-3a91-4dcd-8a94-9bd1f066ea94": [
-      {
-        "id": "889f168f-b2e2-47e0-b3a4-cc6fc9ff9515",
-        "display_name": "Aayush Sharma"
-      },
-      {
-        "id": "7963cfdf-5da6-4fb2-b8bd-a136182253a5",
-        "display_name": "Aditi NA"
-      },
-      {
-        "id": "dcba4cc8-a338-48a4-aded-9f2676720ac7",
-        "display_name": "Agnik Chakraborty"
-      },
-      {
-        "id": "5a0a9081-5c6d-476a-9947-f7b871ce3d14",
-        "display_name": "Ananya Seth"
-      },
-      {
-        "id": "363bf032-fa1c-4041-ac9b-de98014cb06b",
-        "display_name": "Anuj Khokhar"
-      },
-      {
-        "id": "ef6b340f-036a-4669-bbae-56874e72418c",
-        "display_name": "Anuradha Navin"
-      },
-      {
-        "id": "13ac425d-5a75-4fba-91fc-f0db53457850",
-        "display_name": "Ayush Mishra"
-      },
-      {
-        "id": "c875dcde-d314-40e8-a66d-e4dceb35c798",
-        "display_name": "Bhaskar Chauhan"
-      },
-      {
-        "id": "579af18b-58da-4113-9cf9-cc89eec26ae4",
-        "display_name": "Dev Jaishwal"
-      },
-      {
-        "id": "4d63c777-3621-48b3-8702-e489a563d48b",
-        "display_name": "Harsh Kumar01"
-      },
-      {
-        "id": "76dabdc5-8cf6-45d2-805a-939782c33fe9",
-        "display_name": "Harsh Kumar02"
-      },
-      {
-        "id": "34957a50-6ffc-4ec9-9a93-0480bfec286c",
-        "display_name": "Kabirkrishnan A"
-      },
-      {
-        "id": "e0131de7-e58a-4481-a30f-ff18fc29ecd5",
-        "display_name": "Kriti Tiwari"
-      },
-      {
-        "id": "e8c4e6db-f920-4dcb-bbf7-e383c3a2b322",
-        "display_name": "Naman Prasad"
-      },
-      {
-        "id": "126a98c1-b21f-49c3-bea1-60a781d18a52",
-        "display_name": "Pratyush Tiwari"
-      },
-      {
-        "id": "c60327bd-29a8-4d0c-9854-2cf7d33c55a0",
-        "display_name": "Prem Kushwah"
-      },
-      {
-        "id": "2eb8d777-30a2-4e22-bbae-7d123eedf1fd",
-        "display_name": "Raghul D"
-      },
-      {
-        "id": "1737845a-ca42-432f-8534-ce00f889e0aa",
-        "display_name": "Raghupatruni Thej"
-      },
-      {
-        "id": "ad84ec00-d311-4347-8d10-9d5aeb46700e",
-        "display_name": "Swarna Choudhury"
-      },
-      {
-        "id": "0e818b77-7f84-434e-8a25-8a78025a6612",
-        "display_name": "Tanushi NA"
-      },
-      {
-        "id": "2a752e47-23ba-42cb-a2c8-4d74be3f0eb0",
-        "display_name": "Udhav Vinaik"
-      }
-    ],
-    "25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9": [
-      {
-        "id": "ae3ac300-2457-4e1c-a35a-61305d641e70",
-        "display_name": "Abhishek Sharma"
-      },
-      {
-        "id": "7a17e66a-bdc8-4c05-9914-f9539f101012",
-        "display_name": "Abhishek Yadav"
-      },
-      {
-        "id": "039dd3f5-ed21-4e79-91cc-a51078dc8b2a",
-        "display_name": "Aditya Anand"
-      },
-      {
-        "id": "a4834a6c-7d22-448d-bc65-80187a42efd2",
-        "display_name": "Akash Baghel"
-      },
-      {
-        "id": "2525f3f7-feac-4f83-b02d-3fae020c08ed",
-        "display_name": "Anand Amar"
-      },
-      {
-        "id": "dc73e063-2086-4438-97d4-eea281826fa8",
-        "display_name": "Apoorv Jadhav"
-      },
-      {
-        "id": "09b1c4bb-ca75-4d4b-8ee1-aefeab93b8d3",
-        "display_name": "Aryan Gupta"
-      },
-      {
-        "id": "b65cc143-a68c-4205-9f5c-705084e82b4c",
-        "display_name": "Ayush Dutta"
-      },
-      {
-        "id": "05ef4898-f50e-4380-a712-ab4877a7494b",
-        "display_name": "Bhavya Sachan"
-      },
-      {
-        "id": "5c3fb1b9-53d7-4af0-88ae-79d670aff7eb",
-        "display_name": "Gerry Monga"
-      },
-      {
-        "id": "cd30e88e-587d-42b5-9833-9b7225d8c905",
-        "display_name": "Hardik Sahu"
-      },
-      {
-        "id": "6db29b36-6773-4d0c-8a5e-d966cd6395ed",
-        "display_name": "Mansi Patil"
-      },
-      {
-        "id": "ea025636-1834-4db5-8ab9-cbf2b13ce815",
-        "display_name": "Mohit Sen"
-      },
-      {
-        "id": "28e8e827-52f9-4399-938d-3a5ab318c1b9",
-        "display_name": "Nayan Singhania"
-      },
-      {
-        "id": "4d1f4992-f6a4-42f9-9562-10933acc1a14",
-        "display_name": "Nehil Sahu"
-      },
-      {
-        "id": "67b7f50f-f867-48e3-9294-64401d2e56c9",
-        "display_name": "OOM PRAKASH"
-      },
-      {
-        "id": "7a924ae4-1c51-4833-b9a9-50df39edd5e7",
-        "display_name": "Parth Kushwaha"
-      },
-      {
-        "id": "1eea3e07-5a7f-4a35-82b9-c04904675f62",
-        "display_name": "Prabhpreet Kaur"
-      },
-      {
-        "id": "ea731eef-ddb8-44ce-ac66-c087da48dadf",
-        "display_name": "Ritesh Patel"
-      },
-      {
-        "id": "034dd8af-c159-49e4-8a76-0f47b0ea1b12",
-        "display_name": "Ruchir Ankesh"
-      },
-      {
-        "id": "c215dfa5-58bb-4037-85c8-330ed873d574",
-        "display_name": "Samar Soni"
-      },
-      {
-        "id": "504a1864-88df-487f-b776-e0afbb5d7d44",
-        "display_name": "Shivam NA"
-      },
-      {
-        "id": "74eff61a-e232-4371-9895-f71bde7eaa3b",
-        "display_name": "Shivansh Satpute"
-      },
-      {
-        "id": "21e4e800-c4a4-4e11-971c-c1fbe91bfeb7",
-        "display_name": "Soumen Sen"
-      },
-      {
-        "id": "5fd174b5-298a-4d44-a793-cd39ae2417e6",
-        "display_name": "Soumya Senapati"
-      },
-      {
-        "id": "4d067bff-eb59-4ecb-9ed6-fa20ed3bed2a",
-        "display_name": "SRIJAN CHOWDHURY"
-      },
-      {
-        "id": "3dbb883a-3568-4412-a49e-a9c26f2a1ec1",
-        "display_name": "SURAJ KUMAR"
-      },
-      {
-        "id": "c9ae1e70-a46b-45db-9768-33409acb295a",
-        "display_name": "Tushar Nirmal"
-      },
-      {
-        "id": "1baf89ba-f218-45d3-9a96-a81a5cc7b2b8",
-        "display_name": "Twinkle Patre"
-      },
-      {
-        "id": "fbb813af-bd89-4f86-9a4b-c7c62f3dc1e7",
-        "display_name": "Utkarsh Bharat"
-      }
-    ],
+    "1d489083-3a91-4dcd-8a94-9bd1f066ea94": [],
+    "25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9": [],
     "246cbb31-f7ee-479e-ab50-1eacaf86b23b": [
-      {
-        "id": "c07abda4-1530-4498-a0ed-d40408cc8e87",
-        "display_name": "Akhil Yeramsetti"
-      },
       {
         "id": "418773fa-2602-48e0-b1af-26669a0cee03",
         "display_name": "Akshay Mehta"
@@ -419,56 +209,8 @@
         "display_name": "Aman Gupta"
       },
       {
-        "id": "a6abb235-e1bf-4b8b-bddc-f0f3872f7141",
-        "display_name": "Andalam Kumar"
-      },
-      {
         "id": "88e942b5-0703-423b-8f1c-7b5c7864b4b4",
         "display_name": "Avinash Godge"
-      },
-      {
-        "id": "7fd54814-37ac-4b98-962b-133d21e73592",
-        "display_name": "Chandu Jinka"
-      },
-      {
-        "id": "fc560cef-b0e2-4ab8-bed9-152212b9d02f",
-        "display_name": "Gaurav Kumar01"
-      },
-      {
-        "id": "d0c3eb6f-1d82-4418-bc76-fe654894e885",
-        "display_name": "Komal Naik"
-      },
-      {
-        "id": "c34dab6e-d3fd-4897-b2e1-a516af3f8093",
-        "display_name": "Lokesh Sellakkannu"
-      },
-      {
-        "id": "82c65198-fa2a-4746-89cf-674c093131f5",
-        "display_name": "Maqsood Sait"
-      },
-      {
-        "id": "4e6bf175-28d1-4792-9163-693578e85050",
-        "display_name": "Prasad Degala"
-      },
-      {
-        "id": "8e596e89-9d8c-48aa-9795-ec71e7800d9c",
-        "display_name": "Ranajit Pangambam"
-      },
-      {
-        "id": "7e5f475e-4aec-4155-94bc-1d3cf7cfc9e9",
-        "display_name": "Shivam Sukla"
-      },
-      {
-        "id": "a38520bc-1fa5-4cea-851c-3810aaea6a4a",
-        "display_name": "Shrotriya Ghatak"
-      },
-      {
-        "id": "38c72201-8045-47c1-9ca8-96385a24203f",
-        "display_name": "Tulsi Ahirwar"
-      },
-      {
-        "id": "2a4d41ff-c2ca-4228-93d8-c8e1cd367a9a",
-        "display_name": "Venkata Gudla"
       }
     ],
     "37c8ab14-54a1-4935-9940-89067af387ab": [
@@ -633,14 +375,6 @@
       {
         "id": "2ed2d8d1-b1a1-4eae-83e8-b6b56b95508c",
         "display_name": "Karthikeyan  Ganesan"
-      },
-      {
-        "id": "1ee74672-6b59-48b1-a139-fae974080d7e",
-        "display_name": "Mohammad Arshad"
-      },
-      {
-        "id": "9386d93c-29cf-4c5b-aec0-a06856db917d",
-        "display_name": "Mukul Jaju"
       },
       {
         "id": "0cca2836-d49a-47e3-be2c-5534c7d4abc9",
@@ -1034,14 +768,6 @@
         "display_name": "Madhumitha P"
       },
       {
-        "id": "9201e496-0677-4d8f-b9a1-1cd5ce0527e8",
-        "display_name": "Manisha Sahu"
-      },
-      {
-        "id": "9c9a184d-d6bc-42b0-ab23-7a8f8131214d",
-        "display_name": "Nehal  Rout"
-      },
-      {
         "id": "db1bc803-647c-40fa-bc15-a11fd1563536",
         "display_name": "Omana Bangaru"
       },
@@ -1074,10 +800,6 @@
         "display_name": "Rani Sikdar"
       },
       {
-        "id": "542e2cea-ded7-4f7e-900c-143c37d1aae7",
-        "display_name": "Rashi  Sharma"
-      },
-      {
         "id": "e14d4165-3611-4060-b285-bca5532294b3",
         "display_name": "Rashmi Mishra"
       },
@@ -1096,10 +818,6 @@
       {
         "id": "502b61f1-30e9-4152-8889-5d84af292cbe",
         "display_name": "Sai  Gayathri"
-      },
-      {
-        "id": "8535b6e2-b984-46c4-9335-bbea137341af",
-        "display_name": "Sayan  Dutta"
       },
       {
         "id": "e3c29888-5d73-4517-8213-be014aa4253c",
@@ -2120,5 +1838,103 @@
         "display_name": "Oorja Sonthalia"
       }
     ]
-  }
+  },
+  "recent_sessions": [
+    {
+      "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260814-0900",
+      "meeting_topic": "2026-08-14",
+      "program_name": "",
+      "session_start": "2026-08-14T09:00:00+00:00",
+      "session_end": "2026-08-14T11:00:00+00:00",
+      "present_count": 25
+    },
+    {
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260814-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Understanding Window Functions in SQL",
+      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
+      "session_start": "2026-08-14T09:00:00+00:00",
+      "session_end": "2026-08-14T11:00:00+00:00",
+      "present_count": 20
+    },
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260814-0900",
+      "meeting_topic": "2026-08-14",
+      "program_name": "",
+      "session_start": "2026-08-14T09:00:00+00:00",
+      "session_end": "2026-08-14T11:00:00+00:00",
+      "present_count": 28
+    },
+    {
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260813-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Basic SQL Revision",
+      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
+      "session_start": "2026-08-13T09:00:00+00:00",
+      "session_end": "2026-08-13T11:00:00+00:00",
+      "present_count": 20
+    },
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260813-0900",
+      "meeting_topic": "2026-08-13",
+      "program_name": "",
+      "session_start": "2026-08-13T09:00:00+00:00",
+      "session_end": "2026-08-13T11:00:00+00:00",
+      "present_count": 27
+    },
+    {
+      "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260813-0900",
+      "meeting_topic": "2026-08-13",
+      "program_name": "",
+      "session_start": "2026-08-13T09:00:00+00:00",
+      "session_end": "2026-08-13T11:00:00+00:00",
+      "present_count": 25
+    },
+    {
+      "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260812-0900",
+      "meeting_topic": "2026-08-12",
+      "program_name": "",
+      "session_start": "2026-08-12T09:00:00+00:00",
+      "session_end": "2026-08-12T11:00:00+00:00",
+      "present_count": 50
+    },
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260812-0900",
+      "meeting_topic": "2026-08-12",
+      "program_name": "",
+      "session_start": "2026-08-12T09:00:00+00:00",
+      "session_end": "2026-08-12T11:00:00+00:00",
+      "present_count": 42
+    },
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260811-0900",
+      "meeting_topic": "2026-08-11",
+      "program_name": "",
+      "session_start": "2026-08-11T09:00:00+00:00",
+      "session_end": "2026-08-11T11:00:00+00:00",
+      "present_count": 28
+    },
+    {
+      "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260811-0900",
+      "meeting_topic": "2026-08-11",
+      "program_name": "",
+      "session_start": "2026-08-11T09:00:00+00:00",
+      "session_end": "2026-08-11T11:00:00+00:00",
+      "present_count": 24
+    },
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260810-0900",
+      "meeting_topic": "2026-08-10",
+      "program_name": "",
+      "session_start": "2026-08-10T09:00:00+00:00",
+      "session_end": "2026-08-10T11:00:00+00:00",
+      "present_count": 28
+    },
+    {
+      "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260810-0900",
+      "meeting_topic": "2026-08-10",
+      "program_name": "",
+      "session_start": "2026-08-10T09:00:00+00:00",
+      "session_end": "2026-08-10T11:00:00+00:00",
+      "present_count": 25
+    }
+  ]
 }
