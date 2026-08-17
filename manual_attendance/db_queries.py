@@ -12,6 +12,33 @@ logger = logging.getLogger(__name__)
 
 OFFLINE_ZOOM_ACCOUNT_ID = "offline session"
 
+
+def build_offline_zoom_account_id(submitted_by: str | None = None) -> str:
+    """
+    Store submitter on attendance.zoom_account_id as "{name} offline".
+
+    name = local-part of the Google email (before @). Falls back to
+    "offline session" when email is missing.
+    """
+    email = (submitted_by or "").strip().lower()
+    if not email:
+        return OFFLINE_ZOOM_ACCOUNT_ID
+    name = email.split("@", 1)[0].strip().replace(" ", ".")
+    if not name:
+        return OFFLINE_ZOOM_ACCOUNT_ID
+    return f"{name} offline"
+
+
+def submitted_by_from_zoom_account(zoom_account_id: str | None) -> str | None:
+    """Parse submitter label from zoom_account_id values like 'chethan offline'."""
+    value = (zoom_account_id or "").strip()
+    if not value or value.lower() == OFFLINE_ZOOM_ACCOUNT_ID:
+        return None
+    if value.lower().endswith(" offline"):
+        return value[: -len(" offline")].strip() or None
+    return value
+
+
 PROGRAMS_SQL = """
     SELECT DISTINCT
         l.id,
@@ -104,9 +131,11 @@ RECENT_MANUAL_SESSIONS_SQL = """
         COALESCE(a.meeting_topic, '') AS meeting_topic,
         MIN(a.scheduled_from) AS session_start,
         MAX(a.scheduled_to) AS session_end,
-        COUNT(*) AS present_count
+        COUNT(*) AS present_count,
+        MAX(a.zoom_account_id) AS zoom_account_id
     FROM public.attendance a
     WHERE a.zoom_account_id = %s
+       OR a.zoom_account_id ILIKE '%% offline'
        OR a.meeting_id LIKE 'MANUAL-%%'
     GROUP BY a.meeting_id, a.meeting_topic
     ORDER BY MIN(a.scheduled_from) DESC NULLS LAST
@@ -129,6 +158,7 @@ def fetch_recent_manual_sessions(limit: int = 30) -> list[dict[str, Any]]:
                 start = row[2]
                 end = row[3]
                 present_count = int(row[4] or 0)
+                zoom_account_id = str(row[5] or "")
                 program_name = ""
                 if "-ILT-" in topic:
                     program_name = topic.split("-ILT-", 1)[0]
@@ -140,6 +170,8 @@ def fetch_recent_manual_sessions(limit: int = 30) -> list[dict[str, Any]]:
                         "session_start": start.isoformat() if start else None,
                         "session_end": end.isoformat() if end else None,
                         "present_count": present_count,
+                        "zoom_account_id": zoom_account_id or None,
+                        "submitted_by": submitted_by_from_zoom_account(zoom_account_id),
                     }
                 )
             logger.info("Fetched %d recent manual sessions", len(sessions))
@@ -167,12 +199,16 @@ def submit_present_attendance(
     session_end: datetime,
     all_learner_ids: Sequence[str],
     absent_learner_ids: Iterable[str],
+    submitted_by: str | None = None,
 ) -> dict[str, Any]:
     """
     Insert attendance only for PRESENT learners.
 
     Present = all_learner_ids - absent_learner_ids.
     Absent learners are never written to public.attendance.
+
+    zoom_account_id is set to "{name} offline" from the submitter email
+    (or "offline session" if unknown).
     """
     if session_end <= session_start:
         raise ValueError("End time must be after start time")
@@ -182,16 +218,18 @@ def submit_present_attendance(
 
     topic = (meeting_topic or "").strip() or session_date
     meeting_id = build_meeting_id(program_id, session_start)
+    zoom_account_id = build_offline_zoom_account_id(submitted_by)
 
     logger.info(
         "Submitting manual attendance program=%s (%s) date=%s "
-        "present=%d absent=%d meeting_id=%s",
+        "present=%d absent=%d meeting_id=%s zoom_account_id=%s",
         program_name,
         program_id,
         session_date,
         len(present_ids),
         len(absent_set),
         meeting_id,
+        zoom_account_id,
     )
 
     inserted = 0
@@ -210,7 +248,7 @@ def submit_present_attendance(
                     meeting_topic=topic,
                     scheduled_from=session_start,
                     scheduled_to=session_end,
-                    zoom_account_id=OFFLINE_ZOOM_ACCOUNT_ID,
+                    zoom_account_id=zoom_account_id,
                 )
                 if was_inserted:
                     inserted += 1
@@ -234,4 +272,6 @@ def submit_present_attendance(
         "total_learners": len(all_learner_ids),
         "program_name": program_name,
         "session_date": session_date,
+        "zoom_account_id": zoom_account_id,
+        "submitted_by": submitted_by_from_zoom_account(zoom_account_id),
     }

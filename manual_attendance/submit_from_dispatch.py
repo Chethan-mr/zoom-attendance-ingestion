@@ -82,6 +82,7 @@ def main() -> None:
         session_end=session_end,
         all_learner_ids=all_learner_ids,
         absent_learner_ids=absent_learner_ids,
+        submitted_by=submitted_by,
     )
 
     if result.get("meeting_id"):
@@ -91,7 +92,9 @@ def main() -> None:
             meeting_topic=meeting_topic,
             program_name=program_name,
         )
-        result["submitted_by"] = submitted_by or None
+        # Prefer full email in UI when available; DB stores "{name} offline".
+        if submitted_by:
+            result["submitted_by"] = submitted_by
 
     print("✅ Manual attendance saved")
     print(json.dumps(result, indent=2))

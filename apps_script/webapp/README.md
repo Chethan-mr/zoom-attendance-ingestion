@@ -39,8 +39,13 @@ Run `getBootstrap` once → Allow
 When you change code later: Deploy → Manage deployments → Edit → **New version** → Deploy (URL stays the same).
 
 ## Who added attendance
-The web app reads the signed-in Google account via `Session.getActiveUser().getEmail()` and stores it with each submit.
-Recent sessions show an **ADDED BY** column after the next cache refresh.
+The web app reads the signed-in Google account via `Session.getActiveUser().getEmail()`.
+
+On insert, `public.attendance.zoom_account_id` is set to **`{name} offline`**
+(name = email local-part before `@`, e.g. `chethan.mr offline`).
+If email is missing, it falls back to `offline session`.
+
+Recent sessions **ADDED BY** shows the full email when known (from the submissions log), otherwise the name from `zoom_account_id`.
 
 Deploy the web app as:
 - Execute as: **Me**
@@ -49,6 +54,6 @@ Deploy the web app as:
 ## Flow
 ```text
 Open link (Google login) → pick program → topic + times → absents → Submit
-       → GitHub Action inserts rows + records submitted_by email
+       → GitHub Action inserts rows with zoom_account_id = "{name} offline"
        → cache refresh → Recent sessions shows Added by
 ```

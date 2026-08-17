@@ -53,7 +53,12 @@ def merge_submitted_by(
     sessions: list[dict[str, Any]],
     path: Path | None = None,
 ) -> list[dict[str, Any]]:
-    """Attach submitted_by onto recent session dicts when known."""
+    """
+    Prefer full email from the submissions log when present.
+
+    Sessions already carry submitted_by parsed from zoom_account_id
+    ("{name} offline") when that was written to the database.
+    """
     submissions = load_submissions(path)
     if not submissions:
         return sessions
