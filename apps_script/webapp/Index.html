@@ -411,13 +411,14 @@
                   <tr>
                     <th>INFO</th>
                     <th>PROGRAM</th>
+                    <th>ADDED BY</th>
                     <th>STATUS</th>
                     <th>PRESENT</th>
                     <th>WHEN</th>
                   </tr>
                 </thead>
                 <tbody id="recentBody">
-                  <tr><td colspan="5" class="empty">Loading…</td></tr>
+                  <tr><td colspan="6" class="empty">Loading…</td></tr>
                 </tbody>
               </table>
             </div>
@@ -558,18 +559,20 @@
       var body = $('recentBody');
       $('sessionCount').textContent = (sessions.length || 0) + ' sessions';
       if (!sessions.length) {
-        body.innerHTML = '<tr><td colspan="5" class="empty">No recent manual sessions yet.</td></tr>';
+        body.innerHTML = '<tr><td colspan="6" class="empty">No recent manual sessions yet.</td></tr>';
         return;
       }
       body.innerHTML = sessions.map(function (s) {
         var topic = String(s.meeting_topic || s.meeting_id || 'Session').replace(/</g, '&lt;');
         var program = String(s.program_name || '—').replace(/</g, '&lt;');
         var mid = String(s.meeting_id || '').replace(/</g, '&lt;');
+        var by = String(s.submitted_by || '—').replace(/</g, '&lt;');
         return (
           '<tr>' +
             '<td><div class="info-title">' + topic + '</div>' +
               '<div class="info-sub">' + mid + '</div></td>' +
             '<td>' + program + '</td>' +
+            '<td>' + by + '</td>' +
             '<td><span class="pill ok">Recorded</span></td>' +
             '<td>' + (s.present_count != null ? s.present_count : '—') + '</td>' +
             '<td>' + formatWhen(s.session_start) + '</td>' +
@@ -584,11 +587,13 @@
       if (firstEmpty) body.innerHTML = '';
       var topic = String(s.meeting_topic || s.meeting_id || 'Session').replace(/</g, '&lt;');
       var program = String(s.program_name || '—').replace(/</g, '&lt;');
+      var by = String(s.submitted_by || '—').replace(/</g, '&lt;');
       var row =
         '<tr>' +
           '<td><div class="info-title">' + topic + '</div>' +
             '<div class="info-sub">Just submitted</div></td>' +
           '<td>' + program + '</td>' +
+          '<td>' + by + '</td>' +
           '<td><span class="pill ok">Recorded</span></td>' +
           '<td>' + (s.present_count != null ? s.present_count : '—') + '</td>' +
           '<td>' + formatWhen(s.session_start) + '</td>' +
@@ -688,7 +693,8 @@
             meeting_topic: res.meeting_topic,
             program_name: (res.meeting_topic || '').split('-ILT-')[0] || '',
             session_start: (res.session_date || '') + 'T' + (res.start_time || '09:00') + ':00',
-            present_count: res.present_count
+            present_count: res.present_count,
+            submitted_by: res.submitted_by || ''
           });
           updateSummary();
           // Pull updated cache shortly after Action refreshes it

@@ -11,6 +11,7 @@ from pathlib import Path
 
 from manual_attendance.cards import parse_time_hhmm
 from manual_attendance.db_queries import submit_present_attendance
+from manual_attendance.submissions_log import record_submission
 
 logging.basicConfig(
     level=os.environ.get("LOG_LEVEL", "INFO"),
@@ -49,6 +50,7 @@ def main() -> None:
     end_time = payload["end_time"]
     all_learner_ids = payload.get("all_learner_ids") or []
     absent_learner_ids = payload.get("absent_learner_ids") or []
+    submitted_by = str(payload.get("submitted_by") or "").strip()
 
     session_day = date.fromisoformat(session_date)
     start_t = parse_time_hhmm(start_time)
@@ -81,6 +83,15 @@ def main() -> None:
         all_learner_ids=all_learner_ids,
         absent_learner_ids=absent_learner_ids,
     )
+
+    if result.get("meeting_id"):
+        record_submission(
+            meeting_id=str(result["meeting_id"]),
+            submitted_by=submitted_by,
+            meeting_topic=meeting_topic,
+            program_name=program_name,
+        )
+        result["submitted_by"] = submitted_by or None
 
     print("✅ Manual attendance saved")
     print(json.dumps(result, indent=2))

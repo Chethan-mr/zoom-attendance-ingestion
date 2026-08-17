@@ -87,6 +87,8 @@ function submitAttendance(form) {
     return absentLearnerIds.indexOf(id) === -1;
   }).length;
 
+  var submittedBy = getActiveUserEmail_();
+
   triggerManualAttendanceSubmit_({
     program_id: programId,
     program_name: programName,
@@ -95,7 +97,8 @@ function submitAttendance(form) {
     start_time: startTime,
     end_time: endTime,
     all_learner_ids: allLearnerIds,
-    absent_learner_ids: absentLearnerIds
+    absent_learner_ids: absentLearnerIds,
+    submitted_by: submittedBy
   });
 
   return {
@@ -105,11 +108,24 @@ function submitAttendance(form) {
     start_time: startTime,
     end_time: endTime,
     present_count: presentCount,
-    absent_count: absentLearnerIds.length
+    absent_count: absentLearnerIds.length,
+    submitted_by: submittedBy
   };
 }
 
 // -------------------- Shared helpers --------------------
+
+function getActiveUserEmail_() {
+  try {
+    var active = Session.getActiveUser().getEmail();
+    if (active) return String(active).toLowerCase();
+  } catch (e) {}
+  try {
+    var effective = Session.getEffectiveUser().getEmail();
+    if (effective) return String(effective).toLowerCase();
+  } catch (e2) {}
+  return '';
+}
 
 function getConfig_() {
   var props = PropertiesService.getScriptProperties();

@@ -38,11 +38,17 @@ Run `getBootstrap` once → Allow
 
 When you change code later: Deploy → Manage deployments → Edit → **New version** → Deploy (URL stays the same).
 
+## Who added attendance
+The web app reads the signed-in Google account via `Session.getActiveUser().getEmail()` and stores it with each submit.
+Recent sessions show an **ADDED BY** column after the next cache refresh.
+
+Deploy the web app as:
+- Execute as: **Me**
+- Who has access: **Anyone within Mentorskool** (required so the viewer email is available)
+
 ## Flow
 ```text
-Open link → pick program → topic + times → absents → Submit
-       → GitHub Action "Manual Attendance Submit"
-       → rows in public.attendance (zoom_account_id = offline session)
+Open link (Google login) → pick program → topic + times → absents → Submit
+       → GitHub Action inserts rows + records submitted_by email
+       → cache refresh → Recent sessions shows Added by
 ```
-
-Recent sessions refresh when the cache sync workflow runs (hourly / manual).

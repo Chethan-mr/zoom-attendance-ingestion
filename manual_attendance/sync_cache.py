@@ -13,6 +13,7 @@ from manual_attendance.db_queries import (
     fetch_programs,
     fetch_recent_manual_sessions,
 )
+from manual_attendance.submissions_log import merge_submitted_by
 
 logging.basicConfig(
     level=os.environ.get("LOG_LEVEL", "INFO"),
@@ -37,7 +38,7 @@ def build_cache() -> dict:
 
     recent_sessions: list[dict] = []
     try:
-        recent_sessions = fetch_recent_manual_sessions(limit=40)
+        recent_sessions = merge_submitted_by(fetch_recent_manual_sessions(limit=40))
     except Exception:
         logger.exception("Failed fetching recent manual sessions")
 
