@@ -10,6 +10,9 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write
+
 jobs:
   submit:
     runs-on: ubuntu-latest
@@ -81,3 +84,25 @@ jobs:
           USER: ${{ secrets.USER }}
           PASSWORD: ${{ secrets.PASSWORD }}
         run: python -m manual_attendance.submit_from_dispatch /tmp/manual_attendance_payload.json
+
+      # Refresh recent_sessions in cache so the web UI can show the new session.
+      - name: Refresh attendance cache
+        env:
+          HOST: ${{ secrets.HOST }}
+          PORT: ${{ secrets.PORT }}
+          DBNAME: ${{ secrets.DBNAME }}
+          USER: ${{ secrets.USER }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+        run: python -m manual_attendance.sync_cache
+
+      - name: Commit cache if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/manual_attendance_cache.json
+          if git diff --staged --quiet; then
+            echo "No cache changes"
+          else
+            git commit -m "chore: refresh manual attendance cache after submit [skip ci]"
+            git push
+          fi

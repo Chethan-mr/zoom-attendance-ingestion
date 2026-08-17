@@ -398,26 +398,30 @@
               </div>
             </section>
 
-            <section class="card">
-              <h2>Recent sessions</h2>
-              <p class="sub">Offline / MANUAL attendance already saved in the database.</p>
-              <div class="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>INFO</th>
-                      <th>PROGRAM</th>
-                      <th>STATUS</th>
-                      <th>PRESENT</th>
-                      <th>WHEN</th>
-                    </tr>
-                  </thead>
-                  <tbody id="recentBody">
-                    <tr><td colspan="5" class="empty">Loading…</td></tr>
-                  </tbody>
-                </table>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px;">
+              <div>
+                <h2 style="margin:0;">Recent sessions</h2>
+                <p class="sub" style="margin:4px 0 0;">Offline / MANUAL attendance already saved in the database.</p>
               </div>
-            </section>
+              <button class="btn" id="refreshBtn" type="button" style="width:auto;padding:8px 14px;">Refresh</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>INFO</th>
+                    <th>PROGRAM</th>
+                    <th>STATUS</th>
+                    <th>PRESENT</th>
+                    <th>WHEN</th>
+                  </tr>
+                </thead>
+                <tbody id="recentBody">
+                  <tr><td colspan="5" class="empty">Loading…</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
           </div>
 
           <aside class="card summary">
@@ -574,6 +578,26 @@
       }).join('');
     }
 
+    function prependRecentSession(s) {
+      var body = $('recentBody');
+      var firstEmpty = body.querySelector('.empty');
+      if (firstEmpty) body.innerHTML = '';
+      var topic = String(s.meeting_topic || s.meeting_id || 'Session').replace(/</g, '&lt;');
+      var program = String(s.program_name || '—').replace(/</g, '&lt;');
+      var row =
+        '<tr>' +
+          '<td><div class="info-title">' + topic + '</div>' +
+            '<div class="info-sub">Just submitted</div></td>' +
+          '<td>' + program + '</td>' +
+          '<td><span class="pill ok">Recorded</span></td>' +
+          '<td>' + (s.present_count != null ? s.present_count : '—') + '</td>' +
+          '<td>' + formatWhen(s.session_start) + '</td>' +
+        '</tr>';
+      body.insertAdjacentHTML('afterbegin', row);
+      var n = body.querySelectorAll('tr').length;
+      $('sessionCount').textContent = n + ' sessions';
+    }
+
     function showStatus(ok, msg) {
       var el = $('status');
       el.className = 'status ' + (ok ? 'ok' : 'err');
@@ -656,10 +680,19 @@
             true,
             'Submitted · Present ' + res.present_count +
               ' · Absent ' + res.absent_count +
-              '. Action will insert shortly; refresh recent sessions after a minute.'
+              '. Recent list refreshes after cache sync (~1 min). Click Refresh now if needed.'
           );
-          loadBootstrap();
+          // Optimistic row so ops see it immediately
+          prependRecentSession({
+            meeting_id: 'pending',
+            meeting_topic: res.meeting_topic,
+            program_name: (res.meeting_topic || '').split('-ILT-')[0] || '',
+            session_start: (res.session_date || '') + 'T' + (res.start_time || '09:00') + ':00',
+            present_count: res.present_count
+          });
           updateSummary();
+          // Pull updated cache shortly after Action refreshes it
+          setTimeout(loadBootstrap, 45000);
         })
         .withFailureHandler(function (err) {
           $('submitBtn').disabled = false;
@@ -677,6 +710,11 @@
     $('endTime').addEventListener('input', updateSummary);
     $('allPresent').addEventListener('change', onAllPresentChange);
     $('submitBtn').addEventListener('click', submit);
+    $('refreshBtn').addEventListener('click', function () {
+      $('refreshBtn').disabled = true;
+      loadBootstrap();
+      setTimeout(function () { $('refreshBtn').disabled = false; }, 1500);
+    });
     updateSummary();
     loadBootstrap();
   </script>
