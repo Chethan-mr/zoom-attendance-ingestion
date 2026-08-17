@@ -6,99 +6,210 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     :root {
-      --bg: #f3f6f4;
+      --bg: #f5f7fb;
       --panel: #ffffff;
-      --ink: #14201a;
-      --muted: #5b6b63;
-      --line: #d7e0db;
-      --accent: #0f6b4c;
-      --accent-2: #c45c26;
-      --ok: #0f6b4c;
-      --err: #9b1c1c;
+      --ink: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --line-2: #f3f4f6;
+      --blue: #3b82f6;
+      --blue-dark: #2563eb;
+      --blue-soft: #eff6ff;
+      --green: #059669;
+      --green-soft: #ecfdf5;
+      --red: #dc2626;
+      --red-soft: #fef2f2;
+      --amber: #d97706;
+      --amber-soft: #fffbeb;
+      --sidebar: #ffffff;
+      --radius: 12px;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
       color: var(--ink);
-      background:
-        radial-gradient(circle at top left, #e7f2ec 0%, transparent 42%),
-        linear-gradient(180deg, #eef3f0 0%, var(--bg) 100%);
+      background: var(--bg);
+      font-family: "DM Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+    .app {
+      display: grid;
+      grid-template-columns: 72px 1fr;
       min-height: 100vh;
     }
-    .wrap {
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 28px 16px 48px;
+    .sidebar {
+      background: var(--sidebar);
+      border-right: 1px solid var(--line);
+      padding: 18px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
-    header h1 {
-      margin: 0 0 6px;
-      font-size: 1.75rem;
-      letter-spacing: -0.02em;
-    }
-    header p {
-      margin: 0;
+    .nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 0;
+      background: transparent;
       color: var(--muted);
+      display: grid;
+      place-items: center;
+      cursor: default;
+    }
+    .nav-btn.active {
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+    }
+    .nav-btn svg { width: 20px; height: 20px; }
+    .main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .topbar {
+      height: 64px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+    .brand {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--blue-dark);
       font-size: 0.95rem;
     }
-    .grid {
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
       display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .content {
+      padding: 24px;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
       gap: 16px;
-      margin-top: 22px;
+      margin-bottom: 20px;
     }
-    @media (min-width: 860px) {
-      .grid { grid-template-columns: 1.15fr 0.85fr; align-items: start; }
+    .page-head h1 {
+      margin: 0;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
     }
-    .panel {
+    .page-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 8px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 0.75rem;
+      font-weight: 650;
+      vertical-align: middle;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 16px;
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+      .layout { grid-template-columns: 1fr; }
+    }
+    .stack { display: grid; gap: 16px; }
+    .card {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 8px 24px rgba(20, 32, 26, 0.04);
+      border-radius: var(--radius);
+      padding: 20px;
     }
-    .panel h2 {
-      margin: 0 0 12px;
-      font-size: 1.05rem;
+    .card h2 {
+      margin: 0 0 4px;
+      font-size: 1rem;
+    }
+    .card .sub {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 16px;
+    }
+    .field.full { grid-column: 1 / -1; }
+    @media (max-width: 640px) {
+      .fields { grid-template-columns: 1fr; }
     }
     label {
       display: block;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      margin: 12px 0 6px;
+      margin-bottom: 6px;
+      color: #374151;
     }
-    select, input[type="text"], input[type="date"], input[type="time"] {
+    select, input[type="text"], input[type="date"] {
       width: 100%;
       padding: 10px 12px;
       border: 1px solid var(--line);
-      border-radius: 10px;
+      border-radius: 8px;
       font: inherit;
       background: #fff;
+      color: var(--ink);
+    }
+    select:focus, input:focus {
+      outline: 2px solid #bfdbfe;
+      border-color: var(--blue);
     }
     .hint {
-      color: var(--muted);
-      font-size: 0.82rem;
       margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.78rem;
     }
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .check {
+    .check-row {
       display: flex;
-      gap: 8px;
       align-items: center;
-      margin-top: 14px;
-      font-size: 0.95rem;
+      gap: 8px;
+      margin-top: 4px;
+      font-size: 0.92rem;
     }
     .learners {
-      max-height: 260px;
+      max-height: 240px;
       overflow: auto;
       border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 8px 10px;
-      margin-top: 8px;
-      background: #fafcfb;
+      border-radius: 8px;
+      padding: 8px 12px;
+      background: #fafafa;
     }
     .learners label {
       display: flex;
@@ -106,112 +217,236 @@
       align-items: center;
       font-weight: 500;
       margin: 0;
-      padding: 6px 0;
-      font-size: 0.9rem;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--line-2);
+      color: var(--ink);
+      font-size: 0.88rem;
     }
-    button {
-      margin-top: 16px;
+    .learners label:last-child { border-bottom: 0; }
+    .summary .warn {
+      background: var(--amber-soft);
+      border: 1px solid #fde68a;
+      color: #92400e;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      margin-bottom: 12px;
+    }
+    .summary dl {
+      margin: 0 0 16px;
+      display: grid;
+      gap: 10px;
+    }
+    .summary dt {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+    .summary dd {
+      margin: 2px 0 0;
+      font-weight: 600;
+      font-size: 0.92rem;
+    }
+    .btn {
       width: 100%;
       border: 0;
-      border-radius: 999px;
+      border-radius: 8px;
       padding: 12px 16px;
-      background: var(--accent);
+      background: var(--blue);
       color: #fff;
       font: inherit;
       font-weight: 650;
       cursor: pointer;
     }
-    button:disabled {
+    .btn:hover { background: var(--blue-dark); }
+    .btn:disabled {
       opacity: 0.55;
       cursor: not-allowed;
     }
     .status {
       margin-top: 12px;
       padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
       display: none;
     }
-    .status.ok { display: block; background: #e8f6ef; color: var(--ok); }
-    .status.err { display: block; background: #fdecec; color: var(--err); }
-    .meta {
-      color: var(--muted);
-      font-size: 0.78rem;
-      margin-bottom: 10px;
+    .status.ok { display: block; background: var(--green-soft); color: var(--green); }
+    .status.err { display: block; background: var(--red-soft); color: var(--red); }
+    .table-wrap { overflow: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
     }
-    .session {
-      padding: 10px 0;
+    th {
+      text-align: left;
+      font-size: 0.7rem;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      font-weight: 650;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--line);
+      white-space: nowrap;
     }
-    .session:last-child { border-bottom: 0; }
-    .session strong { display: block; font-size: 0.92rem; }
-    .session span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.8rem;
-      margin-top: 3px;
+    td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--line-2);
+      vertical-align: top;
+      font-size: 0.88rem;
     }
+    tr:last-child td { border-bottom: 0; }
+    .info-title { font-weight: 650; }
+    .info-sub { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    .pill.ok { background: var(--green-soft); color: var(--green); }
+    .pill.muted { background: var(--line-2); color: var(--muted); }
     .empty {
       color: var(--muted);
       font-size: 0.9rem;
+      padding: 8px 0;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>Manual Attendance</h1>
-      <p>Mark offline / ILT attendance and review recent sessions.</p>
-    </header>
+  <div class="app">
+    <aside class="sidebar" aria-label="Navigation">
+      <div class="nav-btn" title="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11.5 12 4l9 7.5"/><path d="M6 10.5V20h12v-9.5"/></svg>
+      </div>
+      <div class="nav-btn active" title="Attendance">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/><path d="m9 16 2 2 4-4"/></svg>
+      </div>
+    </aside>
 
-    <div class="grid">
-      <section class="panel">
-        <h2>Mark attendance</h2>
-        <div class="meta" id="cacheMeta">Loading…</div>
+    <div class="main">
+      <header class="topbar">
+        <div class="brand">ENQURIOUS</div>
+        <div class="top-right">
+          <span id="cacheMeta">Loading cache…</span>
+          <div class="avatar">A</div>
+        </div>
+      </header>
 
-        <label for="program">Program</label>
-        <select id="program">
-          <option value="">— Select a program —</option>
-        </select>
-
-        <label for="sessionDate">Date</label>
-        <input type="date" id="sessionDate">
-
-        <label for="topicSuffix">Topic name (after ILT-)</label>
-        <input type="text" id="topicSuffix" placeholder="Understanding Window Functions in SQL">
-        <div class="hint" id="topicPreview">Topic will be: [program]-ILT-[your topic]</div>
-
-        <div class="row">
+      <div class="content">
+        <div class="page-head">
           <div>
-            <label for="startTime">Start</label>
-            <input type="text" id="startTime" value="09:00" placeholder="09:00">
-          </div>
-          <div>
-            <label for="endTime">End</label>
-            <input type="text" id="endTime" value="11:00" placeholder="11:00">
+            <h1>Attendance <span class="badge" id="sessionCount">0 sessions</span></h1>
+            <p>Mark offline / ILT attendance and review recent sessions.</p>
           </div>
         </div>
 
-        <label class="check">
-          <input type="checkbox" id="allPresent" checked>
-          All present (no absentees)
-        </label>
+        <div class="layout">
+          <div class="stack">
+            <section class="card">
+              <h2>Basic details</h2>
+              <p class="sub">Choose the program and session timing for this offline class.</p>
+              <div class="fields">
+                <div class="field full">
+                  <label for="program">Program / Label</label>
+                  <select id="program">
+                    <option value="">— Select a program —</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="sessionDate">Session date</label>
+                  <input type="date" id="sessionDate">
+                </div>
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <div class="hint">Defaults to today if left unchanged.</div>
+                </div>
+                <div class="field">
+                  <label for="startTime">Start time</label>
+                  <input type="text" id="startTime" value="09:00" placeholder="09:00">
+                </div>
+                <div class="field">
+                  <label for="endTime">End time</label>
+                  <input type="text" id="endTime" value="11:00" placeholder="11:00">
+                </div>
+                <div class="field full">
+                  <label for="topicSuffix">Topic name</label>
+                  <input type="text" id="topicSuffix" placeholder="Understanding Window Functions in SQL">
+                  <div class="hint" id="topicPreview">Saved as [program]-ILT-[your topic]</div>
+                </div>
+              </div>
+            </section>
 
-        <label>Absent learners</label>
-        <div class="hint">Uncheck All present, then tick only absentees.</div>
-        <div class="learners" id="learnersBox">
-          <div class="empty">Select a program to load learners.</div>
+            <section class="card">
+              <h2>Learners</h2>
+              <p class="sub">Mark everyone present, or select only absentees.</p>
+              <div class="check-row">
+                <input type="checkbox" id="allPresent" checked>
+                <label for="allPresent" style="margin:0;font-weight:500;">All present (no absentees)</label>
+              </div>
+              <div style="margin-top:14px;">
+                <label>Absent learners</label>
+                <div class="learners" id="learnersBox">
+                  <div class="empty">Select a program to load learners.</div>
+                </div>
+              </div>
+            </section>
+
+            <section class="card">
+              <h2>Recent sessions</h2>
+              <p class="sub">Offline / MANUAL attendance already saved in the database.</p>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>INFO</th>
+                      <th>PROGRAM</th>
+                      <th>STATUS</th>
+                      <th>PRESENT</th>
+                      <th>WHEN</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentBody">
+                    <tr><td colspan="5" class="empty">Loading…</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <aside class="card summary">
+            <h2>Summary</h2>
+            <p class="sub">Review before submit.</p>
+            <div class="warn" id="summaryWarn">Select a program and topic to enable submit.</div>
+            <dl>
+              <div>
+                <dt>Program</dt>
+                <dd id="sumProgram">—</dd>
+              </div>
+              <div>
+                <dt>Topic</dt>
+                <dd id="sumTopic">—</dd>
+              </div>
+              <div>
+                <dt>Schedule</dt>
+                <dd id="sumSchedule">—</dd>
+              </div>
+              <div>
+                <dt>Learners</dt>
+                <dd id="sumLearners">—</dd>
+              </div>
+            </dl>
+            <button class="btn" id="submitBtn" type="button">Submit attendance</button>
+            <div class="status" id="status"></div>
+          </aside>
         </div>
-
-        <button id="submitBtn" type="button">Submit attendance</button>
-        <div class="status" id="status"></div>
-      </section>
-
-      <section class="panel">
-        <h2>Recent sessions</h2>
-        <div class="meta">From offline / MANUAL attendance rows</div>
-        <div id="recentBox"><div class="empty">Loading…</div></div>
-      </section>
+      </div>
     </div>
   </div>
 
@@ -240,24 +475,53 @@
       var p = selectedProgram();
       var suffix = ($('topicSuffix').value || '').trim() || '[your topic]';
       var name = p ? p.text : '[program]';
-      $('topicPreview').textContent = 'Topic will be: ' + name + '-ILT-' + suffix;
+      var full = name + '-ILT-' + suffix;
+      $('topicPreview').textContent = 'Saved as ' + full;
+      updateSummary();
+    }
+
+    function updateSummary() {
+      var p = selectedProgram();
+      var suffix = ($('topicSuffix').value || '').trim();
+      var date = $('sessionDate').value || todayLocal();
+      var start = $('startTime').value || '09:00';
+      var end = $('endTime').value || '11:00';
+      $('sumProgram').textContent = p ? p.text : '—';
+      $('sumTopic').textContent = p && suffix ? (p.text + '-ILT-' + suffix) : '—';
+      $('sumSchedule').textContent = date + ' · ' + start + ' – ' + end;
+      var absentCount = Array.prototype.filter.call(document.querySelectorAll('.absent'), function (cb) {
+        return cb.checked;
+      }).length;
+      if (!learners.length) {
+        $('sumLearners').textContent = '—';
+      } else if ($('allPresent').checked && absentCount === 0) {
+        $('sumLearners').textContent = learners.length + ' present · 0 absent';
+      } else {
+        $('sumLearners').textContent =
+          (learners.length - absentCount) + ' present · ' + absentCount + ' absent';
+      }
+      var ready = !!(p && suffix);
+      $('summaryWarn').style.display = ready ? 'none' : 'block';
+      $('submitBtn').disabled = !ready;
     }
 
     function renderLearners() {
       var box = $('learnersBox');
       if (!learners.length) {
         box.innerHTML = '<div class="empty">No learners for this program.</div>';
+        updateSummary();
         return;
       }
       box.innerHTML = learners.map(function (l) {
         return '<label><input type="checkbox" class="absent" value="' +
-          l.id.replace(/"/g, '&quot;') + '"> ' +
-          (l.display_name || l.id).replace(/</g, '&lt;') +
+          String(l.id).replace(/"/g, '&quot;') + '"> ' +
+          String(l.display_name || l.id).replace(/</g, '&lt;') +
           '</label>';
       }).join('');
       Array.prototype.forEach.call(box.querySelectorAll('.absent'), function (cb) {
         cb.addEventListener('change', onAbsentChange);
       });
+      updateSummary();
     }
 
     function onAbsentChange() {
@@ -265,6 +529,7 @@
         return cb.checked;
       });
       if (any) $('allPresent').checked = false;
+      updateSummary();
     }
 
     function onAllPresentChange() {
@@ -273,26 +538,40 @@
           cb.checked = false;
         });
       }
+      updateSummary();
     }
 
-    function formatSession(s) {
-      var when = '';
-      if (s.session_start) {
-        try {
-          var d = new Date(s.session_start);
-          when = d.toLocaleString();
-        } catch (e) {
-          when = s.session_start;
-        }
+    function formatWhen(iso) {
+      if (!iso) return '—';
+      try {
+        return new Date(iso).toLocaleString();
+      } catch (e) {
+        return iso;
       }
-      return (
-        '<div class="session">' +
-          '<strong>' + (s.meeting_topic || s.meeting_id || 'Session').replace(/</g, '&lt;') + '</strong>' +
-          '<span>' + (when || '—') +
-            (s.present_count != null ? ' · Present: ' + s.present_count : '') +
-          '</span>' +
-        '</div>'
-      );
+    }
+
+    function renderRecent(sessions) {
+      var body = $('recentBody');
+      $('sessionCount').textContent = (sessions.length || 0) + ' sessions';
+      if (!sessions.length) {
+        body.innerHTML = '<tr><td colspan="5" class="empty">No recent manual sessions yet.</td></tr>';
+        return;
+      }
+      body.innerHTML = sessions.map(function (s) {
+        var topic = String(s.meeting_topic || s.meeting_id || 'Session').replace(/</g, '&lt;');
+        var program = String(s.program_name || '—').replace(/</g, '&lt;');
+        var mid = String(s.meeting_id || '').replace(/</g, '&lt;');
+        return (
+          '<tr>' +
+            '<td><div class="info-title">' + topic + '</div>' +
+              '<div class="info-sub">' + mid + '</div></td>' +
+            '<td>' + program + '</td>' +
+            '<td><span class="pill ok">Recorded</span></td>' +
+            '<td>' + (s.present_count != null ? s.present_count : '—') + '</td>' +
+            '<td>' + formatWhen(s.session_start) + '</td>' +
+          '</tr>'
+        );
+      }).join('');
     }
 
     function showStatus(ok, msg) {
@@ -306,21 +585,19 @@
         .withSuccessHandler(function (data) {
           programs = data.programs || [];
           $('cacheMeta').textContent = data.updated_at
-            ? ('Cache updated: ' + data.updated_at)
+            ? ('Cache · ' + new Date(data.updated_at).toLocaleString())
             : 'Cache loaded';
           var sel = $('program');
           sel.innerHTML = '<option value="">— Select a program —</option>' +
             programs.map(function (p) {
-              return '<option value="' + p.id + '">' + p.text.replace(/</g, '&lt;') + '</option>';
+              return '<option value="' + p.id + '">' +
+                String(p.text).replace(/</g, '&lt;') + '</option>';
             }).join('');
-          var recent = data.recent_sessions || [];
-          $('recentBox').innerHTML = recent.length
-            ? recent.map(formatSession).join('')
-            : '<div class="empty">No recent manual sessions yet.</div>';
+          renderRecent(data.recent_sessions || []);
           updateTopicPreview();
         })
         .withFailureHandler(function (err) {
-          $('cacheMeta').textContent = 'Failed to load cache';
+          $('cacheMeta').textContent = 'Cache failed';
           showStatus(false, String(err && err.message ? err.message : err));
         })
         .getBootstrap();
@@ -332,6 +609,7 @@
       if (!id) {
         learners = [];
         $('learnersBox').innerHTML = '<div class="empty">Select a program to load learners.</div>';
+        updateSummary();
         return;
       }
       $('learnersBox').innerHTML = '<div class="empty">Loading learners…</div>';
@@ -376,16 +654,17 @@
           $('submitBtn').disabled = false;
           showStatus(
             true,
-            'Submitted: ' + res.meeting_topic +
-              ' · Present ' + res.present_count +
+            'Submitted · Present ' + res.present_count +
               ' · Absent ' + res.absent_count +
-              '. GitHub Action will insert shortly. Refresh later to see it under Recent sessions.'
+              '. Action will insert shortly; refresh recent sessions after a minute.'
           );
           loadBootstrap();
+          updateSummary();
         })
         .withFailureHandler(function (err) {
           $('submitBtn').disabled = false;
           showStatus(false, String(err && err.message ? err.message : err));
+          updateSummary();
         })
         .submitAttendance(payload);
     }
@@ -393,8 +672,12 @@
     $('sessionDate').value = todayLocal();
     $('program').addEventListener('change', loadLearners);
     $('topicSuffix').addEventListener('input', updateTopicPreview);
+    $('sessionDate').addEventListener('change', updateSummary);
+    $('startTime').addEventListener('input', updateSummary);
+    $('endTime').addEventListener('input', updateSummary);
     $('allPresent').addEventListener('change', onAllPresentChange);
     $('submitBtn').addEventListener('click', submit);
+    updateSummary();
     loadBootstrap();
   </script>
 </body>
