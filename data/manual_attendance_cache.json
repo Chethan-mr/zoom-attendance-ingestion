@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-18T05:47:36.519093+00:00",
+  "updated_at": "2026-08-18T05:57:37.018099+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -2122,6 +2122,16 @@
     ]
   },
   "recent_sessions": [
+    {
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260818-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-SQL",
+      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
+      "session_start": "2026-08-18T09:00:00+00:00",
+      "session_end": "2026-08-18T11:00:00+00:00",
+      "present_count": 21,
+      "zoom_account_id": "abhilipsha offline",
+      "submitted_by": "abhilipsha@mentorskool.com"
+    },
     {
       "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260817-0900",
       "meeting_topic": "alchemy-advanced-dbx-chennai-2026-ILT-17-08-2026",
