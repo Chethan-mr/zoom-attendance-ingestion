@@ -22,5 +22,11 @@
     "submitted_at": "2026-08-18T06:00:46.960733+00:00",
     "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-GCP",
     "program_name": "alchemy-advanced-gcp-pune-2026"
+  },
+  "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260819-0900": {
+    "submitted_by": "abhilipsha@mentorskool.com",
+    "submitted_at": "2026-08-19T05:44:37.633541+00:00",
+    "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-LLM Foundations, Transformer Architecture, Attention Mechnism",
+    "program_name": "alchemy-advanced-gcp-pune-2026"
   }
 }
