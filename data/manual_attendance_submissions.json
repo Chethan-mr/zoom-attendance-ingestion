@@ -40,5 +40,11 @@
     "submitted_at": "2026-08-20T05:36:33.627135+00:00",
     "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Understanding RAG Architecture",
     "program_name": "alchemy-advanced-gcp-pune-2026"
+  },
+  "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260821-1100": {
+    "submitted_by": "abhilipsha@mentorskool.com",
+    "submitted_at": "2026-08-21T05:18:41.629077+00:00",
+    "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Explore Gemini Enterprise ecosystem",
+    "program_name": "alchemy-advanced-gcp-pune-2026"
   }
 }

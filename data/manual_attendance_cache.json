@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-21T04:56:13.826232+00:00",
+  "updated_at": "2026-08-21T05:19:58.088515+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -2123,6 +2123,16 @@
   },
   "recent_sessions": [
     {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260821-1100",
+      "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Explore Gemini Enterprise ecosystem",
+      "program_name": "alchemy-advanced-gcp-pune-2026",
+      "session_start": "2026-08-21T11:00:00+00:00",
+      "session_end": "2026-08-21T12:00:00+00:00",
+      "present_count": 30,
+      "zoom_account_id": "abhilipsha offline",
+      "submitted_by": "abhilipsha@mentorskool.com"
+    },
+    {
       "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260820-1100",
       "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Understanding RAG Architecture",
       "program_name": "alchemy-advanced-gcp-pune-2026",
@@ -2143,16 +2153,6 @@
       "submitted_by": "abhilipsha@mentorskool.com"
     },
     {
-      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260819-0900",
-      "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-LLM Foundations, Transformer Architecture, Attention Mechnism",
-      "program_name": "alchemy-advanced-gcp-pune-2026",
-      "session_start": "2026-08-19T09:00:00+00:00",
-      "session_end": "2026-08-19T11:00:00+00:00",
-      "present_count": 28,
-      "zoom_account_id": "abhilipsha offline",
-      "submitted_by": "abhilipsha@mentorskool.com"
-    },
-    {
       "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260819-0900",
       "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Basic Python Revision",
       "program_name": "alchemy-advanced-dbx-hyderabad-2026",
@@ -2161,6 +2161,16 @@
       "present_count": 21,
       "zoom_account_id": "abhilipsha offline",
       "submitted_by": "abhilipsha"
+    },
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260819-0900",
+      "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-LLM Foundations, Transformer Architecture, Attention Mechnism",
+      "program_name": "alchemy-advanced-gcp-pune-2026",
+      "session_start": "2026-08-19T09:00:00+00:00",
+      "session_end": "2026-08-19T11:00:00+00:00",
+      "present_count": 28,
+      "zoom_account_id": "abhilipsha offline",
+      "submitted_by": "abhilipsha@mentorskool.com"
     },
     {
       "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260818-1100",
