@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-21T23:42:09.362347+00:00",
+  "updated_at": "2026-08-22T01:53:05.394491+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -68,10 +68,6 @@
     {
       "id": "38a3586b-f03b-461d-b908-dbf8f09669e2",
       "text": "skill-path-access-request"
-    },
-    {
-      "id": "38c2320f-3e28-49f6-9ced-af7f17d501ad",
-      "text": "snowpro-advanced-data-scientist-april-2026"
     },
     {
       "id": "b1b2d810-2384-4c8c-93b0-780d8a0a907e",
@@ -1554,100 +1550,6 @@
       {
         "id": "2322147a-b945-487f-89b4-97e16a7beb4a",
         "display_name": "test user_prod_1"
-      }
-    ],
-    "38c2320f-3e28-49f6-9ced-af7f17d501ad": [
-      {
-        "id": "fe49ff1c-e26b-4901-9d7e-35d30a2edd15",
-        "display_name": "Aishwarya Patil"
-      },
-      {
-        "id": "ad4b3368-5514-44ba-85a0-45bf2f4b07fa",
-        "display_name": "Aman Singh"
-      },
-      {
-        "id": "a3657a4b-302e-49a4-b6c6-ba9e498ce3f3",
-        "display_name": "Amit  Dixit"
-      },
-      {
-        "id": "611590b7-d6af-4526-a002-cc9b121f5ff1",
-        "display_name": "ANSHIKA  AGARWAL"
-      },
-      {
-        "id": "ade084af-f7d3-400c-82f9-402fc2e5f9a0",
-        "display_name": "Ashish Mishra"
-      },
-      {
-        "id": "35ed8357-57fd-4cbc-8de3-76c3082a5827",
-        "display_name": "Ashwini Narasimhamurthy"
-      },
-      {
-        "id": "88e942b5-0703-423b-8f1c-7b5c7864b4b4",
-        "display_name": "Avinash Godge"
-      },
-      {
-        "id": "fdc2e298-de32-48da-b1fc-6852ad52fe8a",
-        "display_name": "Dhruv  Saini"
-      },
-      {
-        "id": "37a10d4b-b5ca-42e5-8415-61aa5a978053",
-        "display_name": "Gajendra  Saini"
-      },
-      {
-        "id": "9be7b02b-963d-4b19-a52b-d65d31c50625",
-        "display_name": "Karthik K"
-      },
-      {
-        "id": "6b79b0db-1ac7-4fdf-864c-901534ab512f",
-        "display_name": "LOHIT JHAJHRIA"
-      },
-      {
-        "id": "59734d8f-0ad5-47f6-84b3-be112fef30c5",
-        "display_name": "Mitraansh   Khanna"
-      },
-      {
-        "id": "9a4437f1-2365-456e-b61a-9e5f74c61567",
-        "display_name": "Muralidharan Pasupathi"
-      },
-      {
-        "id": "b5bbd716-33ba-42b3-977a-7350bab8762f",
-        "display_name": "Navratna Tripathi"
-      },
-      {
-        "id": "a3e7cd54-8e32-4f45-a0ff-02ac4e69bda9",
-        "display_name": "Nikhil Ranade"
-      },
-      {
-        "id": "005bb2a2-aefa-426b-bad4-dd6a727ce377",
-        "display_name": "Pramod Barik"
-      },
-      {
-        "id": "8a927357-eac1-4d69-b667-6fd1ceb9dacb",
-        "display_name": "Priya Kumari"
-      },
-      {
-        "id": "6f689539-5fdc-4cc9-a9bf-73e193996a1a",
-        "display_name": "Sakshi Jain"
-      },
-      {
-        "id": "be78c389-12f9-4de6-b4cf-395bc358becf",
-        "display_name": "Subash Bose"
-      },
-      {
-        "id": "7962d998-80cd-4af6-9932-bb8bdd7d0afb",
-        "display_name": "Vaibhav Jain"
-      },
-      {
-        "id": "b0df26da-1ca5-464a-b2d0-bfb7f97fad63",
-        "display_name": "VANSIKA SONTHALIA"
-      },
-      {
-        "id": "0fce5752-f61b-43d1-a70e-a28fdbb6c714",
-        "display_name": "Vinoth Rajendran"
-      },
-      {
-        "id": "39051dba-4e11-4fb3-8090-f4af3e75572e",
-        "display_name": "YADALA VINOD KUMAR"
       }
     ],
     "b1b2d810-2384-4c8c-93b0-780d8a0a907e": [
