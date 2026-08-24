@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-24T05:07:52.155875+00:00",
+  "updated_at": "2026-08-24T05:17:43.173701+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -24,6 +24,10 @@
     {
       "id": "2e85441c-0b46-40c9-a3e1-a8c738fe053d",
       "text": "cortex-code-july-b2-2026"
+    },
+    {
+      "id": "f27654e0-8ace-4070-bbcd-133c23d0ee85",
+      "text": "databricks-de-assoc-aug-2026"
     },
     {
       "id": "a8b684dd-5f33-46e4-821c-6c2c9245982d",
@@ -675,6 +679,7 @@
         "display_name": "Tanumoy Atta"
       }
     ],
+    "f27654e0-8ace-4070-bbcd-133c23d0ee85": [],
     "a8b684dd-5f33-46e4-821c-6c2c9245982d": [
       {
         "id": "d1bb50db-ea0f-43e3-81b0-b40b3512c912",
@@ -2034,6 +2039,16 @@
     ]
   },
   "recent_sessions": [
+    {
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260824-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Python",
+      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
+      "session_start": "2026-08-24T09:00:00+00:00",
+      "session_end": "2026-08-24T11:00:00+00:00",
+      "present_count": 20,
+      "zoom_account_id": "abhilipsha offline",
+      "submitted_by": "abhilipsha@mentorskool.com"
+    },
     {
       "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260821-1100",
       "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Unlocking Seasonal Trends with Timestamps",
