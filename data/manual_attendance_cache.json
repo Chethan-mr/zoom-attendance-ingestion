@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-25T16:03:06.846320+00:00",
+  "updated_at": "2026-08-25T16:58:15.552308+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -68,6 +68,10 @@
     {
       "id": "33f3c774-bb8b-47ab-ba7e-8dc45c90fe9e",
       "text": "iceberg-aws-june-2026"
+    },
+    {
+      "id": "ab7faa17-99fd-4a61-9fa2-caee4b8b321d",
+      "text": "intern-learning"
     },
     {
       "id": "61012b53-4cc7-4fde-afa2-de2149c3c7a5",
@@ -1650,6 +1654,12 @@
       {
         "id": "79cf3a81-7953-4517-ad8b-be6639d545f5",
         "display_name": "Venkata Kamepalli"
+      }
+    ],
+    "ab7faa17-99fd-4a61-9fa2-caee4b8b321d": [
+      {
+        "id": "98f6f6ef-6717-42e3-8cbe-9132767cbdfb",
+        "display_name": "Priyanshu Pandey"
       }
     ],
     "61012b53-4cc7-4fde-afa2-de2149c3c7a5": [
