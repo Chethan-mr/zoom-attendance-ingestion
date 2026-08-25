@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-25T04:55:56.354287+00:00",
+  "updated_at": "2026-08-25T05:50:07.645417+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -34,6 +34,10 @@
       "text": "databricks-de-assoc-july-2026"
     },
     {
+      "id": "2ed980cf-79fd-41fa-b8e7-b267c5769686",
+      "text": "databricks-de-prof-aug-2026"
+    },
+    {
       "id": "f0bd6846-8cd2-414d-8f5f-ed1d66f803bb",
       "text": "databricks-de-prof-july-2026"
     },
@@ -48,6 +52,10 @@
     {
       "id": "48b93f67-dbb7-4347-b26f-c46ab839c1c2",
       "text": "dbx-de-assoc-training-content"
+    },
+    {
+      "id": "6ddaf574-b27f-43cc-b9bf-628a91071fb0",
+      "text": "dbx-de-prof-training-content"
     },
     {
       "id": "ada6e859-4ecc-49a7-a657-f6038d6a6f12",
@@ -919,6 +927,28 @@
         "display_name": "Vishal Shitole"
       }
     ],
+    "2ed980cf-79fd-41fa-b8e7-b267c5769686": [
+      {
+        "id": "b0184054-ab4e-4509-82b1-27150e18e221",
+        "display_name": "Krishna Chaitanya"
+      },
+      {
+        "id": "a14d7d89-b4dc-4892-bb11-2d2a87592a7d",
+        "display_name": "Pranay Aashish"
+      },
+      {
+        "id": "ae0ea210-9e35-4103-95a8-1ebad527eb2f",
+        "display_name": "Rakesh udutha"
+      },
+      {
+        "id": "70ee0e43-5593-4c65-aa49-a93197413e63",
+        "display_name": "Surajudin Mahammad"
+      },
+      {
+        "id": "2d9a2d16-efa6-411a-a9d8-63e5822422d5",
+        "display_name": "Vishnu Durgam"
+      }
+    ],
     "f0bd6846-8cd2-414d-8f5f-ed1d66f803bb": [
       {
         "id": "e3dafe42-6772-45e8-bd3d-06839c85822c",
@@ -1244,6 +1274,12 @@
       {
         "id": "f15bb239-0dcb-4f01-8edd-0d5658107239",
         "display_name": "Arcchana Mohanty"
+      }
+    ],
+    "6ddaf574-b27f-43cc-b9bf-628a91071fb0": [
+      {
+        "id": "23bfe6db-6089-4c37-a7da-3a88ac86c4e5",
+        "display_name": "Akash NA"
       }
     ],
     "ada6e859-4ecc-49a7-a657-f6038d6a6f12": [
@@ -2120,6 +2156,16 @@
     ]
   },
   "recent_sessions": [
+    {
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260825-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Databricks Problem Statement (GlobalMart)",
+      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
+      "session_start": "2026-08-25T09:00:00+00:00",
+      "session_end": "2026-08-25T11:00:00+00:00",
+      "present_count": 21,
+      "zoom_account_id": "abhilipsha offline",
+      "submitted_by": "abhilipsha"
+    },
     {
       "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260824-0900",
       "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Python",
