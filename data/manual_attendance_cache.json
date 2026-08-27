@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-26T23:37:39.800012+00:00",
+  "updated_at": "2026-08-27T04:48:06.907916+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -2279,6 +2279,16 @@
   },
   "recent_sessions": [
     {
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260827-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Intro to ingestion patterns & CDC Concepts",
+      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
+      "session_start": "2026-08-27T09:00:00+00:00",
+      "session_end": "2026-08-27T11:00:00+00:00",
+      "present_count": 20,
+      "zoom_account_id": "abhilipsha offline",
+      "submitted_by": "abhilipsha@mentorskool.com"
+    },
+    {
       "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260825-0900",
       "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Databricks Problem Statement (GlobalMart)",
       "program_name": "alchemy-advanced-dbx-hyderabad-2026",
@@ -2339,16 +2349,6 @@
       "submitted_by": "abhilipsha@mentorskool.com"
     },
     {
-      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260819-0900",
-      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Basic Python Revision",
-      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
-      "session_start": "2026-08-19T09:00:00+00:00",
-      "session_end": "2026-08-19T11:00:00+00:00",
-      "present_count": 21,
-      "zoom_account_id": "abhilipsha offline",
-      "submitted_by": "abhilipsha"
-    },
-    {
       "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260819-0900",
       "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-LLM Foundations, Transformer Architecture, Attention Mechnism",
       "program_name": "alchemy-advanced-gcp-pune-2026",
@@ -2357,6 +2357,16 @@
       "present_count": 28,
       "zoom_account_id": "abhilipsha offline",
       "submitted_by": "abhilipsha@mentorskool.com"
+    },
+    {
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260819-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Basic Python Revision",
+      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
+      "session_start": "2026-08-19T09:00:00+00:00",
+      "session_end": "2026-08-19T11:00:00+00:00",
+      "present_count": 21,
+      "zoom_account_id": "abhilipsha offline",
+      "submitted_by": "abhilipsha"
     },
     {
       "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260818-1100",
@@ -2379,6 +2389,16 @@
       "submitted_by": "abhilipsha@mentorskool.com"
     },
     {
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260817-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Understanding Pivot & Unpivot Data in SQL",
+      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
+      "session_start": "2026-08-17T09:00:00+00:00",
+      "session_end": "2026-08-17T11:00:00+00:00",
+      "present_count": 21,
+      "zoom_account_id": "chethan offline",
+      "submitted_by": "chethan@mentorskool.com"
+    },
+    {
       "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260817-0900",
       "meeting_topic": "alchemy-advanced-dbx-chennai-2026-ILT-17-08-2026",
       "program_name": "alchemy-advanced-dbx-chennai-2026",
@@ -2399,14 +2419,14 @@
       "submitted_by": "chethan@mentorskool.com"
     },
     {
-      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260817-0900",
-      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Understanding Pivot & Unpivot Data in SQL",
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260814-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Understanding Window Functions in SQL",
       "program_name": "alchemy-advanced-dbx-hyderabad-2026",
-      "session_start": "2026-08-17T09:00:00+00:00",
-      "session_end": "2026-08-17T11:00:00+00:00",
-      "present_count": 21,
-      "zoom_account_id": "chethan offline",
-      "submitted_by": "chethan@mentorskool.com"
+      "session_start": "2026-08-14T09:00:00+00:00",
+      "session_end": "2026-08-14T11:00:00+00:00",
+      "present_count": 20,
+      "zoom_account_id": "offline session",
+      "submitted_by": null
     },
     {
       "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260814-0900",
@@ -2415,16 +2435,6 @@
       "session_start": "2026-08-14T09:00:00+00:00",
       "session_end": "2026-08-14T11:00:00+00:00",
       "present_count": 28,
-      "zoom_account_id": "offline session",
-      "submitted_by": null
-    },
-    {
-      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260814-0900",
-      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Understanding Window Functions in SQL",
-      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
-      "session_start": "2026-08-14T09:00:00+00:00",
-      "session_end": "2026-08-14T11:00:00+00:00",
-      "present_count": 20,
       "zoom_account_id": "offline session",
       "submitted_by": null
     },
@@ -2469,16 +2479,6 @@
       "submitted_by": null
     },
     {
-      "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260812-0900",
-      "meeting_topic": "2026-08-12",
-      "program_name": "",
-      "session_start": "2026-08-12T09:00:00+00:00",
-      "session_end": "2026-08-12T11:00:00+00:00",
-      "present_count": 50,
-      "zoom_account_id": "offline session",
-      "submitted_by": null
-    },
-    {
       "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260812-0900",
       "meeting_topic": "2026-08-12",
       "program_name": "",
@@ -2489,12 +2489,12 @@
       "submitted_by": null
     },
     {
-      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260811-0900",
-      "meeting_topic": "2026-08-11",
+      "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260812-0900",
+      "meeting_topic": "2026-08-12",
       "program_name": "",
-      "session_start": "2026-08-11T09:00:00+00:00",
-      "session_end": "2026-08-11T11:00:00+00:00",
-      "present_count": 28,
+      "session_start": "2026-08-12T09:00:00+00:00",
+      "session_end": "2026-08-12T11:00:00+00:00",
+      "present_count": 50,
       "zoom_account_id": "offline session",
       "submitted_by": null
     },
@@ -2505,6 +2505,16 @@
       "session_start": "2026-08-11T09:00:00+00:00",
       "session_end": "2026-08-11T11:00:00+00:00",
       "present_count": 24,
+      "zoom_account_id": "offline session",
+      "submitted_by": null
+    },
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260811-0900",
+      "meeting_topic": "2026-08-11",
+      "program_name": "",
+      "session_start": "2026-08-11T09:00:00+00:00",
+      "session_end": "2026-08-11T11:00:00+00:00",
+      "present_count": 28,
       "zoom_account_id": "offline session",
       "submitted_by": null
     },
