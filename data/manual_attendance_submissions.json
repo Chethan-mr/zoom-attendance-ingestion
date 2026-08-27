@@ -64,5 +64,11 @@
     "submitted_at": "2026-08-27T04:47:09.919557+00:00",
     "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Intro to ingestion patterns & CDC Concepts",
     "program_name": "alchemy-advanced-dbx-hyderabad-2026"
+  },
+  "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260827-0900": {
+    "submitted_by": "abhilipsha@mentorskool.com",
+    "submitted_at": "2026-08-27T04:48:43.867389+00:00",
+    "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Install Python, Jupyter, and required libraries",
+    "program_name": "alchemy-advanced-gcp-pune-2026"
   }
 }
