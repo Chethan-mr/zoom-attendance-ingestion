@@ -76,5 +76,11 @@
     "submitted_at": "2026-08-28T04:53:45.389924+00:00",
     "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-API Ingestion Mechanics (REST/HTTP) & Intro to GraphDB/Cypher Basics",
     "program_name": "alchemy-advanced-dbx-hyderabad-2026"
+  },
+  "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260831-0900": {
+    "submitted_by": "abhilipsha@mentorskool.com",
+    "submitted_at": "2026-08-31T14:05:20.311399+00:00",
+    "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Recap: Ingestion Patterns Across All 4 Sources",
+    "program_name": "alchemy-advanced-dbx-hyderabad-2026"
   }
 }
