@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-01T08:00:25.924840+00:00",
+  "updated_at": "2026-09-01T10:13:38.498806+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -103,11 +103,11 @@
     },
     {
       "id": "b5b56b46-956d-486a-bed4-aa8f9dc04d41",
-      "text": "snowpro-core-aug-b2-2026"
+      "text": "snowpro-core-ch-3-aug-2026"
     },
     {
       "id": "1e1b21d6-a31d-478d-a6b2-f975de58cd79",
-      "text": "snowpro-core-aug-b3-2026"
+      "text": "snowpro-core-ch-4-aug-2026"
     },
     {
       "id": "f1c90958-27bf-46cb-acc2-707d052759c8",
@@ -3155,11 +3155,11 @@
       "submitted_by": "abhilipsha@mentorskool.com"
     },
     {
-      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260831-0900",
-      "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Understand agent execution model, tools and workflow orchestration on Google Cloud Platform.",
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260901-0900",
+      "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Google Cloud Professional Data Engineer Certification Discussion + Learning Plan",
       "program_name": "alchemy-advanced-gcp-pune-2026",
-      "session_start": "2026-08-31T09:00:00+00:00",
-      "session_end": "2026-08-31T11:00:00+00:00",
+      "session_start": "2026-09-01T09:00:00+00:00",
+      "session_end": "2026-09-01T11:00:00+00:00",
       "present_count": 30,
       "zoom_account_id": "abhilipsha offline",
       "submitted_by": "abhilipsha"
@@ -3175,11 +3175,11 @@
       "submitted_by": "abhilipsha@mentorskool.com"
     },
     {
-      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260828-0900",
-      "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Build vector database for retrieval",
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260831-0900",
+      "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Understand agent execution model, tools and workflow orchestration on Google Cloud Platform.",
       "program_name": "alchemy-advanced-gcp-pune-2026",
-      "session_start": "2026-08-28T09:00:00+00:00",
-      "session_end": "2026-08-28T11:00:00+00:00",
+      "session_start": "2026-08-31T09:00:00+00:00",
+      "session_end": "2026-08-31T11:00:00+00:00",
       "present_count": 30,
       "zoom_account_id": "abhilipsha offline",
       "submitted_by": "abhilipsha"
@@ -3193,6 +3193,16 @@
       "present_count": 20,
       "zoom_account_id": "abhilipsha offline",
       "submitted_by": "abhilipsha@mentorskool.com"
+    },
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260828-0900",
+      "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Build vector database for retrieval",
+      "program_name": "alchemy-advanced-gcp-pune-2026",
+      "session_start": "2026-08-28T09:00:00+00:00",
+      "session_end": "2026-08-28T11:00:00+00:00",
+      "present_count": 30,
+      "zoom_account_id": "abhilipsha offline",
+      "submitted_by": "abhilipsha"
     },
     {
       "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260827-0900",
@@ -3315,14 +3325,14 @@
       "submitted_by": "abhilipsha@mentorskool.com"
     },
     {
-      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260817-0900",
-      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Understanding Pivot & Unpivot Data in SQL",
-      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
+      "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260817-0900",
+      "meeting_topic": "alchemy-advanced-dbx-chennai-2026-ILT-17-08-2026",
+      "program_name": "alchemy-advanced-dbx-chennai-2026",
       "session_start": "2026-08-17T09:00:00+00:00",
       "session_end": "2026-08-17T11:00:00+00:00",
-      "present_count": 21,
-      "zoom_account_id": "chethan offline",
-      "submitted_by": "chethan@mentorskool.com"
+      "present_count": 25,
+      "zoom_account_id": "offline session",
+      "submitted_by": null
     },
     {
       "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260817-0900",
@@ -3335,24 +3345,14 @@
       "submitted_by": "chethan@mentorskool.com"
     },
     {
-      "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260817-0900",
-      "meeting_topic": "alchemy-advanced-dbx-chennai-2026-ILT-17-08-2026",
-      "program_name": "alchemy-advanced-dbx-chennai-2026",
+      "meeting_id": "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260817-0900",
+      "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Understanding Pivot & Unpivot Data in SQL",
+      "program_name": "alchemy-advanced-dbx-hyderabad-2026",
       "session_start": "2026-08-17T09:00:00+00:00",
       "session_end": "2026-08-17T11:00:00+00:00",
-      "present_count": 25,
-      "zoom_account_id": "offline session",
-      "submitted_by": null
-    },
-    {
-      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260814-0900",
-      "meeting_topic": "2026-08-14",
-      "program_name": "",
-      "session_start": "2026-08-14T09:00:00+00:00",
-      "session_end": "2026-08-14T11:00:00+00:00",
-      "present_count": 28,
-      "zoom_account_id": "offline session",
-      "submitted_by": null
+      "present_count": 21,
+      "zoom_account_id": "chethan offline",
+      "submitted_by": "chethan@mentorskool.com"
     },
     {
       "meeting_id": "MANUAL-77419489-6bb1-40f6-9ba5-1105f673e116-20260814-0900",
@@ -3371,6 +3371,16 @@
       "session_start": "2026-08-14T09:00:00+00:00",
       "session_end": "2026-08-14T11:00:00+00:00",
       "present_count": 20,
+      "zoom_account_id": "offline session",
+      "submitted_by": null
+    },
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260814-0900",
+      "meeting_topic": "2026-08-14",
+      "program_name": "",
+      "session_start": "2026-08-14T09:00:00+00:00",
+      "session_end": "2026-08-14T11:00:00+00:00",
+      "present_count": 28,
       "zoom_account_id": "offline session",
       "submitted_by": null
     },
