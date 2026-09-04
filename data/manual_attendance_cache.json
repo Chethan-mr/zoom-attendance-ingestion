@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-04T05:58:22.415620+00:00",
+  "updated_at": "2026-09-04T11:24:16.311615+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -108,6 +108,10 @@
     {
       "id": "3cb8ac1b-9092-4932-8a43-0afbef7a4774",
       "text": "snowpro-gen-ai-july-2026"
+    },
+    {
+      "id": "17b73daf-5659-4db7-8a3a-7ce11f35a6d2",
+      "text": "test "
     },
     {
       "id": "cec8ffeb-daaf-49a3-ac94-b8e7240b16bb",
@@ -2778,6 +2782,12 @@
       {
         "id": "9d2aaa81-ca54-496b-8210-e0e3e6bf0cba",
         "display_name": "Yashi Naik"
+      }
+    ],
+    "17b73daf-5659-4db7-8a3a-7ce11f35a6d2": [
+      {
+        "id": "57737a5c-66cf-4de9-b610-1d8f7cbc809c",
+        "display_name": "Taha Lakhat"
       }
     ],
     "cec8ffeb-daaf-49a3-ac94-b8e7240b16bb": [
