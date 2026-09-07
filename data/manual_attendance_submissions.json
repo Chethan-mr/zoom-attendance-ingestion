@@ -94,5 +94,11 @@
     "submitted_at": "2026-09-07T07:46:27.742059+00:00",
     "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Google Cloud BigTable",
     "program_name": "alchemy-advanced-gcp-pune-2026"
+  },
+  "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260907-0900": {
+    "submitted_by": "abhilipsha@mentorskool.com",
+    "submitted_at": "2026-09-07T07:49:31.061613+00:00",
+    "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Exploring Services on Google Platform",
+    "program_name": "alchemy-advanced-gcp-pune-2026"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-07T07:47:31.324937+00:00",
+  "updated_at": "2026-09-07T07:50:32.532328+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -2798,6 +2798,16 @@
     ]
   },
   "recent_sessions": [
+    {
+      "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260907-0900",
+      "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Exploring Services on Google Platform",
+      "program_name": "alchemy-advanced-gcp-pune-2026",
+      "session_start": "2026-09-07T09:00:00+00:00",
+      "session_end": "2026-09-07T11:00:00+00:00",
+      "present_count": 30,
+      "zoom_account_id": "abhilipsha offline",
+      "submitted_by": "abhilipsha@mentorskool.com"
+    },
     {
       "meeting_id": "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260903-0900",
       "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Google Cloud Storage",
