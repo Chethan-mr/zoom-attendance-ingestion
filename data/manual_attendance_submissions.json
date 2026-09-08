@@ -106,5 +106,11 @@
     "submitted_at": "2026-09-07T07:55:24.132413+00:00",
     "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Need for incremental loading",
     "program_name": "alchemy-advanced-dbx-hyderabad-2026"
+  },
+  "MANUAL-1d489083-3a91-4dcd-8a94-9bd1f066ea94-20260908-0900": {
+    "submitted_by": "chethan@mentorskool.com",
+    "submitted_at": "2026-09-08T10:27:04.250811+00:00",
+    "meeting_topic": "alchemy-advanced-dbx-hyderabad-2026-ILT-Watermark-Based Incremental Loading",
+    "program_name": "alchemy-advanced-dbx-hyderabad-2026"
   }
 }
