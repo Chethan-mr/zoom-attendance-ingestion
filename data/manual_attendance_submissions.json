@@ -118,5 +118,11 @@
     "submitted_at": "2026-09-09T06:25:08.950573+00:00",
     "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-Cloud Pub/Sub",
     "program_name": "alchemy-advanced-gcp-pune-2026"
+  },
+  "MANUAL-25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9-20260911-0900": {
+    "submitted_by": "chethan@mentorskool.com",
+    "submitted_at": "2026-09-11T05:14:09.928727+00:00",
+    "meeting_topic": "alchemy-advanced-gcp-pune-2026-ILT-BigLake",
+    "program_name": "alchemy-advanced-gcp-pune-2026"
   }
 }
