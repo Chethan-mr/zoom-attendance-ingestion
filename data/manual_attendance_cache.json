@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-11T22:43:56.376929+00:00",
+  "updated_at": "2026-09-12T01:12:29.751119+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -112,10 +112,6 @@
     {
       "id": "17b73daf-5659-4db7-8a3a-7ce11f35a6d2",
       "text": "test "
-    },
-    {
-      "id": "cec8ffeb-daaf-49a3-ac94-b8e7240b16bb",
-      "text": "testing-content-review"
     }
   ],
   "learners_by_program": {
@@ -2788,12 +2784,6 @@
       {
         "id": "57737a5c-66cf-4de9-b610-1d8f7cbc809c",
         "display_name": "Taha Lakhat"
-      }
-    ],
-    "cec8ffeb-daaf-49a3-ac94-b8e7240b16bb": [
-      {
-        "id": "c7da43d8-ffe6-4b1b-9bcc-34651c352e7b",
-        "display_name": "Oorja Sonthalia"
       }
     ]
   },
