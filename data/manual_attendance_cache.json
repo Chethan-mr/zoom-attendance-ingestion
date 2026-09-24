@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-23T23:45:34.963840+00:00",
+  "updated_at": "2026-09-24T04:56:51.795988+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -76,10 +76,6 @@
     {
       "id": "5a9d5edd-a0a6-4fe4-bbab-4c4f03559e53",
       "text": "project-access-request"
-    },
-    {
-      "id": "38a3586b-f03b-461d-b908-dbf8f09669e2",
-      "text": "skill-path-access-request"
     },
     {
       "id": "b1b2d810-2384-4c8c-93b0-780d8a0a907e",
@@ -1606,12 +1602,6 @@
       {
         "id": "2a0b2362-265b-4962-8277-3eecf69d3c67",
         "display_name": "Sourabhhh Kumar"
-      }
-    ],
-    "38a3586b-f03b-461d-b908-dbf8f09669e2": [
-      {
-        "id": "2322147a-b945-487f-89b4-97e16a7beb4a",
-        "display_name": "test user_prod_1"
       }
     ],
     "b1b2d810-2384-4c8c-93b0-780d8a0a907e": [
