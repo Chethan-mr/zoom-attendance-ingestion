@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-06T10:29:56.890766+00:00",
+  "updated_at": "2026-10-06T17:21:43.472566+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -28,6 +28,10 @@
     {
       "id": "d7150a87-fe2e-448f-91fd-0244692ca837",
       "text": "cortex-code-sep-b3-2026"
+    },
+    {
+      "id": "2c14cd51-9fb7-4ed9-8042-68c3f10608be",
+      "text": "databricks-azure-oct-2026"
     },
     {
       "id": "f27654e0-8ace-4070-bbcd-133c23d0ee85",
@@ -897,6 +901,7 @@
         "display_name": "Yogesh K"
       }
     ],
+    "2c14cd51-9fb7-4ed9-8042-68c3f10608be": [],
     "f27654e0-8ace-4070-bbcd-133c23d0ee85": [
       {
         "id": "4aa55458-1e48-4c8c-a0ee-20c48cb9c80a",
