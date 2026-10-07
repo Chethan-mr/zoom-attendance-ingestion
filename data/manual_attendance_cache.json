@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-07T01:39:08.678007+00:00",
+  "updated_at": "2026-10-07T08:43:46.302171+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -765,10 +765,6 @@
         "display_name": "Divya Gopalakrishna"
       },
       {
-        "id": "2125503d-368e-436c-bdc6-129a1a32ab71",
-        "display_name": "Gangone Geetesh"
-      },
-      {
         "id": "f855d8b1-beb3-44c0-9efc-722b24d07b9e",
         "display_name": "Gokul G"
       },
@@ -1531,10 +1527,6 @@
         "display_name": "Aneek Barman"
       },
       {
-        "id": "27e36030-75a3-49e5-83d9-fa3b48ef1a91",
-        "display_name": "Bhavesh Kukreja"
-      },
-      {
         "id": "14184c5e-baea-403a-8289-fb99b9116e85",
         "display_name": "Bidhan Sarkar"
       },
@@ -1723,18 +1715,8 @@
         "display_name": "Riyanka Nath"
       }
     ],
-    "5a9d5edd-a0a6-4fe4-bbab-4c4f03559e53": [
-      {
-        "id": "2a0b2362-265b-4962-8277-3eecf69d3c67",
-        "display_name": "Sourabhhh Kumar"
-      }
-    ],
-    "c23eeeb9-94f7-4e63-b514-996d671be414": [
-      {
-        "id": "39333394-7e95-47de-9b9f-61c8721060ed",
-        "display_name": "Amit Choudhary"
-      }
-    ],
+    "5a9d5edd-a0a6-4fe4-bbab-4c4f03559e53": [],
+    "c23eeeb9-94f7-4e63-b514-996d671be414": [],
     "b1b2d810-2384-4c8c-93b0-780d8a0a907e": [
       {
         "id": "e3dafe42-6772-45e8-bd3d-06839c85822c",
@@ -2021,10 +2003,6 @@
       {
         "id": "07c5ff9d-2a2e-4452-ad70-e980d09c9dc6",
         "display_name": "Diksha Thakur"
-      },
-      {
-        "id": "2125503d-368e-436c-bdc6-129a1a32ab71",
-        "display_name": "Gangone Geetesh"
       },
       {
         "id": "bb8a121b-137c-4815-8120-5b1c348e8cd7",
@@ -2755,10 +2733,6 @@
         "display_name": "Mustafa Shaikh"
       },
       {
-        "id": "6c432309-53d4-45f5-a9d2-1557676c329f",
-        "display_name": "Nishchay Chaturvedi"
-      },
-      {
         "id": "362072ba-ab4e-4d4b-928e-09674dae9e75",
         "display_name": "Pakki Bharadwaj"
       },
@@ -2769,10 +2743,6 @@
       {
         "id": "3c9693c3-ea4c-4786-ba7e-254dcb5caba2",
         "display_name": "Prateek Agarwal"
-      },
-      {
-        "id": "8a927357-eac1-4d69-b667-6fd1ceb9dacb",
-        "display_name": "Priya Kumari"
       },
       {
         "id": "26bc0bea-a587-4e47-a2f3-4cc71deaa570",
