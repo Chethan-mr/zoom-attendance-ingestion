@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-16T07:14:04.640877+00:00",
+  "updated_at": "2026-10-16T12:31:44.925282+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -100,6 +100,10 @@
     {
       "id": "1e1b21d6-a31d-478d-a6b2-f975de58cd79",
       "text": "snowpro-core-ch-4-aug-2026"
+    },
+    {
+      "id": "fe6bb2cc-ac17-4dd5-950e-6f0e095394e9",
+      "text": "snowpro-core-ch-5-oct-2026"
     },
     {
       "id": "f1c90958-27bf-46cb-acc2-707d052759c8",
@@ -2574,6 +2578,196 @@
       {
         "id": "258ab2c0-d6c8-4630-b247-c33666c4c461",
         "display_name": "Srinidhi  Kannan"
+      }
+    ],
+    "fe6bb2cc-ac17-4dd5-950e-6f0e095394e9": [
+      {
+        "id": "dc723944-beb1-4d20-9de0-57198ad375ea",
+        "display_name": "Akshay Gade"
+      },
+      {
+        "id": "997fe988-59fc-4126-989b-61ae6a280a9c",
+        "display_name": "Ananya Ramesh"
+      },
+      {
+        "id": "6721b0ce-e858-4739-b008-9942f8438c2a",
+        "display_name": "Ankit  Singh02"
+      },
+      {
+        "id": "578120cd-c914-431e-9b35-f02dc67a8a3e",
+        "display_name": "Ayushi Mathur"
+      },
+      {
+        "id": "2db69428-5f97-4c17-b873-6058e0924205",
+        "display_name": "Barkath L"
+      },
+      {
+        "id": "3fcc2bf6-169f-4920-96e0-9e48c59b19d6",
+        "display_name": "Bhaskar  Rawat"
+      },
+      {
+        "id": "2f8eb458-68c6-4de2-b9d1-1cf29f7b9b2b",
+        "display_name": "Chetan Gautam"
+      },
+      {
+        "id": "09596aa4-72e7-43ba-885e-df0dea3a21fa",
+        "display_name": "Dharm Singh"
+      },
+      {
+        "id": "f97a0342-6c99-4f1f-943f-3150b93aaaa4",
+        "display_name": "Dishant Aggarwal"
+      },
+      {
+        "id": "ac477143-29fa-413a-bcb8-0f52c6e2a7a0",
+        "display_name": "Durgesh Choudhary"
+      },
+      {
+        "id": "f66eeaee-94d8-450e-b863-86a16943544c",
+        "display_name": "Gangaraju N"
+      },
+      {
+        "id": "67ba5304-fce0-479a-b0d8-5c0fb80c2e8e",
+        "display_name": "Gaurav Raskar"
+      },
+      {
+        "id": "f324afcc-a409-431e-a0eb-5f44294cdc5c",
+        "display_name": "Goutham K"
+      },
+      {
+        "id": "cafa4fe4-0bcb-428b-8d85-822ce4426488",
+        "display_name": "Hrithwika Krishna"
+      },
+      {
+        "id": "eed64720-2b7e-4d6a-8fd9-49b7580e5930",
+        "display_name": "Kalyani Nandeshwar"
+      },
+      {
+        "id": "fa5683b9-89d7-4027-bc47-0b4c12a19cff",
+        "display_name": "Krishnamoorthy V"
+      },
+      {
+        "id": "42748417-d2bf-42ff-97c6-03028d3adff0",
+        "display_name": "Kuldeep NA"
+      },
+      {
+        "id": "01f03efd-c4f0-4429-80ba-8154eae4b09b",
+        "display_name": "Madhuri Thokal"
+      },
+      {
+        "id": "d500ea52-dbeb-4393-aae3-b589b2b481c1",
+        "display_name": "Meghana Gopireddy"
+      },
+      {
+        "id": "c2f6564a-84b2-40de-9329-34e4095fd6ba",
+        "display_name": "Mudde Babu"
+      },
+      {
+        "id": "77cb80b4-821e-476c-99bc-7d0964e3744a",
+        "display_name": "Namrata Navi"
+      },
+      {
+        "id": "755ec9d9-b126-4d9c-8aba-47a9ba907b05",
+        "display_name": "Narasimha D"
+      },
+      {
+        "id": "e8479711-aa38-4783-a1db-cea40de6fd0a",
+        "display_name": "Nikhil Noolvi"
+      },
+      {
+        "id": "026b6a70-821c-4516-bfac-f2b194a14fe7",
+        "display_name": "Onkar Pujari"
+      },
+      {
+        "id": "61a3ecd9-bfbb-481d-be8e-7c34e2e4d64d",
+        "display_name": "Pavankumar Mudigoudra"
+      },
+      {
+        "id": "b620a1d5-1ffd-40db-abf9-8883acbcb711",
+        "display_name": "Pawan Kumar"
+      },
+      {
+        "id": "54171352-58ef-451d-9598-764f4493cca1",
+        "display_name": "Prabakar Duraisami"
+      },
+      {
+        "id": "9c2b0917-ae10-4e5e-99e9-aaedb0c61196",
+        "display_name": "Prishita Shukla"
+      },
+      {
+        "id": "70e94384-8714-4252-a9b4-3025bd6fcea2",
+        "display_name": "Punith Suvarna"
+      },
+      {
+        "id": "47bd1938-bf59-4c95-8535-d3c3897adfa0",
+        "display_name": "Rakesh  D"
+      },
+      {
+        "id": "669406de-1200-42bf-90f5-3a441bc267c2",
+        "display_name": "Razab Bharti"
+      },
+      {
+        "id": "10748ae9-e19b-43a5-acc0-4ded10a0d0b0",
+        "display_name": "Restya Raju"
+      },
+      {
+        "id": "08357843-915b-45a0-af64-50dc3e20eec9",
+        "display_name": "Rishikant Kumar"
+      },
+      {
+        "id": "42482669-6ea7-4be4-9729-e6ea90a74904",
+        "display_name": "Roshan Banik"
+      },
+      {
+        "id": "177cd9e3-ebcc-422d-977c-f8babbea7666",
+        "display_name": "Rosheela E"
+      },
+      {
+        "id": "00a7d45f-451d-41cb-b220-fcea737df4c0",
+        "display_name": "Sakshi Tyagi"
+      },
+      {
+        "id": "507864aa-965c-462b-bf2b-47dc7efe8224",
+        "display_name": "Sanjay KJ"
+      },
+      {
+        "id": "1ba1897c-25cf-4f08-894c-c836150f7889",
+        "display_name": "Santosh Kumar"
+      },
+      {
+        "id": "9b4f1e6f-83b1-4840-b373-c447df82274d",
+        "display_name": "Sathyanarayanan DR"
+      },
+      {
+        "id": "840746e8-837a-43a0-a550-e8b0a99c5a7b",
+        "display_name": "Shalini GV"
+      },
+      {
+        "id": "eeb3a820-6728-4af7-a9ed-7aa6a2201a9b",
+        "display_name": "Shivam Pandey"
+      },
+      {
+        "id": "9e261c40-a442-4ae5-bad6-bc99c686719b",
+        "display_name": "Shruthi C"
+      },
+      {
+        "id": "59424d6c-6e32-406c-ac85-3dd79de87061",
+        "display_name": "Soubhik kar"
+      },
+      {
+        "id": "d555ac03-6468-411d-9e5d-8c6caba2a1ee",
+        "display_name": "Sowmya MS"
+      },
+      {
+        "id": "845c0cba-437c-4e93-b61d-cdf4f972c938",
+        "display_name": "Tanvi Gandhi"
+      },
+      {
+        "id": "87168d4c-3da4-40f2-8a7b-a9c0bea03454",
+        "display_name": "Vikas Singh03"
+      },
+      {
+        "id": "989ccde2-1fca-40f3-a7a1-dc3ca6d9dd34",
+        "display_name": "Vudattu Sahithi"
       }
     ],
     "f1c90958-27bf-46cb-acc2-707d052759c8": [
