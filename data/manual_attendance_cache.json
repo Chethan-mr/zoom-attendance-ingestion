@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-22T22:24:03.768264+00:00",
+  "updated_at": "2026-10-23T01:34:29.211002+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -44,10 +44,6 @@
     {
       "id": "f0bd6846-8cd2-414d-8f5f-ed1d66f803bb",
       "text": "databricks-de-prof-july-2026"
-    },
-    {
-      "id": "06e4ada2-73ac-4dd7-b368-b5edbb24e7cb",
-      "text": " databricks-gen-ai-april-2026"
     },
     {
       "id": "4e948e61-4dd8-42a3-ac95-9e3ef5fc916d",
@@ -1061,10 +1057,6 @@
         "display_name": "Pratik Kulkarni"
       },
       {
-        "id": "98df6ad2-dcbb-485f-8f3d-9ba87850f51d",
-        "display_name": "Rajeev Ranjan01"
-      },
-      {
         "id": "3164c0f9-9df4-4ca5-ab62-605781def560",
         "display_name": "Reema P"
       },
@@ -1273,7 +1265,6 @@
         "display_name": "Yogendra  Sharma"
       }
     ],
-    "06e4ada2-73ac-4dd7-b368-b5edbb24e7cb": [],
     "4e948e61-4dd8-42a3-ac95-9e3ef5fc916d": [
       {
         "id": "8b0f858c-6edd-4803-913b-da7b319585a2",
