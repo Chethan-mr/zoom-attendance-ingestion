@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T22:16:11.366108+00:00",
+  "updated_at": "2026-10-24T00:48:53.706946+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -16,10 +16,6 @@
     {
       "id": "246cbb31-f7ee-479e-ab50-1eacaf86b23b",
       "text": "aws-july-2026"
-    },
-    {
-      "id": "2e85441c-0b46-40c9-a3e1-a8c738fe053d",
-      "text": "cortex-code-july-b2-2026"
     },
     {
       "id": "d7150a87-fe2e-448f-91fd-0244692ca837",
@@ -489,68 +485,6 @@
       {
         "id": "2a4d41ff-c2ca-4228-93d8-c8e1cd367a9a",
         "display_name": "Venkata Gudla"
-      }
-    ],
-    "2e85441c-0b46-40c9-a3e1-a8c738fe053d": [
-      {
-        "id": "9d402ff3-2e6f-46ec-8a39-43c29e24a137",
-        "display_name": "Abhijith Muralidharan"
-      },
-      {
-        "id": "f677e291-0504-4d26-a847-7b202eff6755",
-        "display_name": "Ashwani Ashish"
-      },
-      {
-        "id": "1174699c-1fee-49c8-9ad3-2835d91a8197",
-        "display_name": "Dikshant Chaudhary"
-      },
-      {
-        "id": "69c03a32-350a-4c65-a8a2-e126bbf8d300",
-        "display_name": "Gowtham  R"
-      },
-      {
-        "id": "2ed2d8d1-b1a1-4eae-83e8-b6b56b95508c",
-        "display_name": "Karthikeyan  Ganesan"
-      },
-      {
-        "id": "1ee74672-6b59-48b1-a139-fae974080d7e",
-        "display_name": "Mohammad Arshad"
-      },
-      {
-        "id": "9386d93c-29cf-4c5b-aec0-a06856db917d",
-        "display_name": "Mukul Jaju"
-      },
-      {
-        "id": "0cca2836-d49a-47e3-be2c-5534c7d4abc9",
-        "display_name": "Nitin Vyas"
-      },
-      {
-        "id": "c841ab29-d637-4fbf-8bd9-b1ba5a235bda",
-        "display_name": "Sai Kallapari"
-      },
-      {
-        "id": "8ab8775d-970f-4c0d-b989-184b81b06486",
-        "display_name": "Saikiran Vanam"
-      },
-      {
-        "id": "e165bb5d-5e08-4c87-a8a9-5e821ad5b37e",
-        "display_name": "Sai Puneeth"
-      },
-      {
-        "id": "6f689539-5fdc-4cc9-a9bf-73e193996a1a",
-        "display_name": "Sakshi Jain"
-      },
-      {
-        "id": "dff17e6c-0e2e-44f0-9e03-bb3be99081ff",
-        "display_name": "Sangeetha D"
-      },
-      {
-        "id": "07549870-ea77-4efe-be47-919ea03c9dfc",
-        "display_name": "Sarvesh P"
-      },
-      {
-        "id": "b7c8ef3e-b9b6-4921-a9a0-75850e0963b0",
-        "display_name": "Tanumoy Atta"
       }
     ],
     "d7150a87-fe2e-448f-91fd-0244692ca837": [
