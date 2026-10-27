@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-27T13:17:21.821853+00:00",
+  "updated_at": "2026-10-27T18:48:36.520931+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -56,6 +56,10 @@
     {
       "id": "6ddaf574-b27f-43cc-b9bf-628a91071fb0",
       "text": "dbx-de-prof-training-content"
+    },
+    {
+      "id": "0ad7b9ac-8b10-44a2-a048-401c7b51090b",
+      "text": "imagineers-ds-onboarding-oct-26"
     },
     {
       "id": "ab7faa17-99fd-4a61-9fa2-caee4b8b321d",
@@ -1529,6 +1533,96 @@
       {
         "id": "23bfe6db-6089-4c37-a7da-3a88ac86c4e5",
         "display_name": "Akash NA"
+      }
+    ],
+    "0ad7b9ac-8b10-44a2-a048-401c7b51090b": [
+      {
+        "id": "a8aa43f1-99a9-4a2a-84f8-935a2781d211",
+        "display_name": "Ashrith Alumalla"
+      },
+      {
+        "id": "d1b0152c-6160-47ef-8f8e-be9d0345b208",
+        "display_name": "Barsha Baibhabi"
+      },
+      {
+        "id": "e20c3a13-2b68-4fbf-b8a3-7553322261d3",
+        "display_name": "Gungun Khaitan"
+      },
+      {
+        "id": "79b772b2-3d1b-4877-ab12-1f70d4369ea9",
+        "display_name": "Harsh Jha"
+      },
+      {
+        "id": "1e2e323a-ab06-4b10-b50e-83aa59e115a3",
+        "display_name": "Het Savla"
+      },
+      {
+        "id": "08d6bcdd-8d23-4bc9-b3af-b431bf647ac9",
+        "display_name": "Jagpreet Khurana"
+      },
+      {
+        "id": "fa3f2590-5f65-486b-a43b-ee282908c8a2",
+        "display_name": "J Akhil Krishna"
+      },
+      {
+        "id": "7c447b7b-42bf-41a0-a3c1-287204d7463a",
+        "display_name": "Khushi Sehrawat"
+      },
+      {
+        "id": "2b962cc2-a064-42b7-bad4-d14ff2725af9",
+        "display_name": "Kranti Dagwar"
+      },
+      {
+        "id": "468e11c7-20bb-4f4c-882a-faa9074b3d62",
+        "display_name": "Manish Kumar"
+      },
+      {
+        "id": "45a8b7f8-07c3-49e7-9b65-0bad9e43f052",
+        "display_name": "Prabhav Agarwal"
+      },
+      {
+        "id": "e0128bf7-6f70-4e32-9d2d-e1a7b1be6651",
+        "display_name": "Pranjal Deore"
+      },
+      {
+        "id": "69e91111-563b-49f6-ad85-2c619846687a",
+        "display_name": "Presha Karan"
+      },
+      {
+        "id": "65474ac8-d850-4cf1-b0c4-e391cf560c85",
+        "display_name": "Priyam Kumari"
+      },
+      {
+        "id": "47dae68c-bb8b-4181-b07e-22b774f9e96e",
+        "display_name": "Ritika Grover"
+      },
+      {
+        "id": "ec9a1a0d-c203-4d2c-b44c-f194d4c791d4",
+        "display_name": "Sakshi Mehta"
+      },
+      {
+        "id": "8753e903-547f-47e1-b3dc-3d72545463b4",
+        "display_name": "Sneha NA"
+      },
+      {
+        "id": "2fb9a91e-1044-4e0d-a8ff-1684e95f9a55",
+        "display_name": "Sukin Hiremath"
+      },
+      {
+        "id": "c5a5ffcc-e02f-4b23-aed5-7f8ddf8c7bcc",
+        "display_name": "Vanshika Thakur"
+      },
+      {
+        "id": "fdcd6d76-47fc-4204-ae68-ff6b99913425",
+        "display_name": "Vanshpreet Khanuja"
+      },
+      {
+        "id": "1a7086a8-d6d4-4040-b0a1-17eb1d60d56f",
+        "display_name": "Vishrutha J"
+      },
+      {
+        "id": "9732651d-e9e1-48c7-878d-e290de501476",
+        "display_name": "Yash Madhani"
       }
     ],
     "ab7faa17-99fd-4a61-9fa2-caee4b8b321d": [
