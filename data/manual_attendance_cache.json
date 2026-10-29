@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-28T21:44:15.956687+00:00",
+  "updated_at": "2026-10-29T01:52:09.275634+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -1043,14 +1043,6 @@
         "display_name": "Aisurya Misra"
       },
       {
-        "id": "2ea6b795-cc85-454a-9ff7-aa674e904039",
-        "display_name": "Aman Chopra"
-      },
-      {
-        "id": "c5d63e15-d890-4e1a-b72f-c67ae17309fa",
-        "display_name": "Ansh Raj"
-      },
-      {
         "id": "578120cd-c914-431e-9b35-f02dc67a8a3e",
         "display_name": "Ayushi Mathur"
       },
@@ -1059,24 +1051,12 @@
         "display_name": "Bal Mukund"
       },
       {
-        "id": "ccf876c8-fe99-4468-85b5-ad154f2f2ea6",
-        "display_name": "Chetan Halunde"
-      },
-      {
-        "id": "cafa4fe4-0bcb-428b-8d85-822ce4426488",
-        "display_name": "Hrithwika Krishna"
-      },
-      {
         "id": "287439ee-284a-45d0-bd9d-5893c8724977",
         "display_name": "Jai Singh"
       },
       {
         "id": "504c0fe7-46a6-46a8-a1a4-67a640c4ffdc",
         "display_name": "Karthika Nair"
-      },
-      {
-        "id": "26e51886-16ac-437c-8132-04dbf1b1d62d",
-        "display_name": "Krishna Pawar"
       },
       {
         "id": "f7ce149a-38e2-4569-8a6b-034b65b1b391",
@@ -1127,16 +1107,8 @@
         "display_name": "Saketha Kusuru"
       },
       {
-        "id": "67ad2f3d-b6bc-4778-9fb7-da28e5fcdde7",
-        "display_name": "Santosh Kuruba"
-      },
-      {
         "id": "d3924ac3-b837-4e06-b46a-0ab02bed4b41",
         "display_name": "Shubham Kharbanda"
-      },
-      {
-        "id": "677de769-e3a7-4810-98b6-f3d954d6459b",
-        "display_name": "Siva Reddy"
       },
       {
         "id": "087904a0-b360-4e63-98fd-172c755d8a26",
@@ -1161,10 +1133,6 @@
       {
         "id": "bb280222-e44b-497a-a835-1b6c73293d1b",
         "display_name": "Vaishnavi Galakatu"
-      },
-      {
-        "id": "54d15459-544f-4877-9791-c0783c4c0469",
-        "display_name": "Vasundhara Pawar"
       },
       {
         "id": "989ccde2-1fca-40f3-a7a1-dc3ca6d9dd34",
