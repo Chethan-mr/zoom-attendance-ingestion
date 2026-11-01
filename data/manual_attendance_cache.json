@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-31T21:41:42.393285+00:00",
+  "updated_at": "2026-11-01T01:23:09.930874+00:00",
   "programs": [
     {
       "id": "77419489-6bb1-40f6-9ba5-1105f673e116",
@@ -12,10 +12,6 @@
     {
       "id": "25cf4ada-8ad7-4f8f-9a66-b3d1eaddb9c9",
       "text": "alchemy-advanced-gcp-pune-2026"
-    },
-    {
-      "id": "246cbb31-f7ee-479e-ab50-1eacaf86b23b",
-      "text": "aws-july-2026"
     },
     {
       "id": "d7150a87-fe2e-448f-91fd-0244692ca837",
@@ -423,72 +419,6 @@
       {
         "id": "fbb813af-bd89-4f86-9a4b-c7c62f3dc1e7",
         "display_name": "Utkarsh Bharat"
-      }
-    ],
-    "246cbb31-f7ee-479e-ab50-1eacaf86b23b": [
-      {
-        "id": "c07abda4-1530-4498-a0ed-d40408cc8e87",
-        "display_name": "Akhil Yeramsetti"
-      },
-      {
-        "id": "418773fa-2602-48e0-b1af-26669a0cee03",
-        "display_name": "Akshay Mehta"
-      },
-      {
-        "id": "b5960b48-e8e0-48bf-b880-d5183aeb635b",
-        "display_name": "Aman Gupta"
-      },
-      {
-        "id": "a6abb235-e1bf-4b8b-bddc-f0f3872f7141",
-        "display_name": "Andalam Kumar"
-      },
-      {
-        "id": "88e942b5-0703-423b-8f1c-7b5c7864b4b4",
-        "display_name": "Avinash Godge"
-      },
-      {
-        "id": "7fd54814-37ac-4b98-962b-133d21e73592",
-        "display_name": "Chandu Jinka"
-      },
-      {
-        "id": "fc560cef-b0e2-4ab8-bed9-152212b9d02f",
-        "display_name": "Gaurav Kumar01"
-      },
-      {
-        "id": "d0c3eb6f-1d82-4418-bc76-fe654894e885",
-        "display_name": "Komal Naik"
-      },
-      {
-        "id": "c34dab6e-d3fd-4897-b2e1-a516af3f8093",
-        "display_name": "Lokesh Sellakkannu"
-      },
-      {
-        "id": "82c65198-fa2a-4746-89cf-674c093131f5",
-        "display_name": "Maqsood Sait"
-      },
-      {
-        "id": "4e6bf175-28d1-4792-9163-693578e85050",
-        "display_name": "Prasad Degala"
-      },
-      {
-        "id": "8e596e89-9d8c-48aa-9795-ec71e7800d9c",
-        "display_name": "Ranajit Pangambam"
-      },
-      {
-        "id": "7e5f475e-4aec-4155-94bc-1d3cf7cfc9e9",
-        "display_name": "Shivam Sukla"
-      },
-      {
-        "id": "a38520bc-1fa5-4cea-851c-3810aaea6a4a",
-        "display_name": "Shrotriya Ghatak"
-      },
-      {
-        "id": "38c72201-8045-47c1-9ca8-96385a24203f",
-        "display_name": "Tulsi Ahirwar"
-      },
-      {
-        "id": "2a4d41ff-c2ca-4228-93d8-c8e1cd367a9a",
-        "display_name": "Venkata Gudla"
       }
     ],
     "d7150a87-fe2e-448f-91fd-0244692ca837": [
