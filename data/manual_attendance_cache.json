@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-13T23:37:40.270908+00:00",
+  "updated_at": "2026-11-14T06:30:07.379585+00:00",
   "programs": [
     {
       "id": "1d489083-3a91-4dcd-8a94-9bd1f066ea94",
@@ -147,10 +147,6 @@
       {
         "id": "579af18b-58da-4113-9cf9-cc89eec26ae4",
         "display_name": "Dev Jaishwal"
-      },
-      {
-        "id": "4d63c777-3621-48b3-8702-e489a563d48b",
-        "display_name": "Harsh Kumar01"
       },
       {
         "id": "76dabdc5-8cf6-45d2-805a-939782c33fe9",
